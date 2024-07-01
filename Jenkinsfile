@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'develop', url: 'https://github.com/2024-SUMMER-BOOTCAMP-TEAM-A/backend.git'
+                git branch: 'develop', url: 'https://github.com/2024-SUMMER-BOOTCAMP-TEAM-A/frontend.git'
             }
         }
 
