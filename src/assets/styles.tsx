@@ -25,18 +25,17 @@ export const animStar = keyframes`
 
 // 유성 애니메이션을 위한 키프레임 (우측 상단에서 좌측 하단으로 이동)
 export const animShootingStar = keyframes`
-  from {
-    transform: translate(0px, 0px) rotate(45deg);
-    opacity: 1;
-    height: 5px;
-  }
-  to {
-    transform: translate(-${starFieldWidth}px, ${starFieldHeight}px) rotate(45deg);
-    opacity: 0;
-    height: 800px;
-  }
+from {
+  transform: translate(0px, 0px) rotate(45deg);
+  opacity: 1;
+  height: 5px;
+}
+to {
+  transform: translate(-${starFieldWidth}px, ${starFieldHeight}px) rotate(45deg);
+  opacity: 0;
+  height: 800px;
+}
 `;
-
 // 달 이미지가 반짝이는 애니메이션을 위한 키프레임
 export const glow = keyframes`
   0%, 100% {
@@ -111,6 +110,26 @@ export const CenteredText = styled.div`
   height: 100vh; // 페이지 전체 높이를 사용하여 중앙 정렬
 `;
 
+// 텍스트 왼쪽 중앙 정렬
+export const LeftText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // 중앙에서 왼쪽 정렬로 변경
+  justify-content: center;
+  height: 100vh; 
+  padding-left: 20%; // 적절한 여백을 추가하여 왼쪽으로 이동
+`;
+
+// 텍스트 오른쪽 중앙 정렬
+export const RightText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; // 오른쪽 정렬로 변경
+  justify-content: center;
+  height: 100vh; 
+  padding-right: 20%; // 적절한 여백을 추가하여 오른쪽으로 이동
+`;
+
 // 기본 폰트
 export const OwnglyphFont = styled.h1`
   @font-face {
@@ -139,7 +158,7 @@ export const GmarketSansMedium = styled.h1`
   color: black;
 `;
 
-// 메인 페이지의 버튼
+// 메인 페이지 시작하기 페이지의 버튼
 export const Button = styled.button`
   position: absolute;
   top: 85%;
@@ -155,6 +174,36 @@ export const Button = styled.button`
   &:hover {
     background-color: #ddd;
   }
+`;
+
+// 메인 페이지 이야기하러가기 버튼 컨테이너
+export const UpButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%; // 중간에 위치
+  left: 70%; // 중간에 위치
+  transform: translate(-50%, -50%); // 가운데 정렬
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+// 메인 페이지 이야기하러가기 버튼 이미지
+export const UpImage = styled.img`
+  width: 120px;   // 버튼 크기 조정
+  height: 120px;  // 버튼 크기 조정
+`;
+
+// 메인 페이지 이야기하러가기 버튼 텍스트
+export const UpButtonText = styled.div`
+  color: white;
+  font-size: 27px;
+  margin-top: 55px;
 `;
 
 // 가장 작은 별
@@ -229,9 +278,10 @@ export const Stars2 = styled(Stars)`
   }
 `;
 
+// ShootingStarsProps 인터페이스를 생성하여 props로 top과 left를 받도록 수정
 interface ShootingStarsProps {
-  top: number;
-  left: number;
+  $top: number;
+  $left: number;
 }
 
 export const ShootingStars = styled.div<ShootingStarsProps>`
@@ -241,8 +291,8 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   position: absolute;
-  top: ${(props) => props.top}px;
-  left: ${(props) => props.left}px;
+  top: ${(props) => props.$top}px;
+  left: ${(props) => props.$left}px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
   animation: ${animShootingStar} 10s linear infinite;
 `;
@@ -281,7 +331,7 @@ export const Section1Image = styled.img`
   width: 200px;
   position: absolute;
   top: 25%;
-  left: 50%;
+  left: 45%;
   transform-origin: center bottom;
   transform: translate(-50%, -50%);
   text-align: center;
