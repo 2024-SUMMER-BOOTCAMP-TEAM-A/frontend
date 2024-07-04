@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import StarField from './main/StarField'; 
+import App from './App';
+import StarField from './StarField';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
