@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import personaImg from '../assets/persona.png'; // Ensure this path is correct
+import personaImg from '../assets/persona.png';
+import section1Img from '../assets/section1.png';
 
 // 별 배경 크기 및 애니메이션 설정을 위한 상수
 const starFieldWidth = 2560;
@@ -52,6 +53,25 @@ const glow = keyframes`
   }
 `;
 
+// 이미지 애니메이션 키프레임
+const tiltLeftRight = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+`;
+
 // 별 위치를 생성하는 함수
 const createStars = (n: number) => {
   let stars = `${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
@@ -80,6 +100,7 @@ const Section = styled.div`
   position: relative;
 `;
 
+// 섹션 1 -> 이모지 부분
 const SectionOne = styled(Section)`
   display: flex;
   flex-direction: column;
@@ -87,6 +108,16 @@ const SectionOne = styled(Section)`
   justify-content: center;
 `;
 
+// 텍스트 중앙 정렬 및 간격 조정
+const CenteredText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; // 페이지 전체 높이를 사용하여 중앙 정렬
+`;
+
+// 기본 폰트
 const OwnglyphFont = styled.h1`
   @font-face {
     font-family: 'Ownglyph_ryuttung-Rg';
@@ -97,14 +128,11 @@ const OwnglyphFont = styled.h1`
   font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
   font-size: 35px;
   color: #fff;
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   margin: 0;
   text-align: center;
 `;
 
+// 시스템적인 폰트 
 const GmarketSansMedium = styled.h1`
   @font-face {
     font-family: 'GmarketSansMedium';
@@ -236,6 +264,7 @@ const Moon = styled.div`
   z-index: 1;
 `;
 
+// PERSONA 문구
 const Image = styled.img`
   width: 800px;
   margin-bottom: 20px;
@@ -247,6 +276,20 @@ const Image = styled.img`
   text-align: center;
   z-index: 2;
 `;
+
+// 섹션1 이모지
+const Section1Image = styled.img`
+  width: 200px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform-origin: center bottom;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  animation: ${tiltLeftRight} 2s infinite;
+`;
+
 
 const StarField: React.FC = () => {
   const [shootingStars, setShootingStars] = useState<JSX.Element[]>([]);
@@ -273,12 +316,13 @@ const StarField: React.FC = () => {
       <SectionOne>
         <Image src={personaImg} alt="Persona" />
         <Moon />
+        <div style={{marginTop: '80px', marginBottom: '60px', textAlign: 'center'}}>
+          <OwnglyphFont>
+            안녕하세요! 저는 Persona입니다.
+          </OwnglyphFont>
+        </div>
         <OwnglyphFont>
-          안녕하세요! 저는 Persona입니다
-          <br/>
-          <br/>
-          <br/>
-          저와 대화를 시작하고, 원하시는 자아를 선택해 대화해보세요
+          저와 대화를 시작하고, 원하시는 자아를 선택해 대화해보세요.
         </OwnglyphFont>
         <Button>
           <GmarketSansMedium>시작하기</GmarketSansMedium>
@@ -288,32 +332,60 @@ const StarField: React.FC = () => {
         <Stars2 />
         {shootingStars}
       </SectionOne>
+
       <Section>
+        <Section1Image src={section1Img} alt="section1" />
         <Stars />
         <Stars1 />
         <Stars2 />
         {shootingStars}
-        <OwnglyphFont>
-          2 세션
-        </OwnglyphFont>
+        <CenteredText>
+          <OwnglyphFont>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            안녕하세요! 저는 Persona입니다.
+          </OwnglyphFont>
+          <OwnglyphFont style={{ marginTop: '50px' }}>
+            혹시 누군가에게 말 못할 고민이나 쉽게 꺼내기 어려운 이야기가 있으신가요?
+          </OwnglyphFont>
+        </CenteredText>
       </Section>
+
+
       <Section>
         <Stars />
         <Stars1 />
         <Stars2 />
         {shootingStars}
-        <OwnglyphFont>
-          3 세션
-        </OwnglyphFont>
+        <CenteredText>
+          <OwnglyphFont>
+            아니면 그저 시시콜콜한 이야기라도 괜찮아요.
+            <br/>
+            <br/>
+            <br/>
+            저와 대화를 시작하고, 여러분에게 맞는 자아를 선택해보세요.
+          </OwnglyphFont>
+        </CenteredText>
       </Section>
+
+
       <Section>
         <Stars />
         <Stars1 />
         <Stars2 />
         {shootingStars}
-        <OwnglyphFont>
-          4 세션
-        </OwnglyphFont>
+        <CenteredText>
+          <OwnglyphFont>
+            가장 편안하고 즐거운 대화 시간을 만들어드릴게요.
+            <br/>
+            <br/>
+            <br/>
+            함께 이야기 나누러 가지 않을래요?
+          </OwnglyphFont>
+        </CenteredText>
       </Section>
     </MainContainer>
   );
