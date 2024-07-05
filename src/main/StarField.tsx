@@ -4,45 +4,16 @@ import section1Img from '../assets/section1.png';
 import upButtonImg from '../assets/upButton.png';
 import styled, { keyframes } from 'styled-components';
 import {
-  MainContainer, Section, SectionOne, CenteredText, LeftText, RightText,
-  OwnglyphFont, GmarketSansMedium, Button, UpButtonContainer, UpImage, UpButtonText, Stars,
-  Stars1, Stars2, ShootingStars, Moon, Image, Section1Image, InputContainer, StyledInput, StyledButton
+  MainContainer, GmarketSansMedium, Stars,
+  Stars1, Stars2, ShootingStars, Moon, Image
 } from '../assets/styles';
+import {
+  CenteredText, LeftText, RightText, Section, SectionOne,
+  OwnglyphFont, Button, UpButtonContainer, UpImage, UpButtonText, Section1Image, InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
+} from '../main/mainstyles';
+import RotatingCharacters from './RotatingCharacters';
 
-// 애니메이션 정의 -> 시작하기 버튼 클릭 시 
-const fadeOut = keyframes`
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-`;
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-// 애니메이션을 위한 스타일 적용
-const FadeOutText = styled(OwnglyphFont)`
-  animation: ${fadeOut} 1s ease-in-out;
-  animation-fill-mode: forwards;
-`;
-
-const FadeInText = styled(OwnglyphFont)`
-  animation: ${fadeIn} 1s ease-in-out;
-`;
-
-const ShootingStarsComponent: React.FC = () => {
+const ShootingStarsComponent: React.FunctionComponent = () => {
   const [shootingStars, setShootingStars] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
@@ -69,7 +40,7 @@ const ShootingStarsComponent: React.FC = () => {
   return <>{shootingStars}</>;
 };
 
-const StarField: React.FC = () => {
+const StarField: React.FunctionComponent = () => {
   const firstSectionRef = useRef<HTMLDivElement>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [fadeOutCompleted, setFadeOutCompleted] = useState(false);
@@ -119,7 +90,7 @@ const StarField: React.FC = () => {
               )}
               {!isStarted && (
                 <Button onClick={handleStartClick}>
-                  <GmarketSansMedium>시작하기</GmarketSansMedium>
+                  <GmarketSansMedium><span>시작하기</span></GmarketSansMedium>
                 </Button>
               )}
             </>
@@ -136,7 +107,7 @@ const StarField: React.FC = () => {
               <InputContainer>
                 <StyledInput type="text" placeholder="닉네임을 입력하세요" />
                 <StyledButton>
-                  <GmarketSansMedium style={{ color: 'white', fontSize: '24px' }}>입력</GmarketSansMedium>
+                  <GmarketSansMedium style={{ color: 'white', fontSize: '20px' }}><span>입력</span></GmarketSansMedium>
                 </StyledButton>
               </InputContainer>
             </>
@@ -170,6 +141,7 @@ const StarField: React.FC = () => {
         <Stars1 />
         <Stars2 />
         <ShootingStarsComponent />
+        <RotatingCharacters /> {/* 회전하는 캐릭터 추가 */}
         <RightText>
           <OwnglyphFont className="fadeInText">
             아니면 그저 시시콜콜한 이야기라도 괜찮아요.

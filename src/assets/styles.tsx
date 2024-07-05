@@ -124,10 +124,14 @@ export const LeftText = styled.div`
 export const RightText = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end; // 오른쪽 정렬로 변경
+  align-items: flex-end;
   justify-content: center;
-  height: 100vh; 
-  padding-right: 20%; // 적절한 여백을 추가하여 오른쪽으로 이동
+  height: 100vh;
+  padding-right: 15%;  
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
 `;
 
 // 기본 폰트
@@ -139,7 +143,7 @@ export const OwnglyphFont = styled.h1`
     font-style: normal;
   }
   font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
-  font-size: 35px;
+  font-size: 40px;
   color: #fff;
   margin: 0;
   text-align: center;
@@ -173,6 +177,12 @@ export const Button = styled.button`
   cursor: pointer;
   &:hover {
     background-color: #ddd;
+  }
+  span {
+    display: inline-block;
+    text-align: center;
+    width: 100%; 
+    margin-top: 3px;
   }
 `;
 
@@ -341,7 +351,7 @@ export const Section1Image = styled.img`
 
 // 닉네임 입력 관련 부분 ------------------
 export const InputContainer = styled.div`
-  display: flex;
+ display: flex;
   align-items: center;
   background-color: #e0e0e0;
   border-radius: 30px;
@@ -352,22 +362,27 @@ export const InputContainer = styled.div`
   position: absolute;
   width: 500px;
   margin-top: 20px;
+  opacity: 1; 
+  z-index: 10; 
 `;
+
 
 export const StyledInput = styled.input`
   border: none;
   border-top-left-radius: 30px;
-  background-color: #e0e0e0;
+  background-color: #e0e0e0; 
   border-bottom-left-radius: 30px;
-  padding: 10px;
-  font-size: 20px; 
+  padding: 10px 20px;
+  font-size: 20px;
+  height: 25px; 
+  line-height: 40px; 
   flex: 1;
   outline: none;
   font-family: 'GmarketSansMedium', sans-serif;
 
   &::placeholder {
-   font-family: 'GmarketSansMedium', sans-serif;
-    font-size: 20px; 
+    font-family: 'GmarketSansMedium', sans-serif;
+    font-size: 20px;
   }
 `;
 
@@ -376,16 +391,131 @@ export const StyledButton = styled.button`
   color: white;
   border: none;
   border-radius: 25px;
-  width: 80px; 
+  width: 80px;
   height: 40px;
   cursor: pointer;
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  opacity: 1; 
+  z-index:10;
+  line-height: 40px; 
   &:hover {
     background-color: #777;
+  } 
+  span {
+    display: inline-block;
+    text-align: center;
+    width: 100%; 
+    margin-top: 3px;
   }
 `;
 // --------------------------------------------
+// 온보딩 3P 사진 돌아가는 css
+// 캐릭터 회전 애니메이션을 위한 키프레임 추가
+const rotate = keyframes`
+  0%, 100% {
+    transform: translateX(0) scale(1);
+    z-index: 3;
+  }
+  33% {
+    transform: translateX(-120%) scale(0.8);
+    z-index: 2;
+  }
+  66% {
+    transform: translateX(120%) scale(0.8);
+    z-index: 1;
+  }
+`;
+
+// 클릭 이미지 애니메이션을 위한 키프레임 추가
+const clickAnimation = keyframes`
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(7px, 7px);
+  }
+`;
+
+// 캐릭터 이미지 컨테이너 스타일 추가
+export const CharacterContainer = styled.div`
+  position: relative;
+  width: 300px;
+  height: 400px;
+  left:15%;
+  top:50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+// 개별 캐릭터 이미지 스타일 추가
+export const Character = styled.img`
+  position: absolute;
+  width: 200px;
+  height: 300px;
+  border-radius: 50%;
+  transition: transform 1s, opacity 1s;
+  backface-visibility: hidden;
+`;
+
+// 각 캐릭터의 회전 애니메이션 스타일 추가
+export const Character1 = styled(Character)`
+  animation: ${rotate} 6s infinite;
+`;
+
+export const Character2 = styled(Character)`
+  animation: ${rotate} 6s infinite 2s;
+`;
+
+export const Character3 = styled(Character)`
+  animation: ${rotate} 6s infinite 4s;
+`;
+
+// 클릭 이미지 스타일 추가
+export const ClickImage = styled.img`
+  position: absolute;
+  width: 50px;
+  height: auto;
+  top: 85%; // 캐릭터 이미지 아래에 위치하도록 조정
+  left: 68%;
+  transform: translateX(-50%, -50%);
+  z-index: 4;
+  animation: ${clickAnimation} 2s infinite;
+`;
+
+// 애니메이션 정의 -> 시작하기 버튼 클릭 시 
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// 애니메이션을 위한 스타일 적용
+export const FadeOutText = styled(OwnglyphFont)`
+  animation: ${fadeOut} 1s ease-in-out;
+  animation-fill-mode: forwards;
+`;
+
+export const FadeInText = styled(OwnglyphFont)`
+  animation: ${fadeIn} 1s ease-in-out;
+`;
