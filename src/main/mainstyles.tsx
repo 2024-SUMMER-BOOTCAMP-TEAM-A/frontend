@@ -68,7 +68,7 @@ export const Section = styled.div`
   position: relative;
 `;
 
-// 섹션 1 -> 이모지 부분
+// 섹션 1 -> 고민 png 부분
 export const SectionOne = styled(Section)`
   display: flex;
   flex-direction: column;
@@ -102,19 +102,6 @@ export const OwnglyphFont = styled.h1`
   color: #fff;
   margin: 0;
   text-align: center;
-`;
-
-// Sextion1의 표정 이모지
-export const Section1Image = styled.img`
-  width: 200px;
-  position: absolute;
-  top: 25%;
-  left: 45%;
-  transform-origin: center bottom;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 2;
-  animation: ${tiltLeftRight} 2s infinite;
 `;
 
 // 닉네임 입력 관련 부분 ------------------
@@ -327,7 +314,7 @@ export const LeftText = styled.div`
   align-items: flex-start; // 중앙에서 왼쪽 정렬로 변경
   justify-content: center;
   height: 100vh; 
-  padding-left: 20%; // 적절한 여백을 추가하여 왼쪽으로 이동
+  padding-left: 15%; // 적절한 여백을 추가하여 왼쪽으로 이동
 `;
 
 // 텍스트 오른쪽 중앙 정렬
@@ -344,4 +331,42 @@ export const RightText = styled.div`
   transform: translateY(-50%);
 `;
 
+// 걱정 이모지 이미지 컨테이너 정의
+export const WorryImageContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: auto;
+`;
 
+// 걱정 이모지 이미지 스타일 정의
+const dontworry = keyframes`
+  0%, 100% {
+    opacity: 0.2;
+    z-index: 1; 
+  }
+  33.33% {
+    opacity: 1;
+    z-index: 5;
+  }
+`;
+
+export const WorryImage = styled.img`
+  width: 250px;
+  margin: 30px;
+  position: relative;
+  top: -60px;
+  animation: ${dontworry} 6s infinite; // 6초 동안 애니메이션 후 반복
+`;
+
+export const WorryImage1 = styled(WorryImage)`
+  animation-delay: 0s; // 첫 번째 이미지 즉시 애니메이션 시작
+`;
+
+export const WorryImage2 = styled(WorryImage)`
+  animation-delay: 2s; // 두 번째 이미지 2초 후 애니메이션 시작
+`;
+
+export const WorryImage3 = styled(WorryImage)`
+  animation-delay: 4s; // 세 번째 이미지 4초 후 애니메이션 시작
+`;
