@@ -185,25 +185,37 @@ export const StyledButton = styled.button`
 const rotate = keyframes`
   0%, 100% {
     transform: translateX(0) scale(1);
+    z-index: 5;
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-100px) scale(0.8);
+    z-index: 4;
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateX(-200px) scale(0.6);
     z-index: 3;
+    opacity: 0.2;
   }
-  33% {
-    transform: translateX(-120%) scale(0.8);
-    z-index: 2;
+  60% {
+    transform: translateX(100px) scale(0.8);
+    z-index: 4;
+    opacity: 0.5;
   }
-  66% {
-    transform: translateX(120%) scale(0.8);
-    z-index: 1;
+  80% {
+    transform: translateX(200px) scale(0.6);
+    z-index: 3;
+    opacity: 0.2;
   }
 `;
-
 // 클릭 이미지 애니메이션을 위한 키프레임 추가
 const clickAnimation = keyframes`
   0%, 100% {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(7px, 7px);
+    transform: translate(9px, 9px);
   }
 `;
 
@@ -212,9 +224,9 @@ export const CharacterContainer = styled.div`
   position: relative;
   width: 300px;
   height: 400px;
-  left:15%;
-  top:50%;
-  transform: translateY(-50%);
+  left: 20%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -223,24 +235,35 @@ export const CharacterContainer = styled.div`
 // 개별 캐릭터 이미지 스타일 추가
 export const Character = styled.img`
   position: absolute;
-  width: 200px;
-  height: 300px;
+  width: 175px;
+  height: 250px;
   border-radius: 50%;
   transition: transform 1s, opacity 1s;
   backface-visibility: hidden;
+  animation: ${rotate} 10s infinite;
+  opacity: 0; // 기본적으로 투명하게 설정
 `;
 
 // 각 캐릭터의 회전 애니메이션 스타일 추가
 export const Character1 = styled(Character)`
-  animation: ${rotate} 6s infinite;
+  animation-delay: 0s;
+  opacity: 1; // 초기 상태에서 보이도록 설정
 `;
 
 export const Character2 = styled(Character)`
-  animation: ${rotate} 6s infinite 2s;
+  animation-delay: 2s;
 `;
 
 export const Character3 = styled(Character)`
-  animation: ${rotate} 6s infinite 4s;
+  animation-delay: 4s;
+`;
+
+export const Character4 = styled(Character)`
+  animation-delay: 6s;
+`;
+
+export const Character5 = styled(Character)`
+  animation-delay: 8s;
 `;
 
 // 클릭 이미지 스타일 추가
@@ -314,7 +337,7 @@ export const RightText = styled.div`
   align-items: flex-end;
   justify-content: center;
   height: 100vh;
-  padding-right: 15%;  
+  padding-right: 10%;  
   position: absolute;
   top: 50%;
   right: 0;
