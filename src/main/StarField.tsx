@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import personaImg from '../assets/persona.png';
-import section1Img from '../assets/section1.png';
 import upButtonImg from '../assets/upButton.png';
-import styled, { keyframes } from 'styled-components';
+import worry1 from '../assets/worry1.png'; 
+import worry2 from '../assets/worry2.png'; 
+import worry3 from '../assets/worry3.png'; 
+import styled from 'styled-components';
 import {
   MainContainer, GmarketSansMedium, Stars,
   Stars1, Stars2, ShootingStars, Moon, Image
 } from '../assets/styles';
 import {
-  CenteredText, LeftText, RightText, Section, SectionOne,
-  OwnglyphFont, Button, UpButtonContainer, UpImage, UpButtonText, Section1Image, InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
+  CenteredText, LeftText, RightText, Section, SectionOne, WorryImageContainer,
+  WorryImage1, WorryImage2, WorryImage3, OwnglyphFont,
+  Button, UpButtonContainer, UpImage, UpButtonText,
+  InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
 } from '../main/mainstyles';
 import RotatingCharacters from './RotatingCharacters';
 
@@ -120,17 +124,16 @@ const StarField: React.FunctionComponent = () => {
         <Stars1 />
         <Stars2 />
         <ShootingStarsComponent />
-        <Section1Image src={section1Img} alt="section1" />
+        
         <CenteredText>
           <OwnglyphFont className="fadeInText">
+            <WorryImageContainer>
+              <WorryImage1 src={worry1} alt="Worry 1" />
+              <WorryImage2 src={worry2} alt="Worry 2" />
+              <WorryImage3 src={worry3} alt="Worry 3" />
+            </WorryImageContainer>
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            안녕하세요! 저는 Persona입니다.
-          </OwnglyphFont>
-          <OwnglyphFont className="fadeInText" style={{ marginTop: '50px' }}>
             혹시 누군가에게 말 못할 고민이나 쉽게 꺼내기 어려운 이야기가 있으신가요?
           </OwnglyphFont>
         </CenteredText>
