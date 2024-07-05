@@ -13,7 +13,7 @@ export const numStarThreeStars = 200;
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
   0% {
-    transform: translateY(0);
+    transform: translateY(0);t
   }
   90% {
     transform: translateY(${starFieldHeight}px);
@@ -184,8 +184,8 @@ export const UpButtonContainer = styled.div`
   justify-content: center;
   cursor: pointer;
   position: absolute;
-  top: 50%; // 중간에 위치
-  left: 70%; // 중간에 위치
+  top: 50%; 
+  left: 70%; 
   transform: translate(-50%, -50%); // 가운데 정렬
 
   &:hover {
@@ -338,3 +338,54 @@ export const Section1Image = styled.img`
   z-index: 2;
   animation: ${tiltLeftRight} 2s infinite;
 `;
+
+// 닉네임 입력 관련 부분 ------------------
+export const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  padding: 5px;
+  top: 75%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 500px;
+  margin-top: 20px;
+`;
+
+export const StyledInput = styled.input`
+  border: none;
+  border-top-left-radius: 30px;
+  background-color: #e0e0e0;
+  border-bottom-left-radius: 30px;
+  padding: 10px;
+  font-size: 20px; 
+  flex: 1;
+  outline: none;
+  font-family: 'GmarketSansMedium', sans-serif;
+
+  &::placeholder {
+   font-family: 'GmarketSansMedium', sans-serif;
+    font-size: 20px; 
+  }
+`;
+
+export const StyledButton = styled.button`
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  width: 80px; 
+  height: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background-color: #777;
+  }
+`;
+// --------------------------------------------
