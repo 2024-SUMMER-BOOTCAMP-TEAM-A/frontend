@@ -172,37 +172,25 @@ export const StyledButton = styled.button`
 const rotate = keyframes`
   0%, 100% {
     transform: translateX(0) scale(1);
-    z-index: 5;
-    opacity: 1;
-  }
-  20% {
-    transform: translateX(-100px) scale(0.8);
-    z-index: 4;
-    opacity: 0.5;
-  }
-  40% {
-    transform: translateX(-200px) scale(0.6);
     z-index: 3;
-    opacity: 0.2;
   }
-  60% {
-    transform: translateX(100px) scale(0.8);
-    z-index: 4;
-    opacity: 0.5;
+  33% {
+    transform: translateX(-120%) scale(0.8);
+    z-index: 2;
   }
-  80% {
-    transform: translateX(200px) scale(0.6);
-    z-index: 3;
-    opacity: 0.2;
+  66% {
+    transform: translateX(120%) scale(0.8);
+    z-index: 1;
   }
 `;
+
 // 클릭 이미지 애니메이션을 위한 키프레임 추가
 const clickAnimation = keyframes`
   0%, 100% {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(9px, 9px);
+    transform: translate(13px, 13px);
   }
 `;
 
@@ -211,12 +199,13 @@ export const CharacterContainer = styled.div`
   position: relative;
   width: 300px;
   height: 400px;
-  left: 20%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left:15%;
+  top:50%;
+  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5; 
 `;
 
 // 개별 캐릭터 이미지 스타일 추가
@@ -227,30 +216,20 @@ export const Character = styled.img`
   border-radius: 50%;
   transition: transform 1s, opacity 1s;
   backface-visibility: hidden;
-  animation: ${rotate} 10s infinite;
-  opacity: 0; // 기본적으로 투명하게 설정
+  z-index: 6; 
 `;
 
 // 각 캐릭터의 회전 애니메이션 스타일 추가
 export const Character1 = styled(Character)`
-  animation-delay: 0s;
-  opacity: 1; // 초기 상태에서 보이도록 설정
+  animation: ${rotate} 6s infinite;
 `;
 
 export const Character2 = styled(Character)`
-  animation-delay: 2s;
+  animation: ${rotate} 6s infinite 2s;
 `;
 
 export const Character3 = styled(Character)`
-  animation-delay: 4s;
-`;
-
-export const Character4 = styled(Character)`
-  animation-delay: 6s;
-`;
-
-export const Character5 = styled(Character)`
-  animation-delay: 8s;
+  animation: ${rotate} 6s infinite 4s;
 `;
 
 // 클릭 이미지 스타일 추가

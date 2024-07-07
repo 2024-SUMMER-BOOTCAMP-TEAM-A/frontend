@@ -171,7 +171,10 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
   left: ${(props) => props.$left}px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
   animation: ${animShootingStar} 10s linear infinite;
+  pointer-events: none; // 유성의 클릭을 방지합니다.
 `;
+
+
 
 // 달
 export const Moon = styled.div`
