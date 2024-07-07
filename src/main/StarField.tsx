@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
-import personaImg from '../assets/persona.png';
-import upButtonImg from '../assets/upButton.png';
-import worry1 from '../assets/worry1.png'; 
-import worry2 from '../assets/worry2.png'; 
-import worry3 from '../assets/worry3.png'; 
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import personaImg from '../assets/png/persona.png';
+import upButtonImg from '../assets/png/upButton.png';
+import worry1 from '../assets/png/worry1.png';
+import worry2 from '../assets/png/worry2.png';
+import worry3 from '../assets/png/worry3.png';
 import styled from 'styled-components';
 import {
   MainContainer, GmarketSansMedium, Stars,
-  Stars1, Stars2, ShootingStars, Moon, Image
+  Stars1, Stars2, Moon, Image
 } from '../assets/styles';
 import {
   CenteredText, LeftText, RightText, Section, SectionOne, WorryImageContainer,
@@ -16,38 +17,14 @@ import {
   InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
 } from '../main/mainstyles';
 import RotatingCharacters from './RotatingCharacters';
-
-const ShootingStarsComponent: React.FunctionComponent = () => {
-  const [shootingStars, setShootingStars] = useState<JSX.Element[]>([]);
-
-  useEffect(() => {
-    const generateShootingStars = () => {
-      const numberOfStars = Math.random() < 0.5 ? 1 : 2;
-      const newShootingStars = Array.from({ length: numberOfStars }, (_, index) => (
-        <ShootingStars 
-          key={index} 
-          $top={Math.random() * window.innerHeight} 
-          $left={Math.random() * window.innerWidth} 
-        />
-      ));
-      setShootingStars(newShootingStars);
-    };
-
-    const interval = setInterval(generateShootingStars, 3000);
-
-    // 초기 별똥별 생성
-    generateShootingStars();
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return <>{shootingStars}</>;
-};
+import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 
 const StarField: React.FunctionComponent = () => {
   const firstSectionRef = useRef<HTMLDivElement>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [fadeOutCompleted, setFadeOutCompleted] = useState(false);
+  const [nickname, setNickname] = useState('');
+  const navigate = useNavigate();
 
   const scrollToFirstSection = () => {
     firstSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -58,6 +35,18 @@ const StarField: React.FunctionComponent = () => {
     setTimeout(() => {
       setFadeOutCompleted(true);
     }, 1000); // fadeOut 애니메이션 시간과 일치
+  };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const handleNicknameSubmit = () => {
+    if (nickname.trim()) {
+      navigate('/select');
+    } else {
+      alert('닉네임을 입력해주세요.');
+    }
   };
 
   return (
@@ -109,8 +98,13 @@ const StarField: React.FunctionComponent = () => {
                 어떻게 불러드릴까요? 닉네임을 알려주세요!
               </FadeInText>
               <InputContainer>
-                <StyledInput type="text" placeholder="닉네임을 입력하세요" />
-                <StyledButton>
+                <StyledInput
+                  type="text"
+                  placeholder="닉네임을 입력하세요"
+                  value={nickname}
+                  onChange={handleNicknameChange}
+                />
+                <StyledButton onClick={handleNicknameSubmit}>
                   <GmarketSansMedium style={{ color: 'white', fontSize: '20px' }}><span>입력</span></GmarketSansMedium>
                 </StyledButton>
               </InputContainer>
@@ -124,7 +118,7 @@ const StarField: React.FunctionComponent = () => {
         <Stars1 />
         <Stars2 />
         <ShootingStarsComponent />
-        
+
         <CenteredText>
           <OwnglyphFont className="fadeInText">
             <WorryImageContainer>
@@ -138,7 +132,7 @@ const StarField: React.FunctionComponent = () => {
           </OwnglyphFont>
         </CenteredText>
       </Section>
-      
+
       <Section>
         <Stars />
         <Stars1 />

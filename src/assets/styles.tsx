@@ -6,9 +6,9 @@ export const starFieldHeight = 2560;
 export const starOneScrollDuration = '100s';
 export const starTwoScrollDuration = '125s';
 export const starThreeScrollDuration = '175s';
-export const numStarOneStars = 1700;
-export const numStarTwoStars = 700;
-export const numStarThreeStars = 200;
+export const numStarOneStars = 700;
+export const numStarTwoStars = 500;
+export const numStarThreeStars = 100;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
@@ -62,6 +62,7 @@ export const MainContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
+
   background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
   overflow: auto;
   scroll-snap-type: y mandatory;
@@ -154,7 +155,6 @@ export const Stars2 = styled(Stars)`
   }
 `;
 
-// ShootingStarsProps 인터페이스를 생성하여 props로 top과 left를 받도록 수정
 interface ShootingStarsProps {
   $top: number;
   $left: number;
@@ -174,8 +174,6 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
   pointer-events: none; // 유성의 클릭을 방지합니다.
 `;
 
-
-
 // 달
 export const Moon = styled.div`
   border-radius: 50%;
@@ -190,7 +188,8 @@ export const Moon = styled.div`
   box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.5);
   animation: ${glow} 3s infinite;
   z-index: 1;
-`;
+  will-change: transform, opacity;
+  `;
 
 // PERSONA 문구 
 export const Image = styled.img`
