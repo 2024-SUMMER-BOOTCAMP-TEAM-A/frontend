@@ -1,9 +1,9 @@
 import React from 'react';
 import { CharacterContainer, Character1, Character2, Character3, ClickImage } from '../main/mainstyles';
-import luckyImage from '../assets/lucky.png';
-import mzImage from '../assets/mz.png';
-import leemalImage from '../assets/leemal.png';
-import clickImg from '../assets/click.png';
+import luckyImage from '../assets/png/lucky.png';
+import mzImage from '../assets/png/mz.png';
+import leemalImage from '../assets/png/leemal.png';
+import clickImg from '../assets/png/click.png';
 
 const RotatingCharacters: React.FC = () => {
   return (

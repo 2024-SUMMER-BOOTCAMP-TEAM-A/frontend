@@ -1,16 +1,13 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom/client';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import StarField from './main/StarField'; 
-// import './index.css';
+// import { BrowserRouter as Router } from 'react-router-dom';
+// import App from './App';
 
-// ReactDOM.createRoot(document.getElementById('root')!).render(
+// const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+// root.render(
 //   <React.StrictMode>
 //     <Router>
-//       <Routes>
-//         <Route path="/" element={<StarField />} />
-//         <Route path="/main" element={<StarField />} />
-//       </Routes>
+//       <App />
 //     </Router>
 //   </React.StrictMode>
 // );
@@ -18,6 +15,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import StarField from './main/StarField';
+import Select from './select/Select';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -25,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Router>
       <Routes>
         <Route path="/" element={<StarField />} />
+        <Route path="/select" element={<Select />} />
       </Routes>
     </Router>
   </React.StrictMode>

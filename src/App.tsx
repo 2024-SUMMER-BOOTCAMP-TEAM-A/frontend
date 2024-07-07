@@ -1,3 +1,18 @@
+// import React from 'react';
+// import { Routes, Route } from 'react-router-dom';
+// import StarField from './main/StarField';
+// import Select from './select/Select';
+
+// const App: React.FC = () => {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<StarField />} />
+//       <Route path="/select" element={<Select />} />
+//     </Routes>
+//   );
+// };
+
+// export default App;
 import React from 'react';
 import { Link } from 'react-router-dom';
 
