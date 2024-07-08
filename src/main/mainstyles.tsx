@@ -373,3 +373,48 @@ export const WorryImage2 = styled(WorryImage)`
 export const WorryImage3 = styled(WorryImage)`
   animation-delay: 4s; // 세 번째 이미지 4초 후 애니메이션 시작
 `;
+
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+`;
+
+export const StyledUpButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  animation: ${bounce} 3s infinite;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const StyledUpImage = styled.img`
+  width: 120px;
+  height: 120px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.25);
+  }
+`;
+
+export const StyledUpButtonText = styled.div`
+  color: white;
+  font-size: 27px;
+  margin-top: 30px;
+`;
