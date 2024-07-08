@@ -62,7 +62,6 @@ export const MainContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-
   background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
   overflow: auto;
   scroll-snap-type: y mandatory;
@@ -155,9 +154,30 @@ export const Stars2 = styled(Stars)`
   }
 `;
 
+
+
+// interface ShootingStarsProps {
+//   $top: number;
+//   $left: number;
+// }
+
+// export const ShootingStars = styled.div<ShootingStarsProps>`
+//   z-index: 10;
+//   width: 5px;
+//   height: 85px;
+//   border-top-left-radius: 50%;
+//   border-top-right-radius: 50%;
+//   position: absolute;
+//   top: ${(props) => props.$top}px;
+//   left: ${(props) => props.$left}px;
+//   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+//   animation: ${animShootingStar} 10s linear infinite;
+//   pointer-events: none; // 유성의 클릭을 방지합니다.
+// `;
+
 interface ShootingStarsProps {
-  $top: number;
-  $left: number;
+  top: number;
+  left: number;
 }
 
 export const ShootingStars = styled.div<ShootingStarsProps>`
@@ -167,11 +187,10 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   position: absolute;
-  top: ${(props) => props.$top}px;
-  left: ${(props) => props.$left}px;
+  top: ${(props) => props.top}px;
+  left: ${(props) => props.left}px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
   animation: ${animShootingStar} 10s linear infinite;
-  pointer-events: none; // 유성의 클릭을 방지합니다.
 `;
 
 // 달
