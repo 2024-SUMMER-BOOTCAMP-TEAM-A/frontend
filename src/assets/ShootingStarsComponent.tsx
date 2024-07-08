@@ -8,16 +8,15 @@ const ShootingStarsComponent: React.FunctionComponent = () => {
       const generateShootingStars = () => {
         const numberOfStars = Math.random() < 0.5 ? 1 : 2;
         const newShootingStars = Array.from({ length: numberOfStars }, (_, index) => {
-          const id = `star-${Date.now()}-${index}`; // 유니크 키 생성
+          //const id = `star-${Date.now()}-${index}`; // 유니크 키 생성
           return (
             <ShootingStars 
-              key={id} 
+              key={index} 
               top={Math.random() * 100} 
               left={Math.random() * 2560} 
             />
           );
         });
-        //setShootingStars((prevStars) => [...prevStars, ...newShootingStars]);
         setShootingStars(newShootingStars);
       };
   

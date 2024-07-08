@@ -1,19 +1,19 @@
 import styled, { keyframes } from 'styled-components';
 
-// 별 배경 크기 및 애니메이션 설정을 위한 상수
+// 별 배경 크기 및 애니메이션 설정을 위한 상수 
 export const starFieldWidth = 2560;
 export const starFieldHeight = 2560;
 export const starOneScrollDuration = '100s';
 export const starTwoScrollDuration = '125s';
 export const starThreeScrollDuration = '175s';
-export const numStarOneStars = 700;
-export const numStarTwoStars = 500;
-export const numStarThreeStars = 100;
+export const numStarOneStars = 1000;
+export const numStarTwoStars = 600;
+export const numStarThreeStars = 150;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
   0% {
-    transform: translateY(0);t
+    transform: translateY(0);
   }
   90% {
     transform: translateY(${starFieldHeight}px);
@@ -77,6 +77,45 @@ export const GmarketSansMedium = styled.h1`
   }
   font-family: 'GmarketSansMedium', sans-serif;
   font-size: 25px;
+  color: black;
+`;
+
+// MZ 폰트
+export const EF_jejudoldam = styled.h1`
+  @font-face {
+    font-family: 'EF_jejudoldam';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'EF_jejudoldam', sans-serif;
+  font-size: 15px;
+  color: black;
+`;
+
+// 아저씨 폰트
+export const KyoboHandwriting2020A = styled.h1`
+  @font-face {
+    font-family: 'KyoboHandwriting2020A';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'KyoboHandwriting2020A', sans-serif;
+  font-size: 15px;
+  color: black;
+
+`;
+// 럭키 폰트
+export const Ownglyph_ryuttung_Rg = styled.h1`
+  @font-face {
+    font-family: 'Ownglyph_ryuttung-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
+  font-size: 15px;
   color: black;
 `;
 
@@ -153,28 +192,6 @@ export const Stars2 = styled(Stars)`
     animation-delay: ${starThreeScrollDuration};
   }
 `;
-
-
-
-// interface ShootingStarsProps {
-//   $top: number;
-//   $left: number;
-// }
-
-// export const ShootingStars = styled.div<ShootingStarsProps>`
-//   z-index: 10;
-//   width: 5px;
-//   height: 85px;
-//   border-top-left-radius: 50%;
-//   border-top-right-radius: 50%;
-//   position: absolute;
-//   top: ${(props) => props.$top}px;
-//   left: ${(props) => props.$left}px;
-//   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
-//   animation: ${animShootingStar} 10s linear infinite;
-//   pointer-events: none; // 유성의 클릭을 방지합니다.
-// `;
-
 interface ShootingStarsProps {
   top: number;
   left: number;
