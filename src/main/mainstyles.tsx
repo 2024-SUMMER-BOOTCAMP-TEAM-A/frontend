@@ -93,7 +93,7 @@ export const Section = styled.div`
   position: relative;
 `;
 
-// 섹션 1 -> 고민 png 부분
+// 섹션 1 
 export const SectionOne = styled(Section)`
   display: flex;
   flex-direction: column;
@@ -179,6 +179,7 @@ export const StyledButton = styled.button`
   justify-content: center;
   opacity: 1; 
   z-index:10;
+  transform: translateX(-10px); 
   line-height: 40px; 
   &:hover {
     background-color: #777;
