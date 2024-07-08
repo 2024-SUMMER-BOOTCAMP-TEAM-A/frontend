@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import personaImg from '../assets/png/persona.png';
 import upButtonImg from '../assets/png/upButton.png';
@@ -12,9 +12,8 @@ import {
 } from '../assets/styles';
 import {
   CenteredText, LeftText, RightText, Section, SectionOne, WorryImageContainer,
-  WorryImage1, WorryImage2, WorryImage3, OwnglyphFont,
-  Button, UpButtonContainer, UpImage, UpButtonText,
-  InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
+  WorryImage1, WorryImage2, WorryImage3, OwnglyphFont, StyledUpButtonContainer, StyledUpImage, StyledUpButtonText,
+  Button, InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
 } from '../main/mainstyles';
 import RotatingCharacters from './RotatingCharacters';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
@@ -23,6 +22,7 @@ const StarField: React.FunctionComponent = () => {
   const firstSectionRef = useRef<HTMLDivElement>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [fadeOutCompleted, setFadeOutCompleted] = useState(false);
+  const [showInput, setShowInput] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const StarField: React.FunctionComponent = () => {
     setIsStarted(true);
     setTimeout(() => {
       setFadeOutCompleted(true);
-    }, 1000); // fadeOut 애니메이션 시간과 일치
+    }, 1000);
   };
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +47,8 @@ const StarField: React.FunctionComponent = () => {
     } else {
       alert('닉네임을 입력해주세요.');
     }
-  };
+  }; 
+
 
   return (
     <MainContainer>
@@ -89,7 +90,7 @@ const StarField: React.FunctionComponent = () => {
             </>
           ) : (
             <>
-              <div style={{ marginTop: '50px', marginBottom: '60px', textAlign: 'center' }}>
+               <div style={{ marginTop: '50px', marginBottom: '60px', textAlign: 'center' }}>
                 <FadeInText>
                   잠깐! 아직 이름을 안 물어봤네요.
                 </FadeInText>
@@ -138,7 +139,7 @@ const StarField: React.FunctionComponent = () => {
         <Stars1 />
         <Stars2 />
         <ShootingStarsComponent />
-        <RotatingCharacters /> {/* 회전하는 캐릭터 추가 */}
+        <RotatingCharacters />
         <RightText>
           <OwnglyphFont className="fadeInText">
             아니면 그저 시시콜콜한 이야기라도 괜찮아요.
@@ -164,10 +165,10 @@ const StarField: React.FunctionComponent = () => {
             함께 이야기 나누러 가지 않을래요?
           </OwnglyphFont>
         </LeftText>
-        <UpButtonContainer onClick={scrollToFirstSection}>
-          <UpImage src={upButtonImg} alt="Up" />
-          <UpButtonText>이야기하러가기</UpButtonText>
-        </UpButtonContainer>
+        <StyledUpButtonContainer onClick={scrollToFirstSection}>
+          <StyledUpImage src={upButtonImg} alt="Up" />
+          <StyledUpButtonText>이야기하러가기</StyledUpButtonText>
+        </StyledUpButtonContainer>
       </Section>
     </MainContainer>
   );
