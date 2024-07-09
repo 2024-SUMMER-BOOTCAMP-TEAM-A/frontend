@@ -32,7 +32,7 @@ const App: React.FC = () => {
   return (
     <Routes location={location}>
       <Route path="/" element={<StarField />} />
-      <Route path="/select" element={<Select />} />
+      <Route path="/select/:nickname" element={<Select />} />
       <Route path="/topselect" element={<TopSelect />} />
     </Routes>
 

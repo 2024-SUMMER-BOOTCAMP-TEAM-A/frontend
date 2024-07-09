@@ -41,7 +41,7 @@ const StarField: React.FunctionComponent = () => {
 
   const handleNicknameSubmit = () => {
     if (nickname.trim()) {
-      navigate('/select');
+      navigate(`/select/${nickname}`);
     } else {
       alert('닉네임을 입력해주세요.');
     }
