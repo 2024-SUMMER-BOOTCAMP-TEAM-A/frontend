@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import personaImg from '../assets/png/persona.png';
 import upButtonImg from '../assets/png/upButton.png';
@@ -21,7 +21,6 @@ const StarField: React.FunctionComponent = () => {
   const firstSectionRef = useRef<HTMLDivElement>(null);
   const [isStarted, setIsStarted] = useState(false);
   const [fadeOutCompleted, setFadeOutCompleted] = useState(false);
-  const [showInput, setShowInput] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 

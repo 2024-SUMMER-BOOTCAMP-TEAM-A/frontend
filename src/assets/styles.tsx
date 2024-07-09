@@ -223,7 +223,6 @@ export const Moon = styled.div`
   background-size: cover;
   box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.5);
   animation: ${glow} 3s infinite;
-  z-index: 1;
   will-change: transform, opacity;
   `;
 
