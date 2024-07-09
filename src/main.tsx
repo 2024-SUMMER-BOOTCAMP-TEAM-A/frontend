@@ -1,30 +1,50 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom/client';
-// import { BrowserRouter as Router } from 'react-router-dom';
-// import App from './App';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import StarField from './main/StarField';
+// import Select from './select/Select';
+// import './index.css';
+// import TopSelect from './topselect/TopSelect';
 
-// const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-// root.render(
+// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 //   <React.StrictMode>
 //     <Router>
-//       <App />
+//       <Routes>
+//         <Route path="/" element={<StarField />} />
+//         <Route path="/select" element={<Select />} />
+//         <Route path="/topselect" element={<TopSelect />} />
+//       </Routes>
 //     </Router>
 //   </React.StrictMode>
 // );
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import StarField from './main/StarField';
 import Select from './select/Select';
+import TopSelect from './topselect/TopSelect';
 import './index.css';
+import './App.css';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const App: React.FC = () => {
+  const location = useLocation();
+
+  return (
+    <Routes location={location}>
+      <Route path="/" element={<StarField />} />
+      <Route path="/select" element={<Select />} />
+      <Route path="/topselect" element={<TopSelect />} />
+    </Routes>
+
+  );
+};
+
+const Root: React.FC = () => (
   <React.StrictMode>
     <Router>
-      <Routes>
-        <Route path="/" element={<StarField />} />
-        <Route path="/select" element={<Select />} />
-      </Routes>
+      <App />
     </Router>
   </React.StrictMode>
 );
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<Root />);

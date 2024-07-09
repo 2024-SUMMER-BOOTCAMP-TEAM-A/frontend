@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import ReactModal from 'react-modal';
 
 // 메인 컨테이너
@@ -126,6 +126,19 @@ export const NavContainer = styled.div`
   }
 `;
 
+export const ChatButton = styled.button`
+  margin-top: 70px; 
+  padding: 3px 70px;
+  border-radius: 40px;
+  background: #CBC3E3;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #789cc1;
+  }
+`;
+
 // 모달 스타일
 export const ModalStyles = {
   overlay: {
@@ -139,14 +152,13 @@ export const ModalStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-
     color: 'white',
     borderRadius: '40px',
     border: '3px solid white',
     width: '70%',
     height: '70%', 
     textAlign: 'center',
-    zIndex: 101, // 모달 내용의 z-index를 설정
+    zIndex: 101,
   },
 } as ReactModal.Styles;
 
@@ -157,6 +169,22 @@ export const ModalContent = styled.div`
   justify-content: flex-start;
   height: 100%;
   padding: 30px 50px;
+  gap:30px;
+
+  & > img {
+    flex-shrink: 0; // 이미지 크기 고정
+  }
+
+  & > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: left;
+    border-radius: 10px; 
+  }
 `;
 
 export const NameText = styled.div`
@@ -164,4 +192,35 @@ export const NameText = styled.div`
   font-family: 'GmarketSansMedium', sans-serif;
   color: black;
   margin-top: 10px;
+  text-align: center; // 중앙 정렬 추가
+  margin-bottom: -30px; 
+  text-align:left;
+`;
+
+// 화면 넘어갈때 애니메이션 
+const fadeOut = keyframes`
+  0% {
+    opacity: 10;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 10;
+  }
+`;
+
+export const FadeOutText = styled.div`
+  animation: ${fadeOut} 1s ease-in-out;
+  animation-fill-mode: forwards;
+`;
+
+export const FadeInText = styled.div`
+  animation: ${fadeIn} 1s ease-in-out;
 `;
