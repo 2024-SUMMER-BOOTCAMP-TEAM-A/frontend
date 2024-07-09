@@ -23,31 +23,6 @@ export const Button = styled.button`
     margin-top: 3px;
   }
 `;
-// // 화려한 감싸는 애니메이션 키프레임 정의 -> 이야기 하러가기 버튼
-// const swirlAnimation = keyframes`
-//   0% {
-//     transform: scale(0) rotate(0deg);
-//     opacity: 1;
-//   }
-//   100% {
-//     transform: scale(10) rotate(720deg);
-//     opacity: 0;
-//   }
-// `;
-
-// // 애니메이션 적용을 위한 스타일 컴포넌트 -> 이야기 하러가기 버튼 
-// const SwirlEffect = styled.div`
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   width: 20px;
-//   height: 20px;
-//   border: 2px solid #ff69b4; /* 원하는 색상으로 변경 */
-//   border-radius: 50%;
-//   transform: translate(-50%, -50%);
-//   animation: ${swirlAnimation} 1.5s forwards;
-//   z-index: 100;
-// `;
 
 // 메인 페이지 이야기하러가기 버튼 컨테이너
 export const UpButtonContainer = styled.div`
