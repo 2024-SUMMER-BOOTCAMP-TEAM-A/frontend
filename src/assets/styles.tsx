@@ -6,9 +6,9 @@ export const starFieldHeight = 2560;
 export const starOneScrollDuration = '100s';
 export const starTwoScrollDuration = '125s';
 export const starThreeScrollDuration = '175s';
-export const numStarOneStars = 1000;
-export const numStarTwoStars = 600;
-export const numStarThreeStars = 150;
+export const numStarOneStars = 1200;
+export const numStarTwoStars = 680;
+export const numStarThreeStars = 30;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
@@ -81,19 +81,32 @@ export const GmarketSansMedium = styled.h1`
 `;
 
 // MZ 폰트
-export const EF_jejudoldam = styled.h1`
+export const Gothic_Goding = styled.h1`
   @font-face {
-    font-family: 'EF_jejudoldam';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-family: 'Gothic_Goding';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Gothic_Goding.woff') format('woff2');
     font-weight: normal;
     font-style: normal;
   }
-  font-family: 'EF_jejudoldam', sans-serif;
+  font-family: 'Gothic_Goding', sans-serif;
   font-size: 15px;
   color: black;
 `;
 
-// 아저씨 폰트
+// 쌈디 폰트
+export const Cafe24Shiningstar = styled.h1`
+  @font-face {
+    font-family: 'Cafe24Shiningstar';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Shiningstar.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'Cafe24Shiningstar', sans-serif;
+  font-size: 15px;
+  color: black;
+    `
+
+// 침착맨 폰트
 export const KyoboHandwriting2020A = styled.h1`
   @font-face {
     font-family: 'KyoboHandwriting2020A';
@@ -104,8 +117,9 @@ export const KyoboHandwriting2020A = styled.h1`
   font-family: 'KyoboHandwriting2020A', sans-serif;
   font-size: 15px;
   color: black;
-
 `;
+
+
 // 럭키 폰트
 export const Ownglyph_ryuttung_Rg = styled.h1`
   @font-face {

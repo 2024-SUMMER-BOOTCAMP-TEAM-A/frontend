@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import personaImg from '../assets/png/persona.png';
 import mzBackground from '../assets/png/mzback.png';
@@ -8,11 +8,11 @@ import luckyBackground from '../assets/png/luckyback.png';
 import uncleBackground from '../assets/png/uncleback.png';
 import styled from 'styled-components';
 import {
-  GmarketSansMedium, Moon, Image, EF_jejudoldam, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg,
+  GmarketSansMedium, Moon, Image, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar,
 } from '../assets/styles';
 import {
-  RankingButton, CardContainer, CardSlider, CardImage, CardText, Card,
-  NavButton, NavContainer, MainContainer, ModalStyles, ModalContent, NameText, FadeOutText, FadeInText, ChatButton,
+  CardContainer, CardSlider, CardImage, CardText, Card,
+  NavButton, NavContainer, MainContainer, ModalStyles, ModalContent, NameText, FadeOutText, FadeInText, RankingButton, ChatButton
 } from '../select/selectstyles';
 import StarBackground from '../assets/StarBackground';
 import luckyImage from '../assets/png/lucky.png';
@@ -30,6 +30,7 @@ interface CardData {
 }
 
 const Select: React.FC = () => {
+  const { nickname } = useParams<{ nickname: string }>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
@@ -39,10 +40,10 @@ const Select: React.FC = () => {
     {
       img: mzImage,
       name: '김아영',
-      cardText: '김아영\n\n이렇게 해야\n능률이 올라가는 편입니다',
+      cardText: '김아영\n\n이렇게 해야 능률이 올라가는 편입니다',
       modalText: '열심히 하(는 척 하겠)습니다! 아… 제 귀에 있는 에어팟을 빼라고요…? 저는 에어팟을 껴야 능률이 오르는 편입니다만. 제 권리를 빼앗지 말아주세요. 아… 고민이 있다고요…? 시간은 없지만 돈은 벌어야 하니 한 번 들어드릴게요. 어떤 고민이 있으세요?',
       background: mzBackground,
-      fontComponent: EF_jejudoldam,
+      fontComponent: Gothic_Goding,
     },
     {
       img: leemalImage,
@@ -66,7 +67,7 @@ const Select: React.FC = () => {
       cardText: '쌈디\n\n연애가 참 어렵제?',
       modalText: '나도 연애가 어려웠다. 연애는 최선을 다 해야되는 기다. 최선을 다해야 후회가 없는 법이다. 시작부터 보이지 않는 끝까지 길찾기 쉽도록 내가 가이드 라인을 알려줄라칸다. 사랑 때문에 고민있는 머스마 가시나 다 따라와라. 사랑이 뭐라고 그리 고민하노!',
       background: uncleBackground,
-      fontComponent: KyoboHandwriting2020A,
+      fontComponent: Cafe24Shiningstar,
     },
   ];
 
@@ -96,8 +97,8 @@ const Select: React.FC = () => {
   return (
     <MainContainer>
       <StarBackground />
-      <Image src={personaImg} alt="Persona" />
-      <Moon />
+      <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }}/>
+      <Moon style={{ width: '300px', height: '300px' }} />
       <FadeInText>
         <RankingButton onClick={() => navigate('/topselect')}>
           <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
@@ -158,6 +159,7 @@ const Select: React.FC = () => {
           </ModalContent>
         )}
       </ReactModal>
+      {nickname && <div>Welcome, {nickname}!</div>}
     </MainContainer>
   );
 };
