@@ -1,19 +1,19 @@
 import styled, { keyframes } from 'styled-components';
 
-// 별 배경 크기 및 애니메이션 설정을 위한 상수
+// 별 배경 크기 및 애니메이션 설정을 위한 상수 
 export const starFieldWidth = 2560;
 export const starFieldHeight = 2560;
 export const starOneScrollDuration = '100s';
 export const starTwoScrollDuration = '125s';
 export const starThreeScrollDuration = '175s';
-export const numStarOneStars = 700;
-export const numStarTwoStars = 500;
-export const numStarThreeStars = 100;
+export const numStarOneStars = 1200;
+export const numStarTwoStars = 680;
+export const numStarThreeStars = 30;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
   0% {
-    transform: translateY(0);t
+    transform: translateY(0);
   }
   90% {
     transform: translateY(${starFieldHeight}px);
@@ -62,7 +62,6 @@ export const MainContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
-
   background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
   overflow: auto;
   scroll-snap-type: y mandatory;
@@ -78,6 +77,59 @@ export const GmarketSansMedium = styled.h1`
   }
   font-family: 'GmarketSansMedium', sans-serif;
   font-size: 25px;
+  color: black;
+`;
+
+// MZ 폰트
+export const Gothic_Goding = styled.h1`
+  @font-face {
+    font-family: 'Gothic_Goding';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Gothic_Goding.woff') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'Gothic_Goding', sans-serif;
+  font-size: 15px;
+  color: black;
+`;
+
+// 쌈디 폰트
+export const Cafe24Shiningstar = styled.h1`
+  @font-face {
+    font-family: 'Cafe24Shiningstar';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Shiningstar.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'Cafe24Shiningstar', sans-serif;
+  font-size: 15px;
+  color: black;
+    `
+
+// 침착맨 폰트
+export const KyoboHandwriting2020A = styled.h1`
+  @font-face {
+    font-family: 'KyoboHandwriting2020A';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'KyoboHandwriting2020A', sans-serif;
+  font-size: 15px;
+  color: black;
+`;
+
+
+// 럭키 폰트
+export const Ownglyph_ryuttung_Rg = styled.h1`
+  @font-face {
+    font-family: 'Ownglyph_ryuttung-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
+  font-size: 15px;
   color: black;
 `;
 
@@ -154,10 +206,9 @@ export const Stars2 = styled(Stars)`
     animation-delay: ${starThreeScrollDuration};
   }
 `;
-
 interface ShootingStarsProps {
-  $top: number;
-  $left: number;
+  top: number;
+  left: number;
 }
 
 export const ShootingStars = styled.div<ShootingStarsProps>`
@@ -167,15 +218,15 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   position: absolute;
-  top: ${(props) => props.$top}px;
-  left: ${(props) => props.$left}px;
+  top: ${(props) => props.top}px;
+  left: ${(props) => props.left}px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
   animation: ${animShootingStar} 10s linear infinite;
-  pointer-events: none; // 유성의 클릭을 방지합니다.
 `;
 
 // 달
 export const Moon = styled.div`
+  display:flex;
   border-radius: 50%;
   width: 350px;
   height: 350px;
@@ -187,7 +238,6 @@ export const Moon = styled.div`
   background-size: cover;
   box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.5);
   animation: ${glow} 3s infinite;
-  z-index: 1;
   will-change: transform, opacity;
   `;
 

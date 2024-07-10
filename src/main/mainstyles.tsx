@@ -2,20 +2,25 @@ import styled, { keyframes } from 'styled-components';
 
 // 메인 페이지 시작하기 페이지의 버튼
 export const Button = styled.button`
+  display:flex;
   position: absolute;
   top: 85%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 5px 40px;
+  transform-origin: center; 
+  padding: 3px 50px;
   font-size: 20px;
   font-family: 'Arial', sans-serif;
   background-color: #fff;
   border: none;
   border-radius: 30px;
   cursor: pointer;
+  
   &:hover {
     background-color: #ddd;
+    transform: translate(-50%, -50%) scale(1.1); // hover 상태에서만 스케일 변화 적용
   }
+  
   span {
     display: inline-block;
     text-align: center;
@@ -23,31 +28,7 @@ export const Button = styled.button`
     margin-top: 3px;
   }
 `;
-// // 화려한 감싸는 애니메이션 키프레임 정의 -> 이야기 하러가기 버튼
-// const swirlAnimation = keyframes`
-//   0% {
-//     transform: scale(0) rotate(0deg);
-//     opacity: 1;
-//   }
-//   100% {
-//     transform: scale(10) rotate(720deg);
-//     opacity: 0;
-//   }
-// `;
 
-// // 애니메이션 적용을 위한 스타일 컴포넌트 -> 이야기 하러가기 버튼 
-// const SwirlEffect = styled.div`
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   width: 20px;
-//   height: 20px;
-//   border: 2px solid #ff69b4; /* 원하는 색상으로 변경 */
-//   border-radius: 50%;
-//   transform: translate(-50%, -50%);
-//   animation: ${swirlAnimation} 1.5s forwards;
-//   z-index: 100;
-// `;
 
 // 메인 페이지 이야기하러가기 버튼 컨테이너
 export const UpButtonContainer = styled.div`
@@ -63,6 +44,7 @@ export const UpButtonContainer = styled.div`
 
   &:hover {
     opacity: 0.8;
+    
   }
 `;
 
@@ -93,7 +75,7 @@ export const Section = styled.div`
   position: relative;
 `;
 
-// 섹션 1 -> 고민 png 부분
+// 섹션 1 
 export const SectionOne = styled(Section)`
   display: flex;
   flex-direction: column;
@@ -179,6 +161,7 @@ export const StyledButton = styled.button`
   justify-content: center;
   opacity: 1; 
   z-index:10;
+  transform: translateX(-10px); 
   line-height: 40px; 
   &:hover {
     background-color: #777;
@@ -233,8 +216,8 @@ export const CharacterContainer = styled.div`
 // 개별 캐릭터 이미지 스타일 추가
 export const Character = styled.img`
   position: absolute;
-  width: 200px;
-  height: 300px;
+  width: 35%;
+  height: 60%;
   border-radius: 50%;
   transition: transform 1s, opacity 1s;
   backface-visibility: hidden;
@@ -256,8 +239,10 @@ export const Character3 = styled(Character)`
   z-index: 1;
   animation-delay: 0s; 
 `;
+
 // 클릭 이미지 스타일 추가
 export const ClickImage = styled.img`
+  display: flex;
   position: absolute;
   width: 50px;
   height: auto;
@@ -327,7 +312,7 @@ export const RightText = styled.div`
   align-items: flex-end;
   justify-content: center;
   height: 100vh;
-  padding-right: 10%;  
+  padding-right: 8%;  
   position: absolute;
   top: 50%;
   right: 0;
