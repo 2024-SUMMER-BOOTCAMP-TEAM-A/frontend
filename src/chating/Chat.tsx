@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TypingWaiting from './component/TypingWaiting';
-import { initialCharacter } from '../assets/initCharacter';
+import initialCharacters, {Character} from '../assets/initCharacter';
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
 import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
 
@@ -33,11 +33,11 @@ import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 
 // 상단바
-const UPCharacterProfile: React.FC<{ name: string; onClose: () => void }> = ({ name, onClose }) => {
+const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
     return (
         <CharacterProfile>
             <Leftarrow />
-            <ProfileName>{name}</ProfileName>
+            <ProfileName style={ {fontFamily} }>{name}</ProfileName>
             <CloseButton onClick={onClose}>
                 <Closeicon />
             </CloseButton>
@@ -49,9 +49,11 @@ interface CharacterChatContentProps {
     isTyping: boolean;
     chatEndRef: React.RefObject<HTMLDivElement>;
     children: React.ReactNode;
+    backgroundColor?: string;
+    fontFamily?: string;
 }
 
-const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatEndRef, children }) => {
+const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatEndRef, children, backgroundColor, fontFamily }) => {
     const [showText, setShowText] = useState<React.ReactNode>(null);
     const [showTyping, setShowTyping] = useState(true);
 
@@ -76,7 +78,7 @@ const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatE
     }, [showText, chatEndRef]);
 
     return (
-        <CharacterChatContent>
+        <CharacterChatContent style={{backgroundColor, fontFamily}}>
             {showTyping ? <TypingWaiting /> : showText}
         </CharacterChatContent>
     );
@@ -85,7 +87,7 @@ const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatE
 
 
 // 채팅 창
-const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTyping: boolean; }> = ({ messages, isTyping }) => {
+const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTyping: boolean; character: Character }> = ({ messages, isTyping, character }) => {
     const chatEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -104,10 +106,12 @@ const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTy
                         </UserChat>
                     ) : (
                         <CharacterChat>
-                            <CharacterAvatar src={initialCharacter.imageSrc} alt="Character Avatar" />
+                            <CharacterAvatar src={character.imageSrc} alt="Character Avatar" />
                             <CharacterChatCon
                                 isTyping={index === messages.length - 1 && isTyping}  // 마지막 메시지에만 isTyping을 전달
                                 chatEndRef={chatEndRef}
+                                backgroundColor={character.chatContentBackgroundColor}
+                                fontFamily={character.FontFamily}
                             >
                                 {msg.text}
                             </CharacterChatCon>
@@ -154,11 +158,6 @@ const UserInputBox: React.FC<{ onSend: (message: string) => void }> = ({ onSend 
     );
 };
 
-interface Character {
-    name: string;
-    imageSrc: string;
-}
-
 // 알람창
 const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onCancel: () => void }> = ({ message, onConfirm, onCancel }) => {
     return (
@@ -174,8 +173,13 @@ const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onCancel: 
     );
 };
 
+// ChatProps 인터페이스 정의
+interface ChatProps {
+    initialCharacter: Character;
+}
+
 // Chat 컴포넌트의 props 타입 정의
-const Chat: React.FC<{ initialCharacter: Character }> = ({ initialCharacter }) => {
+const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
     const [isTyping, setIsTyping] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(true);
@@ -193,7 +197,7 @@ const Chat: React.FC<{ initialCharacter: Character }> = ({ initialCharacter }) =
         };
 
         startChat();
-    }, [initialCharacter]);
+    }, [initialCharacters]);
 
     const handleSend = (message: string) => {
         setMessages((prevMessages) => [
@@ -236,8 +240,12 @@ const Chat: React.FC<{ initialCharacter: Character }> = ({ initialCharacter }) =
 
     return (
         <ChatContainer>
-            <UPCharacterProfile name={initialCharacter.name} onClose={handleCloseChat} />
-            <ChatingBox messages={messages} isTyping={isTyping} />
+            <UPCharacterProfile name={initialCharacter.name} onClose={handleCloseChat} fontFamily={initialCharacter.FontFamily} />
+            <ChatingBox
+                messages={messages}
+                isTyping={isTyping}
+                character={initialCharacter}
+                />
             <UserInputBox onSend={handleSend}/>
             <Stars />
             <Stars1 />

@@ -1,28 +1,39 @@
-import { CSSProperties } from 'react';
 import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
 import leemalImage from '../assets/png/leemal.png';
 
-interface CharacterStyles {
+export interface Character {
+  name: string;
   imageSrc: string;
-  bubbleStyle: CSSProperties;
-  fontStyle: CSSProperties;
+  FontFamily?: string;
+  chatContentBackgroundColor?: string;
 }
 
-export const initialCharacter: Record<string, CharacterStyles> = {
-  '럭키비키걸': {
-    imageSrc: luckyImage,
-    bubbleStyle: { backgroundColor: '#FFDDC1'},
-    fontStyle: { fontFamily: 'Comic Sans MS' }
-  },
-  '맑눈광' : {
-    imageSrc: mzImage,
-    bubbleStyle: {backgroundColor: '#asd232'},
-    fontStyle: { fontFamily: 'monospace' }
-  },
-  '침착맨' : {
-    imageSrc: leemalImage,
-    bubbleStyle: {backgroundColor: '#19ds32'},
-    fontStyle: { fontFamily: 'serif' }
-  }
+export const lucygirl: Character = {
+  name: '럭키비키걸',
+  imageSrc: luckyImage,
+  FontFamily:'sans-serif',
+  chatContentBackgroundColor: '#FFF8B7',
 };
+
+export const MZ: Character = {
+  name: '맑눈광',
+  imageSrc: mzImage,
+  chatContentBackgroundColor: '#fsd3B7',
+};
+
+export const leemal: Character = {
+  name: '침착맨',
+  imageSrc: leemalImage,
+  chatContentBackgroundColor: 'sgeFB7',
+};
+
+export const love: Character = {
+  name: '쌈디',
+  imageSrc: leemalImage,
+  chatContentBackgroundColor: '#FFF8B7',
+}
+
+const initialCharacters = { lucygirl, MZ, leemal, love};
+
+export default initialCharacters;

@@ -102,7 +102,7 @@ export const CharacterChatContent = styled.div`
   display: inline-block;
   padding-bottom: 15px;
   box-shadow: 2px 2px 20px -2px rgba(255,255,255,0.8);
-  color: rgba(48,51,176,1);
+  color: rgba(0,0,0,1);
   border-radius: 15px 15px 15px 2px;
   font-size: 15px;
   animation: ${appearAnimation} 0.5s ease-out;
