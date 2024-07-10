@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 
 // 메인 컨테이너
 export const MainContainer = styled.div`
-  display: block;
+  display: flex;
   position: relative;
   width: 100%;
   height: 100vh;
@@ -35,6 +35,8 @@ export const CardSlider = styled.div`
 
 // 개별 카드 스타일
 export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
   background: rgba(32, 27, 70, 0.7);
   border: 2px solid white; 
   border-radius: 40px;
@@ -49,10 +51,12 @@ export const Card = styled.div`
 `;
 
 export const CardImage = styled.img`
+  display: flex;
   width: 230px;
   height: 300px;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto; /* 수정: 이미지를 가운데 정렬 */
+  align-self: center; 
 `;
 
 export const CardText = styled.div`
@@ -77,6 +81,7 @@ export const Image = styled.img`
 
 // 인기챗봇순위 버튼 스타일
 export const RankingButton = styled.button`
+  display: flex;
   position: absolute;
   top: 5%;
   right: 7%;
@@ -91,11 +96,13 @@ export const RankingButton = styled.button`
 
   &:hover {
     background-color: #789cc1;  
+    transform: scale(1.1);
   }
 `;
 
 // Prev 및 Next 버튼 스타일
 export const NavButton = styled.button`
+  display: flex;
   background: none;
   border: none;
   color: white;
@@ -127,6 +134,7 @@ export const NavContainer = styled.div`
 `;
 
 export const ChatButton = styled.button`
+  display: flex;
   margin-top: 70px; 
   padding: 3px 70px;
   border-radius: 40px;
@@ -223,4 +231,23 @@ export const FadeOutText = styled.div`
 
 export const FadeInText = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
+`;
+
+// next prev 버튼 클릭 시 넘어가는 애니메이션
+const slideLeft = keyframes`
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+const slideRight = keyframes`
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 `;

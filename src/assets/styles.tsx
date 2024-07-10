@@ -226,6 +226,7 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
 
 // 달
 export const Moon = styled.div`
+  display:flex;
   border-radius: 50%;
   width: 350px;
   height: 350px;

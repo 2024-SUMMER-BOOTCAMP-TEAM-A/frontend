@@ -2,20 +2,25 @@ import styled, { keyframes } from 'styled-components';
 
 // 메인 페이지 시작하기 페이지의 버튼
 export const Button = styled.button`
+  display:flex;
   position: absolute;
   top: 85%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 5px 40px;
+  transform-origin: center; 
+  padding: 3px 50px;
   font-size: 20px;
   font-family: 'Arial', sans-serif;
   background-color: #fff;
   border: none;
   border-radius: 30px;
   cursor: pointer;
+  
   &:hover {
     background-color: #ddd;
+    transform: translate(-50%, -50%) scale(1.1); // hover 상태에서만 스케일 변화 적용
   }
+  
   span {
     display: inline-block;
     text-align: center;
@@ -23,6 +28,7 @@ export const Button = styled.button`
     margin-top: 3px;
   }
 `;
+
 
 // 메인 페이지 이야기하러가기 버튼 컨테이너
 export const UpButtonContainer = styled.div`
@@ -38,6 +44,7 @@ export const UpButtonContainer = styled.div`
 
   &:hover {
     opacity: 0.8;
+    
   }
 `;
 
@@ -209,8 +216,8 @@ export const CharacterContainer = styled.div`
 // 개별 캐릭터 이미지 스타일 추가
 export const Character = styled.img`
   position: absolute;
-  width: 200px;
-  height: 300px;
+  width: 35%;
+  height: 60%;
   border-radius: 50%;
   transition: transform 1s, opacity 1s;
   backface-visibility: hidden;
@@ -232,8 +239,10 @@ export const Character3 = styled(Character)`
   z-index: 1;
   animation-delay: 0s; 
 `;
+
 // 클릭 이미지 스타일 추가
 export const ClickImage = styled.img`
+  display: flex;
   position: absolute;
   width: 50px;
   height: auto;
@@ -303,7 +312,7 @@ export const RightText = styled.div`
   align-items: flex-end;
   justify-content: center;
   height: 100vh;
-  padding-right: 10%;  
+  padding-right: 8%;  
   position: absolute;
   top: 50%;
   right: 0;
