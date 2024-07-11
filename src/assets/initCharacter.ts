@@ -1,6 +1,7 @@
 import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
 import leemalImage from '../assets/png/leemal.png';
+import uncleImage from '../assets/png/uncle.png';
 
 export interface Character {
   name: string;
@@ -10,14 +11,14 @@ export interface Character {
 }
 
 export const lucygirl: Character = {
-  name: '럭키비키걸',
+  name: '장원영',
   imageSrc: luckyImage,
   FontFamily:'sans-serif',
   chatContentBackgroundColor: '#FFF8B7',
 };
 
 export const MZ: Character = {
-  name: '맑눈광',
+  name: '김아영',
   imageSrc: mzImage,
   chatContentBackgroundColor: '#fsd3B7',
 };
@@ -28,12 +29,12 @@ export const leemal: Character = {
   chatContentBackgroundColor: 'sgeFB7',
 };
 
-export const love: Character = {
+export const uncle: Character = {
   name: '쌈디',
   imageSrc: leemalImage,
   chatContentBackgroundColor: '#FFF8B7',
 }
 
-const initialCharacters = { lucygirl, MZ, leemal, love};
+const initialCharacters = { lucygirl, MZ, leemal, uncle};
 
 export default initialCharacters;

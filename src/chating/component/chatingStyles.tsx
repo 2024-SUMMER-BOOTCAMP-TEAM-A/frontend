@@ -46,6 +46,10 @@ export const CloseButton = styled.button`
     overflow: hidden;
     margin-left: auto;
     align-items: center;
+
+    &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 // 캐릭터 이름
@@ -258,6 +262,7 @@ export const AlertButtonCancle = styled.button`
 
     &:hover {
         background: #CBCBCB;
+        transform: scale(1.1);
     }
 `;
 
@@ -273,6 +278,7 @@ export const AlertButtonFinish = styled.button`
 
     &:hover {
         background: #DA1B1B;
+        transform: scale(1.1);
     }
 `;
 
