@@ -6,13 +6,12 @@ import mzBackground from '../assets/png/mzback.png';
 import leemalBackground from '../assets/png/leemalback.png';
 import luckyBackground from '../assets/png/luckyback.png';
 import uncleBackground from '../assets/png/uncleback.png';
-import styled from 'styled-components';
 import {
   GmarketSansMedium, Moon, Image, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar,
 } from '../assets/styles';
 import {
-  CardContainer, CardSlider, CardImage, CardText, Card,
-  NavButton, NavContainer, MainContainer, ModalStyles, ModalContent, NameText, FadeOutText, FadeInText, RankingButton, ChatButton
+  CardContainer, CardSlider, CardImage, CardText, Card, FadeInText,
+  NavButton, NavContainer, MainContainer, ModalStyles, ModalContent, RankingButton, ChatButton
 } from '../select/selectstyles';
 import StarBackground from '../assets/StarBackground';
 import luckyImage from '../assets/png/lucky.png';
@@ -89,6 +88,12 @@ const Select: React.FC = () => {
     setSelectedCard(null);
   };
 
+  const handleStartChat = () => {
+    if (selectedCard) {
+      navigate(`/chat/${selectedCard.name}`, { state: { character: selectedCard } });
+    }
+  };
+
   const displayedCards = [
     ...cards.slice(currentIndex, currentIndex + 3),
     ...cards.slice(0, Math.max(0, (currentIndex + 3) - cards.length)),
@@ -97,7 +102,7 @@ const Select: React.FC = () => {
   return (
     <MainContainer>
       <StarBackground />
-      <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }}/>
+      <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '300px', height: '300px' }} />
       <FadeInText>
         <RankingButton onClick={() => navigate('/topselect')}>
@@ -144,15 +149,15 @@ const Select: React.FC = () => {
                 alt="Selected Character" 
                 style={{ width: '250px', height: 'auto', borderRadius: '50%', marginBottom: '10px' }} 
               />
-              <selectedCard.fontComponent style={{ fontSize: '40px', color: 'black', marginBottom: '20px', marginTop: '30px',marginLeft:'-6px' }}>
+              <selectedCard.fontComponent style={{ fontSize: '40px', color: 'black', marginBottom: '20px', marginTop: '30px', marginLeft: '-6px' }}>
                 {selectedCard.name}
               </selectedCard.fontComponent>
             </div>
-            <div style={{ textAlign: 'left', width: '100%', marginLeft:'-200px'}}>
+            <div style={{ textAlign: 'left', width: '100%', marginLeft: '-200px' }}>
               <selectedCard.fontComponent style={{ fontSize: '35px', color: 'black', marginBottom: '20px' }}>
                 {selectedCard.modalText}
               </selectedCard.fontComponent>
-              <ChatButton onClick={handleCloseModal}>
+              <ChatButton onClick={() => navigate('/chat/:nickname')}>
                 <GmarketSansMedium style={{ fontSize: '17px' }}>채팅 시작하기</GmarketSansMedium>
               </ChatButton>
             </div>
