@@ -202,7 +202,7 @@ const clickAnimation = keyframes`
 // 캐릭터 이미지 컨테이너 스타일 추가
 export const CharacterContainer = styled.div`
  position: relative;
-  width: 600px;
+  width: 550px;
   height: 500px;
   left: 8%;
   top: 50%;
