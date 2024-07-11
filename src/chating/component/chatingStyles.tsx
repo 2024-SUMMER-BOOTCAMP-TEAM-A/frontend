@@ -42,15 +42,17 @@ export const CloseButton = styled.button`
     padding: 0;
     cursor: pointer;
     border-radius: 30%;
-    display: felx;
+    display: flex;
     overflow: hidden;
     margin-left: auto;
     align-items: center;
+    z-index: 20;
 
     &:hover {
-    transform: scale(1.1);
-  }
+        transform: scale(1.1);
+    }
 `;
+
 
 // 캐릭터 이름
 export const ProfileName = styled.div`
@@ -65,16 +67,44 @@ export const ChatBox = styled.div`
   flex: 1;
   overflow-y: auto;
   width: 50%;
-  height: calc(100vh - 150px);  /* 채팅창의 높이를 설정합니다 */
+  height: calc(100vh - 120px);  
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 10px 0px;
+  padding: 10px 20px;
   border: none;
   display: flex;
   flex-direction: column;
   gap: 10px;
-`;
 
+  /* Custom scrollbar styles */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track { 
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb { 
+    background-color: skyblue;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* hover 효과 */
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: blue;
+    transition: all 0.2s; /* 작동 안 됨 */
+  }
+
+  /* 코너에 라운드 효과 */
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+  }
+`;
 // 말풍선 등장 시 위로 올라가는 애니메이션
 const appearAnimation = keyframes`
   0% {
@@ -158,7 +188,7 @@ export const UserMessage = styled.div`
 
 // 입력 바
 export const UserInputCon = styled.div`
-  width: 50%;
+  width: 51%;
   height: 70px;
   padding: 10px;
   border-top: 1px solid #ddd;
@@ -169,6 +199,7 @@ export const UserInputCon = styled.div`
   margin-bottom: 40px;
   opacity: 0.9;
   margin-top: auto;
+  justify-content: space-between;
 `;
 
 // 입력창
@@ -184,15 +215,15 @@ export const InputMessage = styled.input`
 export const SendButton = styled.button`
   width: 50px;
   height: 50px;
-  background: #000000;  /* 배경색 설정 */
-  border: none;  /* 테두리 없음 */
-  border-radius: 5px;  /* 원형 모양으로 설정 */
-  cursor: pointer;  /* 커서 모양 */
+  background: #000000;  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer; 
   margin-left: 10px;
   background-image: url(${sendIcon});
-  background-size: 40px 40px;  /* 아이콘의 크기 조절 */
-  background-position: center;  /* 아이콘을 버튼의 중앙에 배치 */
-  background-repeat: no-repeat;  /* 아이콘 반복하지 않음 */
+  background-size: 40px 40px;  
+  background-position: center; 
+  background-repeat: no-repeat;  
   display: flex;
   align-items: center;  /* 버튼 내 아이콘의 수직 정렬 */
   justify-content: center;  /* 버튼 내 아이콘의 수평 정렬 */
