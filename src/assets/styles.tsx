@@ -6,9 +6,9 @@ export const starFieldHeight = 2560;
 export const starOneScrollDuration = '100s';
 export const starTwoScrollDuration = '125s';
 export const starThreeScrollDuration = '175s';
-export const numStarOneStars = 1200;
-export const numStarTwoStars = 680;
-export const numStarThreeStars = 30;
+export const numStarOneStars = 1500;
+export const numStarTwoStars = 800;
+export const numStarThreeStars = 50;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
@@ -228,8 +228,8 @@ export const ShootingStars = styled.div<ShootingStarsProps>`
 export const Moon = styled.div`
   display:flex;
   border-radius: 50%;
-  width: 350px;
-  height: 350px;
+  width: 18%;
+  height: 40%;
   position: absolute;
   top: 12%;
   left: 50%;
@@ -243,7 +243,7 @@ export const Moon = styled.div`
 
 // PERSONA 문구 
 export const Image = styled.img`
-  width: 800px;
+  width: 40%;
   margin-bottom: 20px;
   position: absolute;
   top: 14%;

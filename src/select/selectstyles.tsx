@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import ReactModal from 'react-modal';
 
 // 메인 컨테이너
@@ -22,32 +22,67 @@ export const CardContainer = styled.div`
   transform: translate(-50%, -50%);
   z-index: 20;
   width: 90%; 
+  height: 70%;
   max-width: 1500px; 
   overflow: hidden; 
 `;
 
-// 카드 슬라이더
-export const CardSlider = styled.div`
+// 카드 슬라이더 애니메이션
+
+const slideLeft = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.33%);
+  }
+`;
+
+const slideRight = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(33.33%);
+  }
+`;
+
+export const CardSlider = styled.div<{ animationDirection: 'left' | 'right' | null }>`
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
+  width: 300%; 
+  transition: transform 0.1s ease-in-out;
+  ${({ animationDirection }) =>
+    animationDirection === 'left' &&
+    css`
+      animation: ${slideLeft} 0.2s forwards;
+    `}
+  ${({ animationDirection }) =>
+    animationDirection === 'right' &&
+    css`
+      animation: ${slideRight} 0.2s forwards;
+    `}
 `;
 
 // 개별 카드 스타일
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start; 
   background: rgba(32, 27, 70, 0.7);
   border: 2px solid white; 
   border-radius: 40px;
-  width: 450px;
+  width: 30%; 
   height: 500px;  
   margin: 0 30px;  
   text-align: center;
-  position: relative;
-  padding-top: 40px; 
+  padding: 20px 10px; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer; /* 마우스 오버 시 포인터 커서 표시 */
+  cursor: pointer; 
+  transition: transform 0.2s ease-in-out; 
+
+  &:hover {
+    transform: scale(1.10); 
+  }
 `;
 
 export const CardImage = styled.img`
@@ -55,20 +90,15 @@ export const CardImage = styled.img`
   width: 230px;
   height: 300px;
   border-radius: 50%;
-  margin: 0 auto 20px auto; /* 수정: 이미지를 가운데 정렬 */
-  align-self: center; 
+  margin: 20px auto 20px auto; 
 `;
 
 export const CardText = styled.div`
   color: white;
-  font-size: 25px;
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  white-space: pre-line; /* 줄바꿈을 위한 스타일 추가 */
-  text-align: center; /* 텍스트 중앙 정렬 */
+  font-size: 28px; 
+  margin-top: 20px; /* 텍스트와 이미지 사이에 마진 추가 */
+  white-space: pre-line; 
+  text-align: center;
 `;
 
 // 이미지 스타일
@@ -231,23 +261,4 @@ export const FadeOutText = styled.div`
 
 export const FadeInText = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
-`;
-
-// next prev 버튼 클릭 시 넘어가는 애니메이션
-const slideLeft = keyframes`
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-`;
-
-const slideRight = keyframes`
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
 `;
