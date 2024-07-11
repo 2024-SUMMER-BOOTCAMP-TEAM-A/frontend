@@ -23,7 +23,7 @@ export const Display = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 10%;
+  margin-top: 8%;
   background-color: #3c383c;
   padding: 30px;
   width: 1000px;
@@ -52,7 +52,7 @@ export const Display = styled.div`
 export const CharacterContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   width: 100%;
 `;
@@ -73,10 +73,10 @@ export const ChartContainer = styled.div`
 
 // 캐릭터 이미지 스타일
 export const CharacterImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 10%;
+  height: 15%;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 2%;
   animation: ${typingCharacter} 1s ease-out; 
 `;
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import TypingWaiting from './component/TypingWaiting';
 import { Character } from '../assets/initCharacter'; 
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
@@ -33,10 +33,11 @@ import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 // 상단바
 const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
+  const { nickname } = useParams<{ nickname: string }>();
 
   return (
     <CharacterProfile>
-      <Leftarrow onClick={() => navigate('/select/:nickname')} /> 
+      <Leftarrow onClick={() => navigate(`/select/${nickname}`)} /> 
       <ProfileName style={{ fontFamily }}>{name}</ProfileName>
       <CloseButton onClick={onClose}>
         <Closeicon />
@@ -104,12 +105,12 @@ const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTy
             </UserChat>
           ) : (
             <CharacterChat>
-              <CharacterAvatar src={character.imageSrc} alt="Character Avatar" />
+              <CharacterAvatar src={character.img} alt="Character Avatar" />
               <CharacterChatCon
                 isTyping={index === messages.length - 1 && isTyping} // 마지막 메시지에만 isTyping을 전달
                 chatEndRef={chatEndRef}
-                backgroundColor={character.chatContentBackgroundColor}
-                fontFamily={character.FontFamily}
+                backgroundColor={character.background}
+                fontFamily={character.fontFamily} // Use fontFamily instead of fontComponent
               >
                 {msg.text}
               </CharacterChatCon>
@@ -177,6 +178,7 @@ interface ChatProps {
 
 // Chat 컴포넌트의 props 타입 정의
 const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
+  const { nickname } = useParams<{ nickname: string }>();
   const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(true);
@@ -186,6 +188,9 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
+    console.log('Character from location state:', character);
+    console.log('Nickname:', nickname);
+
     // 초기 메시지와 타이핑 상태를 설정합니다.
     const startChat = () => {
       setIsTyping(true);
@@ -219,7 +224,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const handleConfirmCloseChat = () => {
     handleClose();
     setIsAlertOpen(false);
-    navigate('/log/:nickname');
+    navigate(`/log/${nickname}`, { state: { character } });
   };
 
   const handleCancelCloseChat = () => {
@@ -230,7 +235,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   return (
     <ChatContainer>
-      <UPCharacterProfile name={character.name} onClose={handleCloseChat} fontFamily={character.FontFamily} />
+      <UPCharacterProfile name={character.name} onClose={handleCloseChat} fontFamily={character.fontFamily} />
       <ChatingBox messages={messages} isTyping={isTyping} character={character} />
       <UserInputBox onSend={handleSend} />
       <Stars />

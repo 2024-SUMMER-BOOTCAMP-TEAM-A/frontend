@@ -33,6 +33,7 @@ const Select: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
+  const [animationDirection, setAnimationDirection] = useState<'left' | 'right' | null>(null);
   const navigate = useNavigate();
 
   const cards: CardData[] = [
@@ -71,13 +72,21 @@ const Select: React.FC = () => {
   ];
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? cards.length - 1 : prev - 1));
+    setAnimationDirection('right');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev === 0 ? cards.length - 1 : prev - 1));
+      setAnimationDirection(null);
+    }, 100);
   };
-
+  
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === cards.length - 1 ? 0 : prev + 1));
+    setAnimationDirection('left');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev === cards.length - 1 ? 0 : prev + 1));
+      setAnimationDirection(null);
+    }, 100);
   };
-
+  
   const handleCardClick = (card: CardData) => {
     setSelectedCard(card);
     setModalIsOpen(true);
@@ -90,14 +99,18 @@ const Select: React.FC = () => {
 
   const handleStartChat = () => {
     if (selectedCard) {
-      navigate(`/chat/${selectedCard.name}`, { state: { character: selectedCard } });
+      console.log('Navigating to chat with nickname:', nickname);
+      console.log('Selected card:', selectedCard);
+      const { img, name, cardText, modalText, background, fontComponent } = selectedCard;
+      navigate(`/chat/${nickname}`, { state: { character: { img, name, cardText, modalText, background, fontFamily: fontComponent.displayName || 'defaultFont' } } });
     }
   };
-
+  
   const displayedCards = [
     ...cards.slice(currentIndex, currentIndex + 3),
     ...cards.slice(0, Math.max(0, (currentIndex + 3) - cards.length)),
   ].slice(0, 3);
+
 
   return (
     <MainContainer>
@@ -105,11 +118,11 @@ const Select: React.FC = () => {
       <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '300px', height: '300px' }} />
       <FadeInText>
-        <RankingButton onClick={() => navigate('/topselect')}>
-          <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
-        </RankingButton>
+      <RankingButton onClick={() => navigate(`/topselect/${nickname}`)}>
+        <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
+      </RankingButton>
         <CardContainer>
-          <CardSlider>
+          <CardSlider animationDirection={animationDirection}>
             {displayedCards.map((card, index) => {
               const FontComponent = card.fontComponent;
               return (
@@ -126,28 +139,28 @@ const Select: React.FC = () => {
           <NavButton onClick={handleNext}>{'Next >'}</NavButton>
         </NavContainer>
       </FadeInText>
-      <ReactModal 
+      <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={handleCloseModal}
         style={{
-            ...ModalStyles,
-            content: {
-                ...ModalStyles.content,
-                backgroundImage: `url(${selectedCard?.background})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                overflow: 'hidden',
-            }
+          ...ModalStyles,
+          content: {
+            ...ModalStyles.content,
+            backgroundImage: `url(${selectedCard?.background})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            overflow: 'hidden',
+          }
         }}
-        ariaHideApp={false} 
+        ariaHideApp={false}
       >
         {selectedCard && (
           <ModalContent style={{ position: 'relative', right: '10%' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <img 
-                src={selectedCard.img} 
-                alt="Selected Character" 
-                style={{ width: '250px', height: 'auto', borderRadius: '50%', marginBottom: '10px' }} 
+              <img
+                src={selectedCard.img}
+                alt="Selected Character"
+                style={{ width: '250px', height: 'auto', borderRadius: '50%', marginBottom: '10px' }}
               />
               <selectedCard.fontComponent style={{ fontSize: '40px', color: 'black', marginBottom: '20px', marginTop: '30px', marginLeft: '-6px' }}>
                 {selectedCard.name}
@@ -157,7 +170,7 @@ const Select: React.FC = () => {
               <selectedCard.fontComponent style={{ fontSize: '35px', color: 'black', marginBottom: '20px' }}>
                 {selectedCard.modalText}
               </selectedCard.fontComponent>
-              <ChatButton onClick={() => navigate('/chat/:nickname')}>
+              <ChatButton onClick={handleStartChat}>
                 <GmarketSansMedium style={{ fontSize: '17px' }}>채팅 시작하기</GmarketSansMedium>
               </ChatButton>
             </div>

@@ -18,7 +18,7 @@ const App: React.FC = () => {
       <Route path="/" element={<StarField />} />
       <Route path="/select/:nickname" element={<Select />} />
       <Route path="/chat/:nickname" element={<Chat initialCharacter={defaultCharacter} />} /> 
-      <Route path="/topselect" element={<TopSelect />} />
+      <Route path="/topselect/:nickname" element={<TopSelect />} />
       <Route path="/log/:nickname" element={<Log />} />
     </Routes>
   );
