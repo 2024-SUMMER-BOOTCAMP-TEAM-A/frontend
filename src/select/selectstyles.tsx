@@ -25,10 +25,13 @@ export const CardContainer = styled.div`
   height: 70%;
   max-width: 1500px; 
   overflow: hidden; 
+  @media (max-width: 768px) {
+    height: 60%;
+    width: 100%;
+  }
 `;
 
 // 카드 슬라이더 애니메이션
-
 const slideLeft = keyframes`
   0% {
     transform: translateX(0);
@@ -83,6 +86,13 @@ export const Card = styled.div`
   &:hover {
     transform: scale(1.10); 
   }
+
+  @media (max-width: 768px) {
+    width: 80%; 
+    height: 300px; 
+    margin: 0 10px; 
+    padding: 10px;
+  }
 `;
 
 export const CardImage = styled.img`
@@ -91,6 +101,10 @@ export const CardImage = styled.img`
   height: 300px;
   border-radius: 50%;
   margin: 20px auto 20px auto; 
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 200px;
+  }
 `;
 
 export const CardText = styled.div`
@@ -99,14 +113,21 @@ export const CardText = styled.div`
   margin-top: 20px; /* 텍스트와 이미지 사이에 마진 추가 */
   white-space: pre-line; 
   text-align: center;
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 // 이미지 스타일
 export const Image = styled.img`
-  position: absolute;
+  position: flex;
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
+  @media (max-width: 768px) {
+    width: 60%;
+    top: 5%;
+  }
 `;
 
 // 인기챗봇순위 버튼 스타일
@@ -128,6 +149,12 @@ export const RankingButton = styled.button`
     background-color: #789cc1;  
     transform: scale(1.1);
   }
+  @media (max-width: 768px) {
+    padding: 5px 15px;
+    font-size: 12px;
+    top: 3%;
+    right: 5%;
+  }
 `;
 
 // Prev 및 Next 버튼 스타일
@@ -142,6 +169,9 @@ export const NavButton = styled.button`
   &:hover {
     color: #98B4E6;
   }
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 // 네비게이션 컨테이너 스타일
@@ -155,14 +185,21 @@ export const NavContainer = styled.div`
   transform: translateX(-50%);
   width: 100%;
 
- & > ${NavButton} {
+  @media (max-width: 768px) {
+    bottom: 5%;
+  }
+
+  & > ${NavButton} {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 30px; 
+
+    @media (max-width: 768px) {
+      margin: 0 10px;
+    }
   }
 `;
-
 export const ChatButton = styled.button`
   display: flex;
   margin-top: 70px; 
@@ -175,8 +212,12 @@ export const ChatButton = styled.button`
   &:hover {
     background-color: #789cc1;
   }
+  @media (max-width: 768px) {
+    margin-top: 40px; 
+    padding: 3px 40px;
+    font-size: 14px;
+  }
 `;
-
 // 모달 스타일
 export const ModalStyles = {
   overlay: {
@@ -197,6 +238,10 @@ export const ModalStyles = {
     height: '70%', 
     textAlign: 'center',
     zIndex: 101,
+    '@media (max-width: 768px)': {
+      width: '90%',
+      height: 'auto',
+    }
   },
 } as ReactModal.Styles;
 
@@ -211,6 +256,11 @@ export const ModalContent = styled.div`
 
   & > img {
     flex-shrink: 0; // 이미지 크기 고정
+
+    @media (max-width: 768px) {
+      width: 80px;
+      height: auto;
+    }
   }
 
   & > div {
@@ -222,6 +272,10 @@ export const ModalContent = styled.div`
     box-sizing: border-box;
     text-align: left;
     border-radius: 10px; 
+
+    @media (max-width: 768px) {
+      padding: 20px;
+    }
   }
 `;
 
@@ -233,6 +287,11 @@ export const NameText = styled.div`
   text-align: center; // 중앙 정렬 추가
   margin-bottom: -30px; 
   text-align:left;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: -20px;
+  }
 `;
 
 // 화면 넘어갈때 애니메이션 

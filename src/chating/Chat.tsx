@@ -29,6 +29,17 @@ import {
 } from './component/chatingStyles';
 import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
+import {
+  LogNickname, ChatImage, ChatSummary, Solution, PersonalitySection, PersonalityImage, PersonalityDescription, LogDate, GmarketSansMedium,LogHeaderImage,
+  DownButton, CosultButton, RankingButton, ShareButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
+} from './component/logstyles';
+import StarBackground from '../assets/StarBackground';
+import personaImg from '../assets/png/persona.png';
+import logpersonaImg from '../assets/png/logpersona.png';
+import chatImg from '../assets/png/uncleback.png'; // 채팅 관련 이미지가 나중에 수정
+import penImg from '../assets/png/pen.png';
+import downloadImg from '../assets/png/download.png';
+import shareImg from '../assets/png/share.png';
 
 // 상단바
 const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
@@ -64,9 +75,9 @@ const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatE
       setShowTyping(true); // 타이핑 애니메이션을 표시합니다.
     } else {
       const timer = setTimeout(() => {
-        setShowText(children); // 타이핑이 끝나면 2초 후에 메시지를 표시합니다.
+        setShowText(children); // 타이핑이 끝나면 메시지를 표시합니다.
         setShowTyping(false); // 메시지가 표시된 후 타이핑 애니메이션을 숨깁니다.
-      }, 1000); // 2초 동안 타이핑 애니메이션 표시
+      }, 1000); // 1초 동안 타이핑 애니메이션 표시
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머를 정리합니다.
     }
@@ -110,7 +121,7 @@ const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTy
                 isTyping={index === messages.length - 1 && isTyping} // 마지막 메시지에만 isTyping을 전달
                 chatEndRef={chatEndRef}
                 backgroundColor={character.background}
-                fontFamily={character.fontFamily} // Use fontFamily instead of fontComponent
+                fontFamily={character.fontFamily}
               >
                 {msg.text}
               </CharacterChatCon>
@@ -170,6 +181,65 @@ const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onCancel: 
     </AlertOverlay>
   );
 };
+const LogModal: React.FC<{ character: Character; nickname: string | undefined; onClose: () => void }> = ({ character, nickname, onClose }) => {
+  const getCurrentDate = () => {
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    return now.toLocaleDateString('ko-KR', options);
+  };
+  const navigate = useNavigate();
+  const handleRankingClick = () => {
+    navigate(`/topselect/${nickname}`);
+  };
+
+  return (
+    <ModalOverlay>
+      <ModalContent>
+        <LogHeaderContainer>
+          <LogHeader>
+            <LogHeaderImage src={penImg} alt="Pen Icon" />
+            <GmarketSansMedium style={{ color: '#DEDDBC' }}>상담일지</GmarketSansMedium>
+          </LogHeader>
+        </LogHeaderContainer>
+        <LogContainer>
+          <LogImage src={logpersonaImg} alt="Persona" />
+          <LogNickname>{nickname}</LogNickname>
+          <ChatImage src={chatImg} alt="Chat related" /> {/* 나중에 수정해야함 채팅관련 이미지 */}
+          <ChatSummary>
+            <br />
+            상담내용 상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~
+          </ChatSummary>
+          <Solution>
+            <br />
+            <span>해결 방안~해결 방안~해결 방안~해결 방안~</span>
+          </Solution>
+          <PersonalitySection>
+            <PersonalityDescription>{character?.name}</PersonalityDescription>
+            <PersonalityImage src={character?.img} alt="Personality" />
+          </PersonalitySection>
+          <LogDate>{getCurrentDate()}</LogDate>
+        </LogContainer>
+        <ButtonContainer>
+        <DownButton>
+          <img src={downloadImg} alt="Download Icon" style={{ width: '24px', height: '24px' }} />
+          <GmarketSansMedium>다운로드</GmarketSansMedium>
+        </DownButton>
+        <ShareButton>
+          <img src={shareImg} alt="Share Icon" style={{ width: '24px', height: '24px' }} />
+          <GmarketSansMedium>공유하기</GmarketSansMedium>
+        </ShareButton>
+        <CosultButton onClick={onClose}>
+          <GmarketSansMedium>상담하러가기</GmarketSansMedium>
+        </CosultButton>
+        <RankingButton onClick={handleRankingClick}>
+          <GmarketSansMedium>인기챗봇순위</GmarketSansMedium>
+        </RankingButton>
+      </ButtonContainer>
+    </ModalContent>
+  </ModalOverlay>
+  );
+};
+
 
 // ChatProps 인터페이스 정의
 interface ChatProps {
@@ -183,6 +253,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isLogOpen, setIsLogOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const character = location.state?.character || initialCharacter;
@@ -222,13 +293,17 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   };
 
   const handleConfirmCloseChat = () => {
-    handleClose();
     setIsAlertOpen(false);
-    navigate(`/log/${nickname}`, { state: { character } });
+    setIsLogOpen(true);
   };
 
   const handleCancelCloseChat = () => {
     setIsAlertOpen(false);
+  };
+
+  const handleCloseLog = () => {
+    setIsLogOpen(false);
+    navigate(`/select/${nickname}`);
   };
 
   if (!isChatOpen) return null;
@@ -243,6 +318,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
+      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} onClose={handleCloseLog} />}
     </ChatContainer>
   );
 };
