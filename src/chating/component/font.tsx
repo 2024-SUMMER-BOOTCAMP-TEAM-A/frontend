@@ -1,1 +1,0 @@
-// 이거 assets/styles 에 있슴니다

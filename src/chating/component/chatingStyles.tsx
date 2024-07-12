@@ -27,6 +27,10 @@ export const CharacterProfile = styled.div`
   border-bottom: 1px solid #ddd;
   height: 40px;
   border: none;
+  @media (max-width: 768px) {
+    padding: 20px 50px;
+    height: 30px;
+  }
 `;
 
 // 종료 버튼
@@ -51,8 +55,12 @@ export const CloseButton = styled.button`
     &:hover {
         transform: scale(1.1);
     }
-`;
 
+    @media (max-width: 768px) {
+      top: 20px;
+      right: 50px;
+    }
+`;
 
 // 캐릭터 이름
 export const ProfileName = styled.div`
@@ -60,6 +68,11 @@ export const ProfileName = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: white;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 10px;
+  }
 `;
 
 // 채팅창 부분
@@ -104,6 +117,9 @@ export const ChatBox = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
   }
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 // 말풍선 등장 시 위로 올라가는 애니메이션
 const appearAnimation = keyframes`
@@ -123,6 +139,9 @@ export const CharacterChat = styled.div`
   display: flex;
   align-items: center;
   align-items: flex-end;
+  @media (max-width: 768px) {
+    align-items: flex-start;
+  }
 `;
 
 // 캐릭터 채팅 메시지 내용
@@ -140,6 +159,9 @@ export const CharacterChatContent = styled.div`
   border-radius: 15px 15px 15px 2px;
   font-size: 15px;
   animation: ${appearAnimation} 0.5s ease-out;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 // 유저 채팅 메시지창
@@ -147,6 +169,9 @@ export const UserChat = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: flex-end;
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+  }
 `;
 
 // 유저 채팅 메시지 내용
@@ -164,6 +189,9 @@ export const UserChatContent = styled.div`
   border-radius: 15px 15px 2px 15px;
   font-size: 15px;
   animation: ${appearAnimation} 0.5s ease-out;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 // 캐릭터 프로필 사진
@@ -173,7 +201,13 @@ export const CharacterAvatar = styled.img`
   border-radius: 50%;
   object-fit: cover;  // 이미지 비율 유지하며 크롭
   object-position: 0% 20%;
+  z-index:20;
   margin-right: 20px;
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
 `;
 
 // 캐릭터의 메시지 왼쪽 정렬
@@ -200,6 +234,11 @@ export const UserInputCon = styled.div`
   opacity: 0.9;
   margin-top: auto;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    width: 90%;
+    height: 50px;
+    margin-bottom: 20px;
+  }
 `;
 
 // 입력창
@@ -209,6 +248,11 @@ export const InputMessage = styled.input`
   border: 1px solid #ddd;  /* 테두리 설정 */
   border-radius: 5px;  /* 모서리 둥글게 */
   font-size: 14px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 8px;
+  }
 `;
 
 // 전송버튼
@@ -230,6 +274,10 @@ export const SendButton = styled.button`
   font-size: 0;  /* 버튼 텍스트를 제거하여 아이콘만 보이도록 합니다 */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  /* 버튼에 그림자 효과 추가 */
   transition: background-color 0.3s;  /* 배경색 변화에 부드러운 전환 효과 추가 */
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 // 녹음버튼
@@ -251,6 +299,10 @@ export const MicButton = styled.button`
   font-size: 0;  /* 버튼 텍스트를 제거하여 아이콘만 보이도록 합니다 */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  /* 버튼에 그림자 효과 추가 */
   transition: background-color 0.3s;  /* 배경색 변화에 부드러운 전환 효과 추가 */
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 // 알람창 전체화면
@@ -274,43 +326,60 @@ export const AlertBox = styled.div`
     border-radius: 8px;
     text-align: center;
     color: #295180;
+    @media (max-width: 768px) {
+     width: 90%;
+      padding: 15px;
+    }
 `;
 
 // 버튼 자리
 export const AlertButtons = styled.div`
-    margin-top: 20px;
-`;
+  margin-top: 20px;
 
+  @media (max-width: 768px) {
+    margin-top: 15px;
+  }
+`;
 // 취소 버튼
 export const AlertButtonCancle = styled.button`
-    margin: 0 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #FFFFFF;
-    color: #000000;
-    cursor: pointer;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #FFFFFF;
+  color: #000000;
+  cursor: pointer;
 
-    &:hover {
-        background: #CBCBCB;
-        transform: scale(1.1);
-    }
+  &:hover {
+    background: #CBCBCB;
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    margin: 0 5px;
+  }
 `;
 
 // 종료 버튼
 export const AlertButtonFinish = styled.button`
-    margin: 0 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #FF6464;
-    color: white;
-    cursor: pointer;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #FF6464;
+  color: white;
+  cursor: pointer;
 
-    &:hover {
-        background: #DA1B1B;
-        transform: scale(1.1);
-    }
+  &:hover {
+    background: #DA1B1B;
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    margin: 0 5px;
+  }
 `;
 
 export default CloseButton;

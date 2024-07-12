@@ -133,7 +133,11 @@ export const BackButton = styled.button`
     font-size: 40px;
     color: #8e44ad;
     font-weight: bold;
+    position: relative;
+    top: 2%; 
+    transform: translateY(5%); 
   }
+
 
   &:hover {
     transform: scale(1.1);

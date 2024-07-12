@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import StarField from './main/StarField';
 import Select from './select/Select';
 import Chat from './chating/Chat';
-import Log from './log/Log';
 import initialCharacters from './assets/initCharacter';
 import TopSelect from './topselect/TopSelect';
 import './index.css';
@@ -19,7 +18,6 @@ const App: React.FC = () => {
       <Route path="/select/:nickname" element={<Select />} />
       <Route path="/chat/:nickname" element={<Chat initialCharacter={defaultCharacter} />} /> 
       <Route path="/topselect/:nickname" element={<TopSelect />} />
-      <Route path="/log/:nickname" element={<Log />} />
     </Routes>
   );
 };

@@ -39,197 +39,216 @@ to {
 
 // 달 이미지가 반짝이는 애니메이션을 위한 키프레임
 export const glow = keyframes`
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
+0%, 100% {
+  opacity: 1;
+}
+50% {
+  opacity: 0.8;
+}
 `;
 
 // 별 위치를 생성하는 함수
 export const createStars = (n: number) => {
-  let stars = `${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
-  for (let i = 2; i <= n; i++) {
-    stars += `, ${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
-  }
-  return stars;
+let stars = `${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
+for (let i = 2; i <= n; i++) {
+  stars += `, ${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
+}
+return stars;
 };
 
 // 전체 컨테이너
 export const MainContainer = styled.div`
-  display: block;
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
-  overflow: auto;
-  scroll-snap-type: y mandatory;
+display: block;
+position: relative;
+width: 100%;
+height: 100vh;
+background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+overflow: auto;
+scroll-snap-type: y mandatory;
 `;
 
 // 시스템적인 폰트 
 export const GmarketSansMedium = styled.h1`
-  @font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  font-family: 'GmarketSansMedium', sans-serif;
-  font-size: 25px;
-  color: black;
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+font-family: 'GmarketSansMedium', sans-serif;
+font-size: 25px;
+color: black;
 `;
 
 // MZ 폰트
 export const Gothic_Goding = styled.h1`
-  @font-face {
-    font-family: 'Gothic_Goding';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Gothic_Goding.woff') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  font-family: 'Gothic_Goding', sans-serif;
-  font-size: 15px;
-  color: black;
+@font-face {
+  font-family: 'Gothic_Goding';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Gothic_Goding.woff') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+font-family: 'Gothic_Goding', sans-serif;
+font-size: 15px;
+color: black;
 `;
 
 // 쌈디 폰트
 export const Cafe24Shiningstar = styled.h1`
-  @font-face {
-    font-family: 'Cafe24Shiningstar';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Shiningstar.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  font-family: 'Cafe24Shiningstar', sans-serif;
-  font-size: 15px;
-  color: black;
-    `
+@font-face {
+  font-family: 'Cafe24Shiningstar';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Shiningstar.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+font-family: 'Cafe24Shiningstar', sans-serif;
+font-size: 15px;
+color: black;
+`;
 
 // 침착맨 폰트
 export const KyoboHandwriting2020A = styled.h1`
-  @font-face {
-    font-family: 'KyoboHandwriting2020A';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  font-family: 'KyoboHandwriting2020A', sans-serif;
-  font-size: 15px;
-  color: black;
+@font-face {
+  font-family: 'KyoboHandwriting2020A';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+font-family: 'KyoboHandwriting2020A', sans-serif;
+font-size: 15px;
+color: black;
 `;
-
 
 // 럭키 폰트
 export const Ownglyph_ryuttung_Rg = styled.h1`
-  @font-face {
-    font-family: 'Ownglyph_ryuttung-Rg';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
-  font-size: 15px;
-  color: black;
+@font-face {
+  font-family: 'Ownglyph_ryuttung-Rg';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
+font-size: 15px;
+color: black;
 `;
 
 // 가장 작은 별
 export const Stars = styled.div`
-  z-index: 1;
+z-index: 1;
+width: 1px;
+height: 1px;
+border-radius: 50%;
+background: transparent;
+box-shadow: ${createStars(numStarOneStars)};
+animation: ${animStar} ${starOneScrollDuration} linear infinite;
+animation-delay: 0s;
+position: absolute;
+top: 0;
+left: 0;
+
+@media (max-width: 768px) {
+  box-shadow: ${createStars(Math.floor(numStarOneStars / 2))};
+}
+
+&:after {
+  content: " ";
+  position: absolute;
+  top: -${starFieldHeight}px;
+  left: 0;
   width: 1px;
   height: 1px;
   border-radius: 50%;
   background: transparent;
   box-shadow: ${createStars(numStarOneStars)};
   animation: ${animStar} ${starOneScrollDuration} linear infinite;
-  animation-delay: 0s;
-  position: absolute;
-  top: 0;
-  left: 0;
-  &:after {
-    content: " ";
-    position: absolute;
-    top: -${starFieldHeight}px;
-    left: 0;
-    width: 1px;
-    height: 1px;
-    border-radius: 50%;
-    background: transparent;
-    box-shadow: ${createStars(numStarOneStars)};
-    animation: ${animStar} ${starOneScrollDuration} linear infinite;
-    animation-delay: ${starOneScrollDuration};
-  }
+  animation-delay: ${starOneScrollDuration};
+}
 `;
 
 // 중간 크기 별
 export const Stars1 = styled(Stars)`
-  z-index:1;
+z-index: 1;
+width: 2px;
+height: 2px;
+box-shadow: ${createStars(numStarTwoStars)};
+animation: ${animStar} ${starTwoScrollDuration} linear infinite;
+animation-delay: 0s;
+
+@media (max-width: 768px) {
+  box-shadow: ${createStars(Math.floor(numStarTwoStars / 2))};
+}
+
+&:after {
+  content: " ";
+  position: absolute;
+  top: -${starFieldHeight}px;
+  left: 0;
   width: 2px;
   height: 2px;
+  border-radius: 50%;
+  background: transparent;
   box-shadow: ${createStars(numStarTwoStars)};
   animation: ${animStar} ${starTwoScrollDuration} linear infinite;
-  animation-delay: 0s;
-  &:after {
-    content: " ";
-    position: absolute;
-    top: -${starFieldHeight}px;
-    left: 0;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: transparent;
-    box-shadow: ${createStars(numStarTwoStars)};
-    animation: ${animStar} ${starTwoScrollDuration} linear infinite;
-    animation-delay: ${starTwoScrollDuration};
-  }
+  animation-delay: ${starTwoScrollDuration};
+}
 `;
 
 // 가장 큰 별
 export const Stars2 = styled(Stars)`
-  z-index:1;
+z-index: 1;
+width: 3px;
+height: 3px;
+box-shadow: ${createStars(numStarThreeStars)};
+animation: ${animStar} ${starThreeScrollDuration} linear infinite;
+animation-delay: 0s;
+
+@media (max-width: 768px) {
+  box-shadow: ${createStars(Math.floor(numStarThreeStars / 2))};
+}
+
+&:after {
+  content: " ";
+  position: absolute;
+  top: -${starFieldHeight}px;
+  left: 0;
   width: 3px;
   height: 3px;
+  border-radius: 50%;
+  background: transparent;
   box-shadow: ${createStars(numStarThreeStars)};
   animation: ${animStar} ${starThreeScrollDuration} linear infinite;
-  animation-delay: 0s;
-  &:after {
-    content: " ";
-    position: absolute;
-    top: -${starFieldHeight}px;
-    left: 0;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: transparent;
-    box-shadow: ${createStars(numStarThreeStars)};
-    animation: ${animStar} ${starThreeScrollDuration} linear infinite;
-    animation-delay: ${starThreeScrollDuration};
-  }
+  animation-delay: ${starThreeScrollDuration};
+}
 `;
 interface ShootingStarsProps {
-  top: number;
-  left: number;
+top: number;
+left: number;
 }
 
 export const ShootingStars = styled.div<ShootingStarsProps>`
-  z-index: 10;
-  width: 5px;
-  height: 85px;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-  position: absolute;
-  top: ${(props) => props.top}px;
-  left: ${(props) => props.left}px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
-  animation: ${animShootingStar} 10s linear infinite;
+z-index: 10;
+width: 5px;
+height: 85px;
+border-top-left-radius: 50%;
+border-top-right-radius: 50%;
+position: absolute;
+top: ${(props) => props.top}px;
+left: ${(props) => props.left}px;
+background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+animation: ${animShootingStar} 10s linear infinite;
+
+@media (max-width: 768px) {
+  width: 3px;
+  height: 50px;
+}
 `;
 
 // 달
 export const Moon = styled.div`
   display:flex;
   border-radius: 50%;
-  width: 18%;
-  height: 40%;
+  width: 22%;
+  height: 44%;
   position: absolute;
   top: 12%;
   left: 50%;
@@ -239,6 +258,11 @@ export const Moon = styled.div`
   box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.5);
   animation: ${glow} 3s infinite;
   will-change: transform, opacity;
+
+  @media (max-width: 768px) {
+    width: 25%;
+    height: 30%;
+  }
   `;
 
 // PERSONA 문구 
@@ -252,5 +276,10 @@ export const Image = styled.img`
   margin: 0;
   text-align: center;
   z-index: 2;
+
+  @media (max-width: 768px) {
+    width: 25%;
+    height: 30%;
+  }
 `;
 
