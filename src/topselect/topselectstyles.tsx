@@ -4,11 +4,19 @@ import styled, { keyframes } from 'styled-components';
 export const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   height: 100vh;
   overflow: hidden;
   background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+  z-index: 20;
+  padding-top: 50px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
 `;
 
 // 텍스트 애니메이션
@@ -17,101 +25,127 @@ const typing = keyframes`
   to { width: 100%; }
 `;
 
+const blinkCaret = keyframes`
+  from, to { border-color: transparent; }
+  50% { border-color: white; }
+`;
+
+const endTyping = keyframes`
+  to { border-right: none; }
+`;
+
+// 캐릭터 이미지 애니메이션
+const typingCharacter = keyframes`
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
 export const Display = styled.div`
-  font-family: 'Source Code Pro', monospace;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 8%;
-  background-color: #3c383c;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 70%;
+  height: 62%;
   padding: 30px;
-  width: 1000px;
-  height: 500px;
+  background-color: #3c383c;
   border: 20px solid #D2B48C;
   box-shadow: 0px 0px 0px 3px #654321;
   border-radius: 30px;
   color: #fff;
-  z-index: 50;
+  z-index: 20;
+  margin-top: 8%;
 
-  h1 {
-    text-align: center;
-    font-family: Garamond;
-    color: #f4f4f4;
-    margin-bottom: 20px;
-    overflow: hidden;
-    border-right: .15em solid #3c383c;
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: .15em;
-    animation: ${typing} 3s steps(40, end), blink-caret .75s step-end infinite;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    padding: 20px;
+    margin-top: 5%;
   }
 `;
 
 // 캐릭터 이미지를 위한 컨테이너
 export const CharacterContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
   flex-direction: column;
-  width: 100%;
+  align-items: flex-start;
+  width: 50%;
+  margin-top: 2%;
+  margin-left: -5%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+    align-items: center;
+  }
 `;
 
-// 캐릭터 이미지 스타일
-const typingCharacter = keyframes`
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
-
-// 차트를 위한 컨테이너
-export const ChartContainer = styled.div`
+// 1등 캐릭터를 위한 컨테이너
+export const FirstPlaceContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
+  margin-bottom: 20px;
 `;
 
-// 캐릭터 이미지 스타일
-export const CharacterImage = styled.img`
-  width: 10%;
-  height: 15%;
+// 1등 캐릭터 이미지를 위한 스타일
+export const FirstPlaceImage = styled.img`
+  width: 150px;
+  height: auto;
   border-radius: 50%;
-  margin-bottom: 2%;
-  animation: ${typingCharacter} 1s ease-out; 
-`;
+  animation: ${typingCharacter} 1s ease-out;
 
-const fadeOut = keyframes`
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.95);
+  @media (max-width: 768px) {
+    width: 120px;
   }
 `;
 
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
+// 1등 캐릭터 멘트를 위한 스타일
+export const FirstPlaceComment = styled.div`
+  font-size: 16px;
+  color: #fff;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 13%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #fff;
+  animation: ${typing} 3s steps(30, end), ${blinkCaret} 0.75s step-end infinite, ${endTyping} 3s forwards;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
+`;
+
+// 2, 3, 4등 캐릭터를 위한 컨테이너
+export const OtherPlacesContainer = styled.div`
+  display: flex;
+  justify-content: center;  // 가운데 정렬로 변경
+  align-items: center;
+  width: 100%;
+  gap: 8%;  // 이미지 간격 조절
+
+  @media (max-width: 768px) {
+    gap: 5%;
   }
 `;
 
-export const FadeOutText = styled.div`
-  animation: ${fadeOut} 1s ease-in-out;
-  animation-fill-mode: forwards;
+// 2, 3, 4등 캐릭터 이미지를 위한 스타일
+export const OtherPlaceImage = styled.img`
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  animation: ${typingCharacter} 1s ease-out;
+
+  @media (max-width: 768px) {
+    width: 60px;
+  }
 `;
 
-export const FadeInText = styled.div`
-  animation: ${fadeIn} 1s ease-in-out;
-`;
-
-// 뒤로 돌아가기 버튼
 export const BackButton = styled.button`
   position: absolute;
   top: 5%;
@@ -134,12 +168,22 @@ export const BackButton = styled.button`
     color: #8e44ad;
     font-weight: bold;
     position: relative;
-    top: 2%; 
-    transform: translateY(5%); 
+    top: 2%;
+    transform: translateY(5%);
   }
-
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    top: 2%;
+    right: 5%;
+    width: 80px;
+    height: 50px;
+
+    &::before {
+      font-size: 30px;
+    }
   }
 `;

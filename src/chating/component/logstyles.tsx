@@ -75,7 +75,7 @@ export const LogHeader = styled.div`
 // 연필 모양 이미지
 export const LogHeaderImage = styled.img`
   position: absolute;
-  top: 20%;  
+  top: 25%;  
   left: 110%;
   transform: translateX(-50%);
   width: 10%;
