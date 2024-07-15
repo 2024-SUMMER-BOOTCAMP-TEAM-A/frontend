@@ -36,7 +36,7 @@ export const CharacterProfile = styled.div`
 // 종료 버튼
 export const CloseButton = styled.button`
     position: absolute;
-    top: 35px;
+    top: 40px;
     right: 100px;
     background-color: #9B86BD;
     background-image: url(${closeIcon});

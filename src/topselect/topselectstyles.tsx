@@ -40,6 +40,20 @@ const typingCharacter = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
+// 빛나는 효과 애니메이션
+const glow = keyframes`
+  0% {
+    box-shadow: 0 0 5px #fff;
+  }
+  50% {
+    box-shadow: 0 0 10px #ffd700, 0 0 15px #ffd700, 0 0 20px #ffd700, 0 0 25px #ffd700;
+  }
+  100% {
+    box-shadow: 0 0 5px #fff;
+  }
+`;
+
+
 export const Display = styled.div`
   display: flex;
   justify-content: space-between;
@@ -95,7 +109,7 @@ export const FirstPlaceImage = styled.img`
   width: 150px;
   height: auto;
   border-radius: 50%;
-  animation: ${typingCharacter} 1s ease-out;
+  animation: ${typingCharacter} 1s ease-out, ${glow} 2s infinite alternate;
 
   @media (max-width: 768px) {
     width: 120px;
