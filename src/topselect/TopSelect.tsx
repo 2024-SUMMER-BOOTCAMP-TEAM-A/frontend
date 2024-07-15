@@ -62,6 +62,7 @@ const TopSelect: React.FC = () => {
             <OtherPlaceImage src={uncleImage} alt="김아영" />
           </OtherPlacesContainer>
         </CharacterContainer>
+        <BarChart data={voteData} width="60%" height="80vh" />
       </Display>
       <BackButton onClick={handleBackClick} />
     </MainContainer>
