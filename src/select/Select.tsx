@@ -116,7 +116,7 @@ const Select: React.FC = () => {
     <MainContainer>
       <StarBackground />
       <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }} />
-      <Moon style={{ width: '300px', height: '300px' }} />
+      <Moon style={{ width: '15%', height: '30%' }} />
       <FadeInText>
       <RankingButton onClick={() => navigate(`/topselect/${nickname}`)}>
         <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>

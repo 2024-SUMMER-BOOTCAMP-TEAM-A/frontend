@@ -263,23 +263,34 @@ export const Moon = styled.div`
     width: 25%;
     height: 30%;
   }
-  `;
+
+  @media (max-width: 480px) {
+    width: 30%;
+    height: 25%;
+  }
+`;
+
 
 // PERSONA 문구 
 export const Image = styled.img`
-  width: 40%;
-  margin-bottom: 20px;
-  position: absolute;
-  top: 14%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  text-align: center;
-  z-index: 2;
+width: 40%;
+margin-bottom: 20px;
+position: absolute;
+top: 14%;
+left: 50%;
+transform: translate(-50%, -50%);
+margin: 0;
+text-align: center;
+z-index: 2;
 
-  @media (max-width: 768px) {
-    width: 25%;
-    height: 30%;
-  }
+@media (max-width: 768px) {
+  width: 25%;
+  height: 30%;
+}
+
+@media (max-width: 480px) {
+  width: 30%;
+  height: 25%;
+}
 `;
 

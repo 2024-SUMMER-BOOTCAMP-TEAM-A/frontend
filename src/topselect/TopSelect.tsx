@@ -49,7 +49,7 @@ const TopSelect: React.FC = () => {
     <MainContainer>
       <StarBackground />
       <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }}/>
-      <Moon style={{ width: '300px', height: '300px' }} />
+      <Moon style={{ width: '15%', height: '30%' }} />
       <Display>
         <CharacterContainer>
           <FirstPlaceContainer>

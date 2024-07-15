@@ -9,7 +9,7 @@ export const Button = styled.button`
   transform: translate(-50%, -50%);
   transform-origin: center; 
   padding: 3px 50px;
-  font-size: 20px;
+  font-size: clamp(14px, 2vw, 20px);
   font-family: 'Arial', sans-serif;
   background-color: #fff;
   border: none;
@@ -30,7 +30,10 @@ export const Button = styled.button`
 
   @media (max-width: 768px) {
     padding: 3px 30px;
-    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 3px 20px;
   }
 `;
 
@@ -43,7 +46,7 @@ export const UpButtonContainer = styled.div`
   cursor: pointer;
   position: absolute;
   top: 50%; 
-  left: 70%; 
+  left: 50%; 
   transform: translate(-50%, -50%);
 
   &:hover {
@@ -52,9 +55,13 @@ export const UpButtonContainer = styled.div`
 
   @media (max-width: 768px) {
     top: 60%; 
-    left: 50%; 
+  }
+
+  @media (max-width: 480px) {
+    top: 70%; 
   }
 `;
+
 
 // 이미지 애니메이션 키프레임
 export const tiltLeftRight = keyframes`
@@ -89,8 +96,11 @@ export const SectionOne = styled(Section)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center; // 텍스트 중앙 정렬 추가
+  padding: 0 20px; // 양옆 패딩 추가
+  width: 100%; 
+  box-sizing: border-box; 
 `;
-
 // 메인 페이지 이야기하러가기 버튼 이미지
 export const UpImage = styled.img`
   width: 120px;
@@ -100,17 +110,25 @@ export const UpImage = styled.img`
     width: 80px;
     height: 80px;
   }
+
+  @media (max-width: 480px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 // 메인 페이지 이야기하러가기 버튼 텍스트
 export const UpButtonText = styled.div`
   color: white;
-  font-size: 27px;
+  font-size: clamp(16px, 4vw, 27px);
   margin-top: 55px;
 
   @media (max-width: 768px) {
-    font-size: 20px;
     margin-top: 30px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 20px;
   }
 `;
 
@@ -123,14 +141,11 @@ export const OwnglyphFont = styled.h1`
     font-style: normal;
   }
   font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
-  font-size: 40px;
+  font-size: clamp(25px, 5vw, 40px);
   color: #fff;
   margin: 0;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
+  text-align: center; // 텍스트 중앙 정렬 추가
+  padding: 0 20px; // 양옆 패딩 추가
 `;
 
 // 닉네임 입력 관련 부분
@@ -152,6 +167,10 @@ export const InputContainer = styled.div`
   @media (max-width: 768px) {
     width: 90%;
   }
+
+  @media (max-width: 480px) {
+    width: 95%;
+  }
 `;
 
 export const StyledInput = styled.input`
@@ -160,7 +179,7 @@ export const StyledInput = styled.input`
   background-color: #e0e0e0; 
   border-bottom-left-radius: 30px;
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: clamp(14px, 3vw, 20px);
   height: 25px; 
   line-height: 40px; 
   flex: 1;
@@ -169,15 +188,7 @@ export const StyledInput = styled.input`
 
   &::placeholder {
     font-family: 'GmarketSansMedium', sans-serif;
-    font-size: 20px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-
-    &::placeholder {
-      font-size: 16px;
-    }
+    font-size: clamp(14px, 3vw, 20px);
   }
 `;
 
@@ -189,7 +200,7 @@ export const StyledButton = styled.button`
   width: 80px;
   height: 40px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: clamp(12px, 2.5vw, 16px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,9 +221,13 @@ export const StyledButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 14px;
     width: 60px;
     height: 35px;
+  }
+
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 30px;
   }
 `;
 
@@ -245,9 +260,9 @@ export const CharacterContainer = styled.div`
   position: relative;
   width: 30%;
   height: 50%;
-  left: 8%;
+  left: 22%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -256,8 +271,11 @@ export const CharacterContainer = styled.div`
   @media (max-width: 768px) {
     width: 50%;
     height: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: 480px) {
+    width: 60%;
+    height: 30%;
   }
 `;
 
@@ -276,6 +294,11 @@ export const Character = styled.img`
   @media (max-width: 768px) {
     width: 50%;
     height: 40%;
+  }
+
+  @media (max-width: 480px) {
+    width: 60%;
+    height: 30%;
   }
 `;
 
@@ -307,6 +330,10 @@ export const ClickImage = styled.img`
 
   @media (max-width: 768px) {
     width: 35px;
+  }
+
+  @media (max-width: 480px) {
+    width: 25px;
   }
 `;
 
@@ -350,6 +377,9 @@ export const CenteredText = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh; // 페이지 전체 높이를 사용하여 중앙 정렬
+  padding: 0 20px; // 양옆 패딩 추가
+  width: 100%; 
+  box-sizing: border-box; 
 `;
 
 // 텍스트 왼쪽 중앙 정렬
@@ -360,6 +390,8 @@ export const LeftText = styled.div`
   justify-content: center;
   height: 100vh; 
   padding-left: 15%; // 적절한 여백을 추가하여 왼쪽으로 이동
+  width: 100%; 
+  box-sizing: border-box;
 
   @media (max-width: 768px) {
     padding-left: 5%;
@@ -378,6 +410,8 @@ export const RightText = styled.div`
   top: 50%;
   right: 0;
   transform: translateY(-50%);
+  width: 100%; 
+  box-sizing: border-box; 
 
   @media (max-width: 768px) {
     padding-right: 5%;
@@ -424,6 +458,12 @@ export const WorryImage = styled.img`
     margin: 15px;
     top: -30px;
   }
+
+  @media (max-width: 480px) {
+    width: 120px;
+    margin: 10px;
+    top: -20px;
+  }
 `;
 
 export const WorryImage1 = styled(WorryImage)`
@@ -468,6 +508,11 @@ export const StyledUpButtonContainer = styled.div`
     top: 50%;
     left: 50%;
   }
+
+  @media (max-width: 480px) {
+    top: 60%;
+    left: 50%;
+  }
 `;
 
 export const StyledUpImage = styled.img`
@@ -483,16 +528,23 @@ export const StyledUpImage = styled.img`
     width: 80px;
     height: 80px;
   }
+
+  @media (max-width: 480px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const StyledUpButtonText = styled.div`
   color: white;
-  font-size: 27px;
+  font-size: clamp(16px, 4vw, 27px);
   margin-top: 30px;
 
   @media (max-width: 768px) {
-    font-size: 20px;
     margin-top: 20px;
   }
-`;
 
+  @media (max-width: 480px) {
+    margin-top: 10px;
+  }
+`;
