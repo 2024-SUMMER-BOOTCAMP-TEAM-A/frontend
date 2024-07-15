@@ -192,7 +192,7 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
   };
 
   const navigate = useNavigate();
-  const logContainerRef = useRef(null);
+  const logContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRankingClick = () => {
     navigate(`/topselect/${nickname}`);
@@ -256,7 +256,7 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
             <GmarketSansMedium style={{ color: '#DEDDBC' }}>상담일지</GmarketSansMedium>
           </LogHeader>
         </LogHeaderContainer>
-        <div id="logContainer" ref={logContainerRef}>
+        <LogContainer ref={logContainerRef}>
           <LogImage src={logpersonaImg} alt="Persona" />
           <LogNickname>{nickname}</LogNickname>
           <ChatImage src={chatImg} alt="Chat related" /> {/* 나중에 수정해야함 채팅관련 이미지 */}
@@ -273,7 +273,7 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
             <PersonalityImage src={character?.img} alt="Personality" />
           </PersonalitySection>
           <LogDate>{getCurrentDate()}</LogDate>
-        </div>
+        </LogContainer>
         <ButtonContainer>
           <DownButton onClick={handleDownload}>
             <img src={downloadImg} alt="Download Icon" style={{ width: '24px', height: '24px' }} />
@@ -294,7 +294,6 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
     </ModalOverlay>
   );
 };
-
 
 // ChatProps 인터페이스 정의
 interface ChatProps {
