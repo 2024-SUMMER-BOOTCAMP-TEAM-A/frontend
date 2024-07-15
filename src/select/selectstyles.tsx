@@ -93,6 +93,13 @@ export const Card = styled.div`
     margin: 0 10px; 
     padding: 10px;
   }
+
+  @media (max-width: 480px) {
+    width: 90%;
+    height: 250px;
+    margin: 0 5px;
+    padding: 5px;
+  }
 `;
 
 export const CardImage = styled.img`
@@ -105,6 +112,11 @@ export const CardImage = styled.img`
     width: 150px;
     height: 200px;
   }
+
+  @media (max-width: 480px) {
+    width: 120px;
+    height: 160px;
+  }
 `;
 
 export const CardText = styled.div`
@@ -113,11 +125,19 @@ export const CardText = styled.div`
   margin-top: 20px; /* 텍스트와 이미지 사이에 마진 추가 */
   white-space: pre-line; 
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   @media (max-width: 768px) {
     font-size: 18px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-top: 5px;
   }
 `;
-
 // 이미지 스타일
 export const Image = styled.img`
   position: flex;
@@ -126,6 +146,11 @@ export const Image = styled.img`
   transform: translateX(-50%);
   @media (max-width: 768px) {
     width: 60%;
+    top: 5%;
+  }
+
+  @media (max-width: 480px) {
+    width: 80%;
     top: 5%;
   }
 `;
@@ -155,6 +180,13 @@ export const RankingButton = styled.button`
     top: 3%;
     right: 5%;
   }
+
+  @media (max-width: 480px) {
+    padding: 3px 10px;
+    font-size: 10px;
+    top: 2%;
+    right: 4%;
+  }
 `;
 
 // Prev 및 Next 버튼 스타일
@@ -171,6 +203,10 @@ export const NavButton = styled.button`
   }
   @media (max-width: 768px) {
     font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
   }
 `;
 
@@ -189,6 +225,10 @@ export const NavContainer = styled.div`
     bottom: 5%;
   }
 
+  @media (max-width: 480px) {
+    bottom: 4%;
+  }
+
   & > ${NavButton} {
     display: flex;
     justify-content: center;
@@ -198,8 +238,13 @@ export const NavContainer = styled.div`
     @media (max-width: 768px) {
       margin: 0 10px;
     }
+
+    @media (max-width: 480px) {
+      margin: 0 5px;
+    }
   }
 `;
+
 export const ChatButton = styled.button`
   display: flex;
   margin-top: 70px; 
@@ -217,7 +262,14 @@ export const ChatButton = styled.button`
     padding: 3px 40px;
     font-size: 14px;
   }
+
+  @media (max-width: 480px) {
+    margin-top: 30px;
+    padding: 3px 30px;
+    font-size: 12px;
+  }
 `;
+
 // 모달 스타일
 export const ModalStyles = {
   overlay: {
@@ -241,6 +293,10 @@ export const ModalStyles = {
     '@media (max-width: 768px)': {
       width: '90%',
       height: 'auto',
+    },
+    '@media (max-width: 480px)': {
+      width: '95%',
+      height: 'auto',
     }
   },
 } as ReactModal.Styles;
@@ -261,6 +317,11 @@ export const ModalContent = styled.div`
       width: 80px;
       height: auto;
     }
+
+    @media (max-width: 480px) {
+      width: 60px;
+      height: auto;
+    }
   }
 
   & > div {
@@ -275,6 +336,10 @@ export const ModalContent = styled.div`
 
     @media (max-width: 768px) {
       padding: 20px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 10px;
     }
   }
 `;
@@ -292,12 +357,17 @@ export const NameText = styled.div`
     font-size: 24px;
     margin-bottom: -20px;
   }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+    margin-bottom: -10px;
+  }
 `;
 
 // 화면 넘어갈때 애니메이션 
 const fadeOut = keyframes`
   0% {
-    opacity: 10;
+    opacity: 1;
   }
   100% {
     opacity: 0;
@@ -309,7 +379,7 @@ const fadeIn = keyframes`
     opacity: 0;
   }
   100% {
-    opacity: 10;
+    opacity: 1;
   }
 `;
 
