@@ -32,7 +32,7 @@ import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 import {
   LogNickname, ChatImage, ChatSummary, Solution, PersonalitySection, PersonalityImage, PersonalityDescription, LogDate, GmarketSansMedium,LogHeaderImage,
-  DownButton, CosultButton, RankingButton, ShareButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
+  DownButton, CosultButton, RankingButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
 } from './component/logstyles';
 import StarBackground from '../assets/StarBackground';
 import personaImg from '../assets/png/persona.png';
@@ -262,7 +262,7 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
           <ChatImage src={chatImg} alt="Chat related" /> {/* 나중에 수정해야함 채팅관련 이미지 */}
           <ChatSummary>
             <br />
-            상담내용 상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~
+            상담내용 상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담
           </ChatSummary>
           <Solution>
             <br />
@@ -279,10 +279,6 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
             <img src={downloadImg} alt="Download Icon" style={{ width: '24px', height: '24px' }} />
             <GmarketSansMedium>다운로드</GmarketSansMedium>
           </DownButton>
-          <ShareButton onClick={handleShare}>
-            <img src={shareImg} alt="Share Icon" style={{ width: '24px', height: '24px' }} />
-            <GmarketSansMedium>공유하기</GmarketSansMedium>
-          </ShareButton>
           <CosultButton onClick={onClose}>
             <GmarketSansMedium>상담하러가기</GmarketSansMedium>
           </CosultButton>
