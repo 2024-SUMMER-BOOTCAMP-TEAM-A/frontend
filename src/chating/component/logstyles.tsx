@@ -172,6 +172,7 @@ export const ChatImage = styled.img`
     margin-bottom: 10px;
   }
 `;
+
 // 상담내용
 export const ChatSummary = styled.div`
   width: 100%;
