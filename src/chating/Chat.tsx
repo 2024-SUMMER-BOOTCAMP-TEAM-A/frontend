@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import html2canvas from 'html2canvas';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import TypingWaiting from './component/TypingWaiting';
 import { Character } from '../assets/initCharacter'; 
@@ -118,7 +119,7 @@ const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTy
             <CharacterChat>
               <CharacterAvatar src={character.img} alt="Character Avatar" />
               <CharacterChatCon
-                isTyping={index === messages.length - 1 && isTyping} // 마지막 메시지에만 isTyping을 전달
+                isTyping={index === messages.length - 1 && isTyping}
                 chatEndRef={chatEndRef}
                 backgroundColor={character.background}
                 fontFamily={character.fontFamily}
@@ -129,7 +130,7 @@ const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTy
           )}
         </div>
       ))}
-      <div ref={chatEndRef} /> {/* 스크롤할 위치를 표시하는 요소 */}
+      <div ref={chatEndRef} />
     </ChatBox>
   );
 };
@@ -181,15 +182,69 @@ const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onCancel: 
     </AlertOverlay>
   );
 };
+
+// 상담일지 모달
 const LogModal: React.FC<{ character: Character; nickname: string | undefined; onClose: () => void }> = ({ character, nickname, onClose }) => {
   const getCurrentDate = () => {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
     return now.toLocaleDateString('ko-KR', options);
   };
+
   const navigate = useNavigate();
+  const logContainerRef = useRef(null);
+
   const handleRankingClick = () => {
     navigate(`/topselect/${nickname}`);
+  };
+
+  // 다운로드
+  const handleDownload = () => {
+    if (logContainerRef.current) {
+      html2canvas(logContainerRef.current).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = 'log.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
+  };
+
+  // 공유
+  const handleShare = () => {
+    if (logContainerRef.current) {
+      html2canvas(logContainerRef.current).then(canvas => {
+        canvas.toBlob((blob: Blob | null) => {
+          if (blob) {
+            const formData = new FormData();
+            formData.append('file', blob, 'log.png');
+
+            fetch('/upload', {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                const shareLink = data.url;
+                alert(`Image shared successfully! Here is your link: ${shareLink}`);
+              } else {
+                alert('Image sharing failed.');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred while sharing the image.');
+            });
+          } else {
+            alert('Failed to convert canvas to Blob.');
+          }
+        });
+      });
+    }
   };
 
   return (
@@ -201,7 +256,7 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
             <GmarketSansMedium style={{ color: '#DEDDBC' }}>상담일지</GmarketSansMedium>
           </LogHeader>
         </LogHeaderContainer>
-        <LogContainer>
+        <div id="logContainer" ref={logContainerRef}>
           <LogImage src={logpersonaImg} alt="Persona" />
           <LogNickname>{nickname}</LogNickname>
           <ChatImage src={chatImg} alt="Chat related" /> {/* 나중에 수정해야함 채팅관련 이미지 */}
@@ -218,25 +273,25 @@ const LogModal: React.FC<{ character: Character; nickname: string | undefined; o
             <PersonalityImage src={character?.img} alt="Personality" />
           </PersonalitySection>
           <LogDate>{getCurrentDate()}</LogDate>
-        </LogContainer>
+        </div>
         <ButtonContainer>
-        <DownButton>
-          <img src={downloadImg} alt="Download Icon" style={{ width: '24px', height: '24px' }} />
-          <GmarketSansMedium>다운로드</GmarketSansMedium>
-        </DownButton>
-        <ShareButton>
-          <img src={shareImg} alt="Share Icon" style={{ width: '24px', height: '24px' }} />
-          <GmarketSansMedium>공유하기</GmarketSansMedium>
-        </ShareButton>
-        <CosultButton onClick={onClose}>
-          <GmarketSansMedium>상담하러가기</GmarketSansMedium>
-        </CosultButton>
-        <RankingButton onClick={handleRankingClick}>
-          <GmarketSansMedium>인기챗봇순위</GmarketSansMedium>
-        </RankingButton>
-      </ButtonContainer>
-    </ModalContent>
-  </ModalOverlay>
+          <DownButton onClick={handleDownload}>
+            <img src={downloadImg} alt="Download Icon" style={{ width: '24px', height: '24px' }} />
+            <GmarketSansMedium>다운로드</GmarketSansMedium>
+          </DownButton>
+          <ShareButton onClick={handleShare}>
+            <img src={shareImg} alt="Share Icon" style={{ width: '24px', height: '24px' }} />
+            <GmarketSansMedium>공유하기</GmarketSansMedium>
+          </ShareButton>
+          <CosultButton onClick={onClose}>
+            <GmarketSansMedium>상담하러가기</GmarketSansMedium>
+          </CosultButton>
+          <RankingButton onClick={handleRankingClick}>
+            <GmarketSansMedium>인기챗봇순위</GmarketSansMedium>
+          </RankingButton>
+        </ButtonContainer>
+      </ModalContent>
+    </ModalOverlay>
   );
 };
 
