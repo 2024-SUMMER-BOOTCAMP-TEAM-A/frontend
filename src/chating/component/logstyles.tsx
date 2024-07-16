@@ -36,9 +36,9 @@ export const ModalContent = styled.div`
 export const LogHeaderContainer = styled.div`
   position: absolute;
   width: 580px;
-  height: calc(580px * 1.414); 
+  height: calc(580px * 1.414);
   left: 40%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,11 +47,12 @@ export const LogHeaderContainer = styled.div`
   padding: 20px;
 
   @media (max-width: 768px) {
-    width:520px;
-    height: auto; 
+    width: 520px;
+    height: auto;
     left: 35%;
   }
 `;
+
 
 // 상담일지 글씨 부분
 export const LogHeader = styled.div`
@@ -94,9 +95,9 @@ export const LogContainer = styled.div`
   position: absolute;
   top: 11%;
   left: 40%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   width: 500px;
-  height: calc(500px * 1.414); 
+  height: calc(500px * 1.414);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,7 +108,7 @@ export const LogContainer = styled.div`
   @media (max-width: 768px) {
     top: 15%;
     width: 450px;
-    height: auto; 
+    height: auto;
     left: 35%;
   }
 `;
@@ -199,9 +200,9 @@ export const Solution = styled.div`
   font-size: 1em;
   color: black;
   position: absolute;
-  left: 0; 
-  bottom: 120px; 
-  padding-left: 20px; 
+  left: 0;
+  bottom: 120px;
+  padding-left: 20px;
   &::before {
     content: "해결 방안";
     color: gray;
@@ -215,14 +216,13 @@ export const Solution = styled.div`
 
   @media (max-width: 768px) {
     font-size: 0.9em;
-    padding-left: 10px; 
+    padding-left: 10px;
 
     span {
       font-size: 1.1em;
     }
   }
 `;
-
 
 export const PersonalitySection = styled.div`
   position: absolute;
@@ -317,19 +317,3 @@ export const DownButton = styled(ButtonBase)`
 
 export const CosultButton = styled(ButtonBase)``;
 export const RankingButton = styled(ButtonBase)``;
-
-export const GmarketSansMedium = styled.h1`
-  @font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  font-family: 'GmarketSansMedium', sans-serif;
-  font-size: 150%;
-  color: #fff;
-
-  @media (max-width: 768px) {
-    font-size: 120%;
-  }
-`;

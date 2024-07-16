@@ -247,8 +247,8 @@ animation: ${animShootingStar} 10s linear infinite;
 export const Moon = styled.div`
   display:flex;
   border-radius: 50%;
-  width: 22%;
-  height: 44%;
+  width: 370px;
+  height: 400px;
   position: absolute;
   top: 12%;
   left: 50%;
@@ -260,13 +260,13 @@ export const Moon = styled.div`
   will-change: transform, opacity;
 
   @media (max-width: 768px) {
-    width: 25%;
-    height: 30%;
+    width: 200px;
+    height: 250px;
   }
 
   @media (max-width: 480px) {
-    width: 30%;
-    height: 25%;
+    width: 150px;
+    height: 200px;
   }
 `;
 

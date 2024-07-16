@@ -5,24 +5,24 @@ import upButtonImg from '../assets/png/upButton.png';
 import worry1 from '../assets/png/worry1.png';
 import worry2 from '../assets/png/worry2.png';
 import worry3 from '../assets/png/worry3.png';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
   MainContainer, GmarketSansMedium, Moon, Image
 } from '../assets/styles';
 import {
   CenteredText, LeftText, RightText, Section, SectionOne, WorryImageContainer,
   WorryImage1, WorryImage2, WorryImage3, OwnglyphFont, StyledUpButtonContainer, StyledUpImage, StyledUpButtonText,
-  Button, InputContainer, StyledInput, StyledButton, FadeOutText, FadeInText
+  Button, FadeOutText, FadeInText
 } from '../main/mainstyles';
 import RotatingCharacters from './RotatingCharacters';
 import StarBackground from '../assets/StarBackground';
+import LoginPage from './Login';
 
 const StarField: React.FunctionComponent = () => {
   const firstSectionRef = useRef<HTMLDivElement>(null);
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const [isStarted, setIsStarted] = useState(false);
   const [fadeOutCompleted, setFadeOutCompleted] = useState(false);
-  const [nickname, setNickname] = useState('');
   const [visibleSections, setVisibleSections] = useState<Set<number>>(new Set());
   const navigate = useNavigate();
 
@@ -35,24 +35,6 @@ const StarField: React.FunctionComponent = () => {
     setTimeout(() => {
       setFadeOutCompleted(true);
     }, 1000);
-  };
-
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
-  const handleNicknameSubmit = () => {
-    if (nickname.trim()) {
-      navigate(`/select/${nickname}`);
-    } else {
-      alert('닉네임을 입력해주세요.');
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleNicknameSubmit();
-    }
   };
 
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
@@ -125,26 +107,7 @@ const StarField: React.FunctionComponent = () => {
             </>
           ) : (
             <>
-              <div style={{ marginTop: '50px', marginBottom: '60px', textAlign: 'center' }}>
-                <FadeInText>
-                  잠깐! 아직 이름을 안 물어봤네요.
-                </FadeInText>
-              </div>
-              <FadeInText>
-                어떻게 불러드릴까요? 닉네임을 알려주세요!
-              </FadeInText>
-              <InputContainer>
-                <StyledInput
-                  type="text"
-                  placeholder="닉네임을 입력하세요"
-                  value={nickname}
-                  onChange={handleNicknameChange}
-                  onKeyPress={handleKeyPress}
-                />
-                <StyledButton onClick={handleNicknameSubmit}>
-                  <GmarketSansMedium style={{ color: 'white', fontSize: '20px' }}><span>입력</span></GmarketSansMedium>
-                </StyledButton>
-              </InputContainer>
+              <LoginPage />
             </>
           )}
         </SectionOne>
@@ -199,7 +162,7 @@ const StarField: React.FunctionComponent = () => {
         </LeftText>
         <StyledUpButtonContainer onClick={scrollToFirstSection}>
           <StyledUpImage src={upButtonImg} alt="Up" />
-          <StyledUpButtonText>이야기하러가기</StyledUpButtonText>
+          <StyledUpButtonText><OwnglyphFont>이야기하러가기</OwnglyphFont></StyledUpButtonText>
         </StyledUpButtonContainer>
       </Section>
     </MainContainer>
