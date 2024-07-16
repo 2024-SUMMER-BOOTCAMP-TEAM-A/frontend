@@ -16,7 +16,7 @@ export const ModalOverlay = styled.div`
 
 // 모달 콘텐츠
 export const ModalContent = styled.div`
-  background: transparent; 
+  background: transparent;
   width: 80%;
   height: 80%;
   display: flex;
@@ -35,9 +35,10 @@ export const ModalContent = styled.div`
 // 상담일지 헤더 컨테이너
 export const LogHeaderContainer = styled.div`
   position: absolute;
-  width: 37%;
-  left: 20%;
-  height: 90%;
+  width: 580px;
+  height: calc(580px * 1.414); 
+  left: 40%;
+  transform: translateX(-50%); 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,28 +47,28 @@ export const LogHeaderContainer = styled.div`
   padding: 20px;
 
   @media (max-width: 768px) {
-    width: 80%;
-    left: 10%;
-    height: 60%;
+    width:520px;
+    height: auto; 
+    left: 35%;
   }
 `;
 
 // 상담일지 글씨 부분
 export const LogHeader = styled.div`
   position: absolute;
-  top: -2.5%;  
+  top: -2.5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
   font-size: 2em;
   font-weight: bold;
   color: #DEDDBC;
   box-sizing: border-box;
 
   @media (max-width: 768px) {
-    top: -4.5%;  
+    top: -4.5%;
     font-size: 1.5em;
   }
 `;
@@ -75,15 +76,15 @@ export const LogHeader = styled.div`
 // 연필 모양 이미지
 export const LogHeaderImage = styled.img`
   position: absolute;
-  top: 25%;  
+  top: 25%;
   left: 110%;
   transform: translateX(-50%);
   width: 10%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 
   @media (max-width: 768px) {
-    top: 18%;  /
+    top: 18%;
     width: 15%;
   }
 `;
@@ -92,9 +93,10 @@ export const LogHeaderImage = styled.img`
 export const LogContainer = styled.div`
   position: absolute;
   top: 11%;
-  left: 21%;
-  width: 35%;
-  height: 80%;
+  left: 40%;
+  transform: translateX(-50%); 
+  width: 500px;
+  height: calc(500px * 1.414); 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,9 +106,9 @@ export const LogContainer = styled.div`
 
   @media (max-width: 768px) {
     top: 15%;
-    left: 10%;
-    width: 80%;
-    height: 60%;
+    width: 450px;
+    height: auto; 
+    left: 35%;
   }
 `;
 
@@ -196,8 +198,10 @@ export const Solution = styled.div`
   text-align: left;
   font-size: 1em;
   color: black;
-  margin-bottom: 5%;
-
+  position: absolute;
+  left: 0; 
+  bottom: 120px; 
+  padding-left: 20px; 
   &::before {
     content: "해결 방안";
     color: gray;
@@ -211,6 +215,7 @@ export const Solution = styled.div`
 
   @media (max-width: 768px) {
     font-size: 0.9em;
+    padding-left: 10px; 
 
     span {
       font-size: 1.1em;
@@ -218,40 +223,40 @@ export const Solution = styled.div`
   }
 `;
 
+
 export const PersonalitySection = styled.div`
   position: absolute;
-  bottom: 40px; 
+  bottom: 40px;
   width: 100%;
-  right: 10px; 
+  right: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
   @media (max-width: 768px) {
-    bottom: 30px; 
+    bottom: 30px;
   }
 `;
 
 export const PersonalityImage = styled.img`
-  width: 7vw;  
-  height: auto;  
-  max-width: 50px;  
+  width: 7vw;
+  height: auto;
+  max-width: 50px;
   border-radius: 50%;
-  margin-right: 1vw;  
+  margin-right: 1vw;
 
   @media (max-width: 768px) {
-    width: 12vw;  
-    height: auto;  
-    margin-right: 2vw;  
+    width: 12vw;
+    height: auto;
+    margin-right: 2vw;
   }
 
   @media (max-width: 480px) {
-    width: 15vw;  
-    height: auto;  
-    margin-right: 3vw;  
+    width: 15vw;
+    height: auto;
+    margin-right: 3vw;
   }
 `;
-
 
 export const PersonalityDescription = styled.div`
   font-size: 1em;
@@ -271,7 +276,7 @@ export const LogDate = styled.div`
   position: absolute;
   width: 100%;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.8em;
   color: black;
   bottom: 15px;
 
@@ -288,10 +293,10 @@ const ButtonBase = styled.button`
   background-color: #98B4E6;
   border: none;
   border-radius: 55px;
-  width: 60%;  
-  height: 55%;  
+  width: 60%;
+  height: 55%;
   cursor: pointer;
-  font-size: 15px;  
+  font-size: 15px;
 
   &:hover {
     background-color: #789cc1;
@@ -299,21 +304,17 @@ const ButtonBase = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 80%;  
-    height: 45%;  
-    font-size: 11px;  
+    width: 80%;
+    height: 45%;
+    font-size: 11px;
   }
 `;
 
 // 다운로드 버튼 스타일
-export const DownButton = styled(ButtonBase)` 
+export const DownButton = styled(ButtonBase)`
   gap: 7%;
 `;
 
-// 공유하기 버튼 스타일
-export const ShareButton = styled(ButtonBase)`
-  gap: 7%;
-`;
 export const CosultButton = styled(ButtonBase)``;
 export const RankingButton = styled(ButtonBase)``;
 
