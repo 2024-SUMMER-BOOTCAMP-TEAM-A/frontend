@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MainContainer, BackButton, Display, CharacterContainer, FirstPlaceContainer, OtherPlacesContainer, FirstPlaceImage, OtherPlaceImage, FirstPlaceComment
@@ -13,9 +13,38 @@ import uncleImage from '../assets/png/uncle.png';
 import personaImg from '../assets/png/persona.png';
 import StarBackground from '../assets/StarBackground';
 import BarChart from './BarChart';
+import { getPersonsByCountDesc, Person } from './topselectAPI';
+
+const characterImages: Record<string, string> = {
+  '장원영': luckyImage,
+  '이서진': uncleImage,
+  '침착맨': leemalImage,
+  '김아영': mzImage,
+};
 
 const TopSelect: React.FC = () => {
   const navigate = useNavigate();
+  const [persons, setPersons] = useState<Person[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);  // boolean 타입 정의
+  const [error, setError] = useState<string | null>(null); // string 또는 null 타입 정의
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getPersonsByCountDesc();
+        console.log('Fetched data:', data); // 데이터 콘솔 출력
+        setPersons(data);
+      } catch (error) {
+        console.error('Error fetching persons:', error);
+        setError('Error fetching data');
+      } finally {
+        setLoading(false); // 로딩 상태 업데이트
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -29,8 +58,8 @@ const TopSelect: React.FC = () => {
         return <Ownglyph_ryuttung_Rg style={commonStyle}>내가 1등이라고?! 완전 럭키비키잖아~</Ownglyph_ryuttung_Rg>;
       case '김아영':
         return <Gothic_Goding style={commonStyle}>제가 1등이네요</Gothic_Goding>;
-      case '쌈디':
-        return <Cafe24Shiningstar style={commonStyle}>역시 내가 1등이데이</Cafe24Shiningstar>;
+      case '이서진':
+        return <Cafe24Shiningstar style={commonStyle}>아이 뭐, 나는 항상 1등이니까~</Cafe24Shiningstar>;
       case '침착맨':
         return <KyoboHandwriting2020A style={commonStyle}>ㅋㅋㅋㅋㅋ</KyoboHandwriting2020A>;
       default:
@@ -38,12 +67,16 @@ const TopSelect: React.FC = () => {
     }
   };
 
-  const voteData = {
-    '장원영': 40,
-    '쌈디': 30,
-    '침착맨': 20,
-    '김아영': 10,
-  };
+  // 데이터를 횟수 기준으로 정렬
+  const sortedPersons = [...persons].sort((a, b) => b.count - a.count);
+
+  // 가장 많이 선택된 캐릭터
+  const topPerson = sortedPersons[0];
+
+  const voteData = persons.reduce((acc: { [key: string]: number }, person) => {
+    acc[person.name] = person.count;
+    return acc;
+  }, {});
 
   return (
     <MainContainer>
@@ -52,14 +85,16 @@ const TopSelect: React.FC = () => {
       <Moon style={{ width: '15%', height: '30%' }} />
       <Display>
         <CharacterContainer>
-          <FirstPlaceContainer>
-            <FirstPlaceImage src={luckyImage} alt="장원영" />
-            <FirstPlaceComment>{firstPlaceComment('장원영')}</FirstPlaceComment>
-          </FirstPlaceContainer>
+          {topPerson && (
+            <FirstPlaceContainer>
+              <FirstPlaceImage src={characterImages[topPerson.name]} alt={topPerson.name} />
+              <FirstPlaceComment>{firstPlaceComment(topPerson.name)}</FirstPlaceComment>
+            </FirstPlaceContainer>
+          )}
           <OtherPlacesContainer>
-            <OtherPlaceImage src={mzImage} alt="쌈디" />
-            <OtherPlaceImage src={leemalImage} alt="침착맨" />
-            <OtherPlaceImage src={uncleImage} alt="김아영" />
+            {sortedPersons.slice(1).map(person => (
+              <OtherPlaceImage key={person.id} src={characterImages[person.name]} alt={person.name} />
+            ))}
           </OtherPlacesContainer>
         </CharacterContainer>
         <BarChart data={voteData} width="60%" height="80vh" />
