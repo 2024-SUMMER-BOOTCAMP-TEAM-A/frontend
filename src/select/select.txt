@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import personaImg from '../assets/png/persona.png';
@@ -18,11 +18,8 @@ import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
 import leemalImage from '../assets/png/leemal.png';
 import uncleImage from '../assets/png/uncle.png';
-import { fetchPersonas } from './selectAPI';
-import { fetchPersonaDetails } from './selectmodalAPI';
 
 interface CardData {
-  id: string;
   img: string;
   name: string;
   cardText: string;
@@ -37,76 +34,42 @@ const Select: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
   const [animationDirection, setAnimationDirection] = useState<'left' | 'right' | null>(null);
-  const [cards, setCards] = useState<CardData[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadPersonas = async () => {
-      try {
-        const personas = await fetchPersonas();
-        const newCards = personas.map(persona => ({
-          id: persona.id,
-          img: getImageByName(persona.name),
-          name: persona.name,
-          cardText: `${persona.name}\n\n${persona.title}`,
-          modalText: '', // 나중에 fetchPersonaDetails로 채워질 것입니다.
-          background: getBackgroundByName(persona.name),
-          fontComponent: getFontComponentByName(persona.name),
-        }));
-        console.log('New Cards:', newCards); // 새로운 카드 배열을 로그에 출력
-        setCards(newCards);
-      } catch (error) {
-        console.error('인격 카드 데이터를 불러오는 중 오류 발생:', error);
-      }
-    };
-
-    loadPersonas();
-  }, []);
-
-  const getImageByName = (name: string) => {
-    switch (name) {
-      case '김아영':
-        return mzImage;
-      case '침착맨':
-        return leemalImage;
-      case '장원영':
-        return luckyImage;
-      case '쌈디':
-        return uncleImage;
-      default:
-        return '';
-    }
-  };
-
-  const getBackgroundByName = (name: string) => {
-    switch (name) {
-      case '김아영':
-        return mzBackground;
-      case '침착맨':
-        return leemalBackground;
-      case '장원영':
-        return luckyBackground;
-      case '쌈디':
-        return uncleBackground;
-      default:
-        return '';
-    }
-  };
-
-  const getFontComponentByName = (name: string) => {
-    switch (name) {
-      case '김아영':
-        return Gothic_Goding;
-      case '침착맨':
-        return KyoboHandwriting2020A;
-      case '장원영':
-        return Ownglyph_ryuttung_Rg;
-      case '쌈디':
-        return Cafe24Shiningstar;
-      default:
-        return GmarketSansMedium;
-    }
-  };
+  const cards: CardData[] = [
+    {
+      img: mzImage,
+      name: '김아영',
+      cardText: '김아영\n\n이렇게 해야 능률이 올라가는 편입니다',
+      modalText: '열심히 하(는 척 하겠)습니다! 아… 제 귀에 있는 에어팟을 빼라고요…? 저는 에어팟을 껴야 능률이 오르는 편입니다만. 제 권리를 빼앗지 말아주세요. 아… 고민이 있다고요…? 시간은 없지만 돈은 벌어야 하니 한 번 들어드릴게요. 어떤 고민이 있으세요?',
+      background: mzBackground,
+      fontComponent: Gothic_Goding,
+    },
+    {
+      img: leemalImage,
+      name: '침착맨',
+      cardText: '침착맨\n\n나랑 스무고개해서 이기면 만원ㅋ',
+      modalText: '침하! 오늘 아저씨랑 스무고개 하자. 내가 어떤 단어를 낼지는 아무도 모르는 거 알지? 뭐? 너무 뻔하다고? 열받네 경고 1회 드립니다. 예측 불가능한 단어로만 골라줄게. 병건하게 바로 들어가자.',
+      background: leemalBackground,
+      fontComponent: KyoboHandwriting2020A,
+    },
+    {
+      img: luckyImage,
+      name: '장원영',
+      cardText: '장원영\n\n이거 완전 럭키비키잖아!',
+      modalText: '내가 연습끝나고 딱 물을 먹으려고 했는데 글쎄 물이 딱 반정도 남은거야! 다 먹기엔 너무 많고 덜 먹기엔 너무 적고 그래서 딱 반만 있었으면 좋겠다고 생각했는데 완전 럭키비키잖아 근데 고민이 있다고? 나한테 말해봐~',
+      background: luckyBackground,
+      fontComponent: Ownglyph_ryuttung_Rg,
+    },
+    {
+      img: uncleImage,
+      name: '쌈디',
+      cardText: '쌈디\n\n연애가 참 어렵제?',
+      modalText: '나도 연애가 어려웠다. 연애는 최선을 다 해야되는 기다. 최선을 다해야 후회가 없는 법이다. 시작부터 보이지 않는 끝까지 길찾기 쉽도록 내가 가이드 라인을 알려줄라칸다. 사랑 때문에 고민있는 머스마 가시나 다 따라와라. 사랑이 뭐라고 그리 고민하노!',
+      background: uncleBackground,
+      fontComponent: Cafe24Shiningstar,
+    },
+  ];
 
   const handlePrev = () => {
     setAnimationDirection('right');
@@ -115,7 +78,7 @@ const Select: React.FC = () => {
       setAnimationDirection(null);
     }, 100);
   };
-
+  
   const handleNext = () => {
     setAnimationDirection('left');
     setTimeout(() => {
@@ -123,15 +86,10 @@ const Select: React.FC = () => {
       setAnimationDirection(null);
     }, 100);
   };
-
-  const handleCardClick = async (card: CardData) => {
-    try {
-      const details = await fetchPersonaDetails(card.id);
-      setSelectedCard({ ...card, modalText: details.title });
-      setModalIsOpen(true);
-    } catch (error) {
-      console.error('캐릭터 세부 정보를 가져오는 중 오류 발생:', error);
-    }
+  
+  const handleCardClick = (card: CardData) => {
+    setSelectedCard(card);
+    setModalIsOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -147,13 +105,12 @@ const Select: React.FC = () => {
       navigate(`/chat/${nickname}`, { state: { character: { img, name, cardText, modalText, background, fontFamily: fontComponent.displayName || 'defaultFont' } } });
     }
   };
-
+  
   const displayedCards = [
     ...cards.slice(currentIndex, currentIndex + 3),
     ...cards.slice(0, Math.max(0, (currentIndex + 3) - cards.length)),
   ].slice(0, 3);
 
-  console.log('Displayed Cards:', displayedCards); // 표시되는 카드 배열을 로그에 출력
 
   return (
     <MainContainer>
@@ -161,11 +118,11 @@ const Select: React.FC = () => {
       <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '15%', height: '30%' }} />
       <FadeInText>
-        <RankingButton onClick={() => navigate(`/topselect/${nickname}`)}>
-          <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
-        </RankingButton>
+      <RankingButton onClick={() => navigate(`/topselect/${nickname}`)}>
+        <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
+      </RankingButton>
         <CardContainer>
-          <CardSlider $animationDirection={animationDirection}>
+          <CardSlider animationDirection={animationDirection}>
             {displayedCards.map((card, index) => {
               const FontComponent = card.fontComponent;
               return (
