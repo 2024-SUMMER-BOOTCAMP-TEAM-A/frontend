@@ -1,57 +1,145 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Character } from '../assets/initCharacter'; 
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import socket from './socket';
 import {
   UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
 } from './ChatComponents';
-import { ChatContainer } from './component/chatingStyles';
 import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
+import { Character } from '../assets/initCharacter';
+import { ChatContainer } from './component/chatingStyles';
 
-// ChatProps 인터페이스 정의
+interface Message {
+  sender: string;
+  message: string;
+}
+
 interface ChatProps {
   initialCharacter: Character;
 }
 
-// Chat 컴포넌트의 props 타입 정의
 const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { character, nickname } = location.state || { character: initialCharacter, nickname: '' };
-  const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState<string>('');
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
+  const messageEndRef = useRef<HTMLDivElement>(null);
+  let silenceTimer: ReturnType<typeof setTimeout>;
+  let mediaRecorder: MediaRecorder;
+
+  const { nickname } = useParams<{ nickname: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
-    console.log('Character from location state:', character);
-    console.log('Nickname:', nickname);
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEzLCJpYXQiOjE3MjEyOTA1NDgsImV4cCI6MTcyMTM3Njk0OH0.DL8-OM9shd1ZxnMEXmLR0sPbi4bHtxz5YtPSljJJs-o'; // Replace with the appropriate token retrieval method
+    socket.emit('start chat', { token });
 
-    // 초기 메시지와 타이핑 상태를 설정합니다.
-    const startChat = () => {
-      setIsTyping(true);
-      setMessages([{ text: `Hi! I'm ${character.name}. How can I help you?`, isUser: false }]);
-      setIsTyping(false);
+    const handleChatMessage = (message: Message) => {
+      console.log('handleChatMessage:', message);
+      setMessages((prevMessages) => {
+        // 중복 메시지 추가 방지
+        if (prevMessages.length > 0 && prevMessages[prevMessages.length - 1].message === message.message && prevMessages[prevMessages.length - 1].sender === message.sender) {
+          return prevMessages;
+        }
+        return [...prevMessages, message];
+      });
+      scrollToBottom();
     };
 
-    startChat();
-  }, [character, nickname]);
+    const handleTtsAudio = (data: { audio: string }) => {
+      if (data.audio) {
+        const audio = new Audio(`data:audio/mpeg;base64,${data.audio}`);
+        audio.play();
+      }
+    };
 
-  const handleSend = (message: string) => {
-    setMessages((prevMessages) => [...prevMessages, { text: message, isUser: true }]);
+    const handleTranscript = (data: { message: string }) => {
+      console.log('handleTranscript:', data.message);
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: data.message }]);
+      resetSilenceTimer();
+    };
 
-    setIsTyping(true);
+    const handleError = (data: { message: string }) => {
+      console.error('Error:', data.message);
+    };
 
-    // 타이핑 애니메이션 후 응답 메시지를 추가하도록 지연 설정
-    setTimeout(() => {
-      setMessages((prevMessages) => [...prevMessages, { text: `Here is a response to "${message}"`, isUser: false }]);
-      setIsTyping(false);
-    }, 500); // 0.5초 지연, 필요에 따라 지연 시간 조정 가능
+    socket.on('chat log created', (data: { code: number; data: any }) => {
+      if (data.code === 201) {
+        console.log('Chat log created:', data.data);
+      } else {
+        console.error('Failed to create chat log:', data.data);
+      }
+    });
+
+    socket.on('chat message', handleChatMessage);
+    socket.on('tts audio', handleTtsAudio);
+    socket.on('transcript', handleTranscript);
+    socket.on('error', handleError);
+
+    return () => {
+      socket.off('chat log created');
+      socket.off('chat message', handleChatMessage);
+      socket.off('tts audio', handleTtsAudio);
+      socket.off('transcript', handleTranscript);
+      socket.off('error', handleError);
+    };
+  }, [nickname]);
+
+  const sendMessage = (message: string) => {
+    console.log('sendMessage:', message);
+    if (message.trim()) {
+      socket.emit('chat message', { content: message, sender: nickname });
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message }]);
+      setInput('');
+    }
+  };
+
+  const resetSilenceTimer = () => {
+    clearTimeout(silenceTimer);
+    silenceTimer = setTimeout(() => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+      }
+    }, 5000); // Set the timeout duration
+  };
+
+  const scrollToBottom = () => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleEndChat = () => {
+    socket.emit('end chat');
+  };
+
+  const handleStartSTT = async () => {
+    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(audioStream, { mimeType: 'audio/webm' });
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        socket.emit('audio message', event.data);
+      }
+    };
+
+    mediaRecorder.onstop = () => {
+      clearTimeout(silenceTimer);
+      socket.emit('end stt');
+    };
+
+    mediaRecorder.start(250); // Collect audio data every 250ms
+
+    socket.emit('start stt');
+    resetSilenceTimer();
   };
 
   const handleCloseChat = () => {
-    setIsAlertOpen(true); // 알림창을 엽니다.
+    setIsAlertOpen(true);
   };
 
   const handleConfirmCloseChat = () => {
@@ -70,11 +158,25 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   if (!isChatOpen) return null;
 
+  const convertedMessages = messages.map((msg) => ({
+    text: msg.message,
+    isUser: msg.sender === nickname,
+  }));
+
   return (
     <ChatContainer>
       <UPCharacterProfile name={character.name} onClose={handleCloseChat} fontFamily={character.fontFamily} />
-      <ChatingBox messages={messages} isTyping={isTyping} character={character} />
-      <UserInputBox onSend={handleSend} />
+      <ChatingBox 
+        messages={convertedMessages}
+        isTyping={isTyping}
+        character={character}
+      />
+      <UserInputBox 
+        input={input} 
+        setInput={setInput} 
+        sendMessage={sendMessage}
+        handleStartSTT={handleStartSTT}
+      />
       <Stars />
       <Stars1 />
       <Stars2 />

@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import sendIcon from '../../assets/svg/send.svg';
 import micIcon from '../../assets/svg/mic.svg';
@@ -121,6 +121,7 @@ export const ChatBox = styled.div`
     width: 90%;
   }
 `;
+
 // 말풍선 등장 시 위로 올라가는 애니메이션
 const appearAnimation = keyframes`
   0% {
@@ -381,5 +382,3 @@ export const AlertButtonFinish = styled.button`
     margin: 0 5px;
   }
 `;
-
-export default CloseButton;
