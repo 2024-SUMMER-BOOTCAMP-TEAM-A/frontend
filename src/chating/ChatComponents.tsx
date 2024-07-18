@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import html2canvas from 'html2canvas';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import TypingWaiting from './component/TypingWaiting';
 import { Character } from '../assets/initCharacter'; 
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
@@ -22,11 +22,12 @@ import downloadImg from '../assets/png/download.png';
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
-  const { nickname } = useParams<{ nickname: string }>();
+  const { state } = useLocation();
+  const { nickname } = state || {};
 
   return (
     <CharacterProfile>
-      <Leftarrow onClick={() => navigate(`/select/${nickname}`)} />
+      <Leftarrow onClick={() => navigate('/select', { state: { nickname } })} />
       <ProfileName style={{ fontFamily }}>{name}</ProfileName>
       <CloseButton onClick={onClose}>
         <Closeicon />
@@ -34,6 +35,7 @@ export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; f
     </CharacterProfile>
   );
 };
+
 
 interface CharacterChatContentProps {
   isTyping: boolean;
@@ -156,7 +158,7 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
   );
 };
 
-export const LogModal: React.FC<{ character: Character; nickname: string | undefined; onClose: () => void }> = ({ character, nickname, onClose }) => {
+export const LogModal: React.FC<{ character: Character; nickname?: string; onClose: () => void }> = ({ character, nickname = '', onClose }) => {
   const getCurrentDate = () => {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
@@ -167,7 +169,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
   const logContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRankingClick = () => {
-    navigate(`/topselect/${nickname}`);
+    navigate('/topselect', { state: { nickname } });
   };
 
   const handleDownload = () => {
@@ -195,7 +197,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
         </LogHeaderContainer>
         <LogContainer ref={logContainerRef}>
           <LogImage src={logpersonaImg} alt="Persona" />
-          <LogNickname>{nickname}</LogNickname>
+          <LogNickname>{nickname || 'No nickname provided'}</LogNickname>
           <ChatImage src={chatImg} alt="Chat related" /> {/* Placeholder for chat-related image */}
           <ChatSummary>
             <br />

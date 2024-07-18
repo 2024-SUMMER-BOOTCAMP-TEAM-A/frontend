@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import socket from './socket';
 import {
   UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
@@ -29,10 +29,9 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   let silenceTimer: ReturnType<typeof setTimeout>;
   let mediaRecorder: MediaRecorder;
 
-  const { nickname } = useParams<{ nickname: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const character = location.state?.character || initialCharacter;
+  const { character, nickname } = location.state || { character: initialCharacter, nickname: '' };
 
   useEffect(() => {
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEzLCJpYXQiOjE3MjEyOTA1NDgsImV4cCI6MTcyMTM3Njk0OH0.DL8-OM9shd1ZxnMEXmLR0sPbi4bHtxz5YtPSljJJs-o'; // Replace with the appropriate token retrieval method
@@ -41,7 +40,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     const handleChatMessage = (message: Message) => {
       console.log('handleChatMessage:', message);
       setMessages((prevMessages) => {
-        // 중복 메시지 추가 방지
+        // Prevent duplicate messages
         if (prevMessages.length > 0 && prevMessages[prevMessages.length - 1].message === message.message && prevMessages[prevMessages.length - 1].sender === message.sender) {
           return prevMessages;
         }
@@ -59,7 +58,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
     const handleTranscript = (data: { message: string }) => {
       console.log('handleTranscript:', data.message);
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: data.message }]);
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname, message: data.message }]);
       resetSilenceTimer();
     };
 
@@ -93,7 +92,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     console.log('sendMessage:', message);
     if (message.trim()) {
       socket.emit('chat message', { content: message, sender: nickname });
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message }]);
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname, message }]);
       setInput('');
     }
   };
@@ -132,7 +131,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       socket.emit('end stt');
     };
 
-    mediaRecorder.start(250); // Collect audio data every 250ms
+    mediaRecorder.start(250);
 
     socket.emit('start stt');
     resetSilenceTimer();

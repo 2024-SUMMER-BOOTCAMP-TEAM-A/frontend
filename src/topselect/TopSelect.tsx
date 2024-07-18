@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   MainContainer, BackButton, Display, CharacterContainer, FirstPlaceContainer, OtherPlacesContainer, FirstPlaceImage, OtherPlaceImage, FirstPlaceComment
 } from './topselectstyles';
@@ -24,25 +24,26 @@ const characterImages: Record<string, string> = {
 
 const TopSelect: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { nickname } = location.state || { nickname: 'No nickname provided' };
   const [persons, setPersons] = useState<Person[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);  // boolean 타입 정의
-  const [error, setError] = useState<string | null>(null); // string 또는 null 타입 정의
-
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getPersonsByCountDesc();
-        console.log('Fetched data:', data); // 데이터 콘솔 출력
+        console.log('Fetched data:', data);
         setPersons(data);
       } catch (error) {
         console.error('Error fetching persons:', error);
         setError('Error fetching data');
       } finally {
-        setLoading(false); // 로딩 상태 업데이트
+        setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -67,10 +68,7 @@ const TopSelect: React.FC = () => {
     }
   };
 
-  // 데이터를 횟수 기준으로 정렬
   const sortedPersons = [...persons].sort((a, b) => b.count - a.count);
-
-  // 가장 많이 선택된 캐릭터
   const topPerson = sortedPersons[0];
 
   const voteData = persons.reduce((acc: { [key: string]: number }, person) => {
@@ -80,13 +78,13 @@ const TopSelect: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/'); 
+    navigate('/');
   };
 
   return (
     <MainContainer>
       <StarBackground />
-      <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }}/>
+      <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '15%', height: '30%' }} />
       <Display>
         <CharacterContainer>

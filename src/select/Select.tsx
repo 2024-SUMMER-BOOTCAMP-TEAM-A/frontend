@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import axios from 'axios'; 
 import personaImg from '../assets/png/persona.png';
@@ -52,8 +52,6 @@ const personas: Persona[] = [
 ];
 
 const Select: React.FC = () => {
-  const location = useLocation();
-  const { nickname } = location.state || {};
   const [personasData, setPersonasData] = useState<CardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -118,10 +116,8 @@ const Select: React.FC = () => {
 
   const handleStartChat = () => {
     if (selectedCard) {
-      console.log('Navigating to chat with nickname:', nickname);
-      console.log('Selected card:', selectedCard);
       const { name, cardText, modalText, fontComponent } = selectedCard;
-      navigate('/chat', { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' }, nickname } });
+      navigate('/chat', { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' } } });
     }
   };
 
@@ -142,17 +138,16 @@ const Select: React.FC = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // 토큰을 로컬 저장소에서 제거
-    navigate('/'); // 로그인 페이지로 리디렉션
+    localStorage.removeItem('token');
+    navigate('/');
   };
-  
 
   const displayedCards = [
     ...personasData.slice(currentIndex, currentIndex + 3),
     ...personasData.slice(0, Math.max(0, (currentIndex + 3) - personasData.length)),
   ].slice(0, 3);
 
-  const FontComponent = selectedCard?.fontComponent || KyoboHandwriting2020A; // Default font component
+  const FontComponent = selectedCard?.fontComponent || KyoboHandwriting2020A;
 
   return (
     <MainContainer>
@@ -163,7 +158,7 @@ const Select: React.FC = () => {
         <GmarketSansMedium style={{ fontSize: '15px' }}>로그아웃</GmarketSansMedium>
       </LogoutButton>
       <FadeInText>
-        <RankingButton onClick={() => navigate('/topselect', { state: { nickname } })}>
+        <RankingButton onClick={() => navigate('/topselect')}>
           <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
         </RankingButton>
         <CardContainer>
@@ -220,7 +215,6 @@ const Select: React.FC = () => {
           </ModalContent>
         )}
       </ReactModal>
-      {nickname && <div>Welcome, {nickname}!</div>}
     </MainContainer>
   );
 };
