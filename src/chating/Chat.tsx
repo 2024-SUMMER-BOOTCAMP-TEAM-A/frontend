@@ -153,7 +153,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const handleCloseLog = () => {
     setIsLogOpen(false);
-    navigate(`/select/${nickname}`);
+    navigate('/select', { state: { nickname } });
   };
 
   if (!isChatOpen) return null;
@@ -182,7 +182,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} onClose={handleCloseLog} />}
+      {isLogOpen && <LogModal character={character} nickname={nickname || 'No nickname provided'} onClose={handleCloseLog} />}
     </ChatContainer>
   );
 };

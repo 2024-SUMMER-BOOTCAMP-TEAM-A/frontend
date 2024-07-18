@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ReactModal from 'react-modal';
-import { fetchPersonas } from './selectAPI';
-import { fetchPersonaDetails } from './selectmodalAPI';
+import axios from 'axios'; 
 import personaImg from '../assets/png/persona.png';
 import mzBackground from '../assets/png/mzback.png';
 import leemalBackground from '../assets/png/leemalback.png';
@@ -21,8 +20,22 @@ import mzImage from '../assets/png/mz.png';
 import leemalImage from '../assets/png/leemal.png';
 import uncleImage from '../assets/png/uncle.png';
 
+const API_URL = 'http://localhost:8000/api/v1/persons';
+
+interface Persona {
+  id: number;
+  name: string;
+  title: string;
+}
+
+interface PersonaDetails {
+  id: number;
+  name: string;
+  content: string;
+}
+
 interface CardData {
-  id: string;
+  id: number;
   name: string;
   cardText: string;
   modalText: string;
@@ -31,9 +44,17 @@ interface CardData {
   fontComponent: React.FC<{ children: React.ReactNode; style?: React.CSSProperties }>;
 }
 
+const personas: Persona[] = [
+  { id: 1, name: '침착맨',title: '나랑 스무고개해서 이기면 만원'},
+  { id: 2, name: '장원영' ,title: '이거 완전 럭키비키잖아! 🍀 '},
+  { id: 3, name: '쌈디' , title: '연애가 참 어렵제?'},
+  { id: 4, name: '맑눈광',title: '이렇게 해야 능률이 올라가는 편입니다.' }
+];
+
 const Select: React.FC = () => {
-  const { nickname } = useParams<{ nickname: string }>(); // nickname 받아오기
-  const [personas, setPersonas] = useState<CardData[]>([]);
+  const location = useLocation();
+  const { nickname } = location.state || {};
+  const [personasData, setPersonasData] = useState<CardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
@@ -41,59 +62,52 @@ const Select: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadPersonas = async () => {
-      try {
-        const data = await fetchPersonas();
-        console.log('Fetched personas:', data); // Fetch된 데이터를 로그에 출력
-        const formattedData = data.map((persona, index) => {
-          // 임시 데이터 설정 (예시)
-          const images = [mzImage, leemalImage, luckyImage, uncleImage];
-          const backgrounds = [mzBackground, leemalBackground, luckyBackground, uncleBackground];
-          const fonts = [Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar];
-
-          return {
-            ...persona,
-            cardText: persona.title,
-            modalText: '',
-            img: images[index % images.length],
-            background: backgrounds[index % backgrounds.length],
-            fontComponent: fonts[index % fonts.length],
-          };
-        });
-        setPersonas(formattedData);
-      } catch (error) {
-        console.error('인격 데이터를 불러오는 중 오류 발생:', error);
-      }
-    };
-    loadPersonas();
+    const formattedData = personas.map((persona, index) => {
+      const images = [leemalImage, luckyImage, uncleImage, mzImage];
+      const backgrounds = [leemalBackground, luckyBackground, uncleBackground, mzBackground];
+      const fonts = [KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar, Gothic_Goding];
+  
+      return {
+        id: persona.id,
+        name: persona.name,
+        cardText: persona.title, 
+        modalText: '',
+        img: images[index % images.length],
+        background: backgrounds[index % backgrounds.length],
+        fontComponent: fonts[index % fonts.length],
+      };
+    });
+  
+    setPersonasData(formattedData);
   }, []);
 
-  const handlePrev = () => {
-    setAnimationDirection('right');
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev === 0 ? personas.length - 1 : prev - 1));
-      setAnimationDirection(null);
-    }, 100);
+  const fetchPersonaDetails = async (personaId: number): Promise<PersonaDetails> => {
+    try {
+      const response = await axios.get<PersonaDetails>(`${API_URL}/${personaId}`);
+      console.log('API Response for Details:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching persona details:', error);
+      throw error;
+    }
   };
 
-  const handleNext = () => {
-    setAnimationDirection('left');
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev === personas.length - 1 ? 0 : prev + 1));
-      setAnimationDirection(null);
-    }, 100);
-  };
+  const handleCardClick = async (personaId: number) => {
+    console.log("Clicked Persona ID:", personaId);
 
-  const handleCardClick = async (personaId: string) => {
     try {
       const details = await fetchPersonaDetails(personaId);
-      const cardData = personas.find((card) => card.id === personaId);
+      console.log('Fetched details:', details);
+
+      const cardData = personasData.find((card) => card.id === personaId);
       if (cardData) {
-        setSelectedCard({ ...cardData, modalText: details.title });
+        const updatedCard = { ...cardData, modalText: details.content };
+        console.log("Selected Card Data:", updatedCard);
+        setSelectedCard(updatedCard);
         setModalIsOpen(true);
       }
     } catch (error) {
-      console.error('모달 데이터를 불러오는 중 오류 발생:', error);
+      console.error('Error fetching persona details:', error);
     }
   };
 
@@ -107,44 +121,60 @@ const Select: React.FC = () => {
       console.log('Navigating to chat with nickname:', nickname);
       console.log('Selected card:', selectedCard);
       const { name, cardText, modalText, fontComponent } = selectedCard;
-      navigate(`/chat/${nickname}`, { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' } } });
+      navigate('/chat', { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' }, nickname } });
     }
   };
 
-  // 로그아웃 처리 함수
+  const handlePrev = () => {
+    setAnimationDirection('right');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev === 0 ? personasData.length - 1 : prev - 1));
+      setAnimationDirection(null);
+    }, 100);
+  };
+
+  const handleNext = () => {
+    setAnimationDirection('left');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev === personasData.length - 1 ? 0 : prev + 1));
+      setAnimationDirection(null);
+    }, 100);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token'); // 토큰을 로컬 저장소에서 제거
     navigate('/'); // 로그인 페이지로 리디렉션
   };
   
+
   const displayedCards = [
-    ...personas.slice(currentIndex, currentIndex + 3),
-    ...personas.slice(0, Math.max(0, (currentIndex + 3) - personas.length)),
+    ...personasData.slice(currentIndex, currentIndex + 3),
+    ...personasData.slice(0, Math.max(0, (currentIndex + 3) - personasData.length)),
   ].slice(0, 3);
+
+  const FontComponent = selectedCard?.fontComponent || KyoboHandwriting2020A; // Default font component
 
   return (
     <MainContainer>
       <StarBackground />
       <Image src={personaImg} alt="Persona" style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '15%', height: '30%' }} />
-      <LogoutButton onClick={handleLogout}>
+      <LogoutButton onClick={() => handleLogout()}>
         <GmarketSansMedium style={{ fontSize: '15px' }}>로그아웃</GmarketSansMedium>
       </LogoutButton>
       <FadeInText>
-        <RankingButton onClick={() => navigate(`/topselect/${nickname}`)}>
+        <RankingButton onClick={() => navigate('/topselect', { state: { nickname } })}>
           <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
         </RankingButton>
         <CardContainer>
-          <CardSlider animationDirection={animationDirection}>
-            {displayedCards.map((card, index) => {
-              const FontComponent = card.fontComponent;
-              return (
-                <Card key={index} onClick={() => handleCardClick(card.id)}>
-                  <CardImage src={card.img} alt={`Character ${index + 1}`} />
-                  <CardText as={FontComponent}>{card.cardText}</CardText>
-                </Card>
-              );
-            })}
+          <CardSlider $animationDirection={animationDirection}>
+            {displayedCards.map((card) => (
+              <Card key={card.id} onClick={() => handleCardClick(card.id)}>
+                <CardImage src={card.img} alt={`Character ${card.name}`} />
+                <CardText as={card.fontComponent}>{card.name}</CardText>
+                <CardText as={card.fontComponent}>{card.cardText}</CardText>
+              </Card>
+            ))}
           </CardSlider>
         </CardContainer>
         <NavContainer>
@@ -170,14 +200,19 @@ const Select: React.FC = () => {
         {selectedCard && (
           <ModalContent style={{ position: 'relative', right: '10%' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <selectedCard.fontComponent style={{ fontSize: '40px', color: 'black', marginBottom: '20px', marginTop: '30px', marginLeft: '-6px' }}>
-                {selectedCard.name}
-              </selectedCard.fontComponent>
+              <div>
+                <img src={selectedCard.img} alt={`Character ${selectedCard.name}`} style={{ width: '200px', height: '300px', borderRadius: '50%' }} />
+              </div>
+              <div style={{ marginBottom: '20px', marginTop: '30px', marginLeft: '-6px' }}>
+                <selectedCard.fontComponent style={{ fontSize: '40px', color: 'black' }}>
+                  {selectedCard.name}
+                </selectedCard.fontComponent>
+              </div>
             </div>
             <div style={{ textAlign: 'left', width: '100%', marginLeft: '-200px' }}>
-              <selectedCard.fontComponent style={{ fontSize: '35px', color: 'black', marginBottom: '20px' }}>
+              <FontComponent style={{ fontSize: '35px', color: 'black', marginBottom: '20px' }}>
                 {selectedCard.modalText}
-              </selectedCard.fontComponent>
+              </FontComponent>
               <ChatButton onClick={handleStartChat}>
                 <GmarketSansMedium style={{ fontSize: '17px' }}>채팅 시작하기</GmarketSansMedium>
               </ChatButton>
