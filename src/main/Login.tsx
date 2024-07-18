@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
 import { OwnglyphFont } from './mainstyles';
+import { signupUser } from './signupAPI';
+import { loginUser } from './loginAPI';
+import axios from 'axios';
 
 const LoginPage: React.FC = () => {
-  // 상태 관리: 회원가입 모달, 이메일, 닉네임, 비밀번호, 로그인 이메일, 로그인 비밀번호, 오류 모달, 완료 모달, 필드 입력 요구 모달
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
@@ -17,24 +19,45 @@ const LoginPage: React.FC = () => {
   const [loginPassword, setLoginPassword] = useState('');
   const navigate = useNavigate();
 
+  // 이메일 형식 검사 함수
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   // 회원가입 처리 함수
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    if (!isValidEmail(email)) {
+      setErrorMessage('이메일 형식으로 입력해주세요.');
+      setShowErrorModal(true);
+      return;
+    }
+
     if (email && nickname && password) {
-      // 로컬 저장소에 사용자 정보 저장
-      localStorage.setItem('user', JSON.stringify({ email, nickname, password }));
-      setShowRegisterModal(false);
-      setShowCompleteModal(true); // 회원가입 완료 모달 표시
+      try {
+        await signupUser({ email, nickname, password });
+        setShowRegisterModal(false);
+        setShowCompleteModal(true); // 회원가입 완료 모달 표시
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setErrorMessage(error.response?.data?.message || '회원가입 중 오류가 발생했습니다.');
+        } else {
+          setErrorMessage('회원가입 중 오류가 발생했습니다.');
+        }
+        setShowErrorModal(true);
+      }
     } else {
       setShowFieldErrorModal(true); // 모든 필드 입력 요구 모달 표시
     }
   };
 
   // 로그인 처리 함수
-  const handleLogin = () => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user.email === loginEmail && user.password === loginPassword) {
-      navigate(`/select/${user.nickname}`);
-    } else {
+  const handleLogin = async () => {
+    try {
+      const response = await loginUser({ email: loginEmail, password: loginPassword });
+      localStorage.setItem('token', response.token); // 토큰을 로컬 저장소에 저장
+      navigate(`/select/${response.nickname}`);
+    } catch (error) {
       setErrorMessage('이메일 또는 비밀번호가 잘못되었습니다.');
       setShowErrorModal(true);
     }

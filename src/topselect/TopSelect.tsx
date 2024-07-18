@@ -4,7 +4,7 @@ import {
   MainContainer, BackButton, Display, CharacterContainer, FirstPlaceContainer, OtherPlacesContainer, FirstPlaceImage, OtherPlaceImage, FirstPlaceComment
 } from './topselectstyles';
 import {
-  GmarketSansMedium, Moon, Image, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar,
+  GmarketSansMedium, Moon, Image, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar, LogoutButton
 } from '../assets/styles';
 import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
@@ -78,6 +78,11 @@ const TopSelect: React.FC = () => {
     return acc;
   }, {});
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/'); 
+  };
+
   return (
     <MainContainer>
       <StarBackground />
@@ -100,6 +105,9 @@ const TopSelect: React.FC = () => {
         <BarChart data={voteData} width="60%" height="80vh" />
       </Display>
       <BackButton onClick={handleBackClick} />
+      <LogoutButton onClick={handleLogout}>
+        <GmarketSansMedium style={{ fontSize: '15px' }}>로그아웃</GmarketSansMedium>
+      </LogoutButton>
     </MainContainer>
   );
 };
