@@ -41,7 +41,6 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     const handleChatMessage = (message: Message) => {
       console.log('handleChatMessage:', message);
       setMessages((prevMessages) => {
-        // 중복 메시지 추가 방지
         if (prevMessages.length > 0 && prevMessages[prevMessages.length - 1].message === message.message && prevMessages[prevMessages.length - 1].sender === message.sender) {
           return prevMessages;
         }
