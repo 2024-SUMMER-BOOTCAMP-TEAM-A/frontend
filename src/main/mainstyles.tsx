@@ -210,13 +210,13 @@ export const Character = styled.img`
   animation-fill-mode: both;
 
   @media (max-width: 768px) {
-    width: 50%;
-    height: 40%;
+    width: 25%;
+    height: 50%;
   }
 
   @media (max-width: 480px) {
-    width: 60%;
-    height: 30%;
+    width: 50%;
+    height: 40%;
   }
 `;
 
