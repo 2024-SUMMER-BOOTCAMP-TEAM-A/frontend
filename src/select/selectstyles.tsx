@@ -32,6 +32,39 @@ export const CardContainer = styled.div`
 `;
 
 // 카드 슬라이더 애니메이션
+// const slideLeft = keyframes`
+//   from {
+//     transform: translateX(0%);
+//   }
+//   to {
+//     transform: translateX(-33.33%);
+//   }
+// `;
+
+// const slideRight = keyframes`
+//   from {
+//     transform: translateX(0%);
+//   }
+//   to {
+//     transform: translateX(33.33%);
+//   }
+// `;
+
+// export const CardSlider = styled.div<{ $animationDirection: 'left' | 'right' | null }>`
+//   display: flex;
+//   width: 300%; 
+//   transition: transform 0.1s ease-in-out;
+//   ${({ $animationDirection }) =>
+//     $animationDirection === 'left' &&
+//     css`
+//       animation: ${slideLeft} 0.2s forwards;
+//     `}
+//   ${({ $animationDirection }) =>
+//     $animationDirection === 'right' &&
+//     css`
+//       animation: ${slideRight} 0.2s forwards;
+//     `}
+// `;
 const slideLeft = keyframes`
   0% {
     transform: translateX(0);
@@ -50,20 +83,15 @@ const slideRight = keyframes`
   }
 `;
 
-export const CardSlider = styled.div<{ animationDirection: 'left' | 'right' | null }>`
+interface CardSliderProps {
+  $animationDirection?: 'left' | 'right' | null;
+}
+
+export const CardSlider = styled.div<CardSliderProps>`
   display: flex;
-  width: 300%; 
-  transition: transform 0.1s ease-in-out;
-  ${({ animationDirection }) =>
-    animationDirection === 'left' &&
-    css`
-      animation: ${slideLeft} 0.2s forwards;
-    `}
-  ${({ animationDirection }) =>
-    animationDirection === 'right' &&
-    css`
-      animation: ${slideRight} 0.2s forwards;
-    `}
+  transition: transform 0.5s ease-in-out;
+  transform: ${({ $animationDirection }) =>
+    $animationDirection === 'left' ? 'translateX(-100%)' : $animationDirection === 'right' ? 'translateX(100%)' : 'translateX(0)'};
 `;
 
 // 개별 카드 스타일
