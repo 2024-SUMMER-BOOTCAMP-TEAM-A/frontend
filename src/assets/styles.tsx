@@ -294,3 +294,22 @@ z-index: 2;
 }
 `;
 
+export const LogoutButton = styled.button`
+  display: flex;
+  position: absolute;
+  top: 5%;
+  right: 8%;
+  background-color: #005870;
+  color: #000000;
+  border: none;
+  border-radius: 55px;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 10;
+
+  &:hover {
+    background-color: #00465A;
+    transform: scale(1.1);
+  }
+`;

@@ -188,7 +188,7 @@ export const RankingButton = styled.button`
   display: flex;
   position: absolute;
   top: 5%;
-  right: 7%;
+  right: 16%;
   background-color: #98B4E6; 
   color: #000000;
   border: none;

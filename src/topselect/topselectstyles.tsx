@@ -58,7 +58,7 @@ export const Display = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 70%;
+  width: 84%;
   height: 80%; 
   padding: 30px;
   background-color: #3c383c;
@@ -167,7 +167,7 @@ export const OtherPlaceImage = styled.img`
 export const BackButton = styled.button`
   position: absolute;
   top: 5%;
-  right: 7%;
+  right: 16%;
   background-color: #E0BBE4;
   border: none;
   border-radius: 55px;
