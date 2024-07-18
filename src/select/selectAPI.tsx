@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api/v1/persons';
 
 interface Persona {
-  id: string;
+  id: number;
   name: string;
   title: string;
 }

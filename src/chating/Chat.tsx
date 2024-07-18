@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Character } from '../assets/initCharacter'; 
 import {
   UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
@@ -15,15 +15,14 @@ interface ChatProps {
 
 // Chat 컴포넌트의 props 타입 정의
 const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
-  const { nickname } = useParams<{ nickname: string }>();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { character, nickname } = location.state || { character: initialCharacter, nickname: '' };
   const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
     console.log('Character from location state:', character);
@@ -37,7 +36,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     };
 
     startChat();
-  }, [character]);
+  }, [character, nickname]);
 
   const handleSend = (message: string) => {
     setMessages((prevMessages) => [...prevMessages, { text: message, isUser: true }]);
@@ -48,11 +47,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages, { text: `Here is a response to "${message}"`, isUser: false }]);
       setIsTyping(false);
-    }, 500); // 1초 지연, 필요에 따라 지연 시간 조정 가능
-  };
-
-  const handleClose = () => {
-    setIsChatOpen(false);
+    }, 500); // 0.5초 지연, 필요에 따라 지연 시간 조정 가능
   };
 
   const handleCloseChat = () => {
@@ -70,7 +65,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const handleCloseLog = () => {
     setIsLogOpen(false);
-    navigate(`/select/${nickname}`);
+    navigate('/select', { state: { nickname } });
   };
 
   if (!isChatOpen) return null;
@@ -85,7 +80,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} onClose={handleCloseLog} />}
+      {isLogOpen && <LogModal character={character} nickname={nickname || 'No nickname provided'} onClose={handleCloseLog} />}
     </ChatContainer>
   );
 };

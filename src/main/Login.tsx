@@ -55,14 +55,15 @@ const LoginPage: React.FC = () => {
   const handleLogin = async () => {
     try {
       const response = await loginUser({ email: loginEmail, password: loginPassword });
+      console.log('Login response:', response); // 로그인 응답을 로그에 출력
       localStorage.setItem('token', response.token); // 토큰을 로컬 저장소에 저장
-      navigate(`/select/${response.nickname}`);
+      navigate('/select', { state: { nickname: response.nickname } }); // nickname을 상태로 전달
     } catch (error) {
       setErrorMessage('이메일 또는 비밀번호가 잘못되었습니다.');
       setShowErrorModal(true);
     }
   };
-
+  
   // Enter 키 누를 때 로그인 처리
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
