@@ -25,7 +25,7 @@ export const ModalContent = styled.div`
   align-items: center;
   padding: 0 10%;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 90%;
     height: 90%;
     padding: 0 5%;
@@ -46,13 +46,12 @@ export const LogHeaderContainer = styled.div`
   z-index: 1;
   padding: 20px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 520px;
     height: auto;
     left: 35%;
   }
 `;
-
 
 // 상담일지 글씨 부분
 export const LogHeader = styled.div`
@@ -68,7 +67,7 @@ export const LogHeader = styled.div`
   color: #DEDDBC;
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     top: -4.5%;
     font-size: 1.5em;
   }
@@ -84,7 +83,7 @@ export const LogHeaderImage = styled.img`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     top: 18%;
     width: 15%;
   }
@@ -105,7 +104,7 @@ export const LogContainer = styled.div`
   padding: 20px;
   z-index: 2;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     top: 15%;
     width: 450px;
     height: auto;
@@ -128,7 +127,7 @@ export const ButtonContainer = styled.div`
   gap: 40%;
   z-index: 3;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     right: 10%;
     top: 70%;
     width: 50%;
@@ -142,7 +141,7 @@ export const LogImage = styled.img`
   height: 50px;
   margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     height: 40px;
     margin-bottom: 10px;
   }
@@ -159,7 +158,7 @@ export const LogNickname = styled.div`
     color: gray;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 1.2em;
     margin-bottom: 10px;
   }
@@ -170,7 +169,7 @@ export const ChatImage = styled.img`
   height: 40%;
   margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     height: 30%;
     margin-bottom: 10px;
   }
@@ -188,7 +187,7 @@ export const ChatSummary = styled.div`
     color: gray;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 0.9em;
     margin-bottom: 10px;
   }
@@ -214,7 +213,7 @@ export const Solution = styled.div`
     font-size: 1.2em;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 0.9em;
     padding-left: 10px;
 
@@ -233,7 +232,7 @@ export const PersonalitySection = styled.div`
   align-items: center;
   justify-content: flex-end;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     bottom: 30px;
   }
 `;
@@ -245,16 +244,10 @@ export const PersonalityImage = styled.img`
   border-radius: 50%;
   margin-right: 1vw;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 12vw;
     height: auto;
     margin-right: 2vw;
-  }
-
-  @media (max-width: 480px) {
-    width: 15vw;
-    height: auto;
-    margin-right: 3vw;
   }
 `;
 
@@ -267,7 +260,7 @@ export const PersonalityDescription = styled.div`
     color: gray;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 0.9em;
   }
 `;
@@ -280,7 +273,7 @@ export const LogDate = styled.div`
   color: black;
   bottom: 15px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 0.9em;
   }
 `;
@@ -303,7 +296,7 @@ const ButtonBase = styled.button`
     transform: scale(1.1);
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 80%;
     height: 45%;
     font-size: 11px;

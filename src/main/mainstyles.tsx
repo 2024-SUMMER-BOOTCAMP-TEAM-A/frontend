@@ -28,12 +28,8 @@ export const Button = styled.button`
     margin-top: 3px;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 3px 30px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 3px 20px;
   }
 `;
 
@@ -53,15 +49,10 @@ export const UpButtonContainer = styled.div`
     opacity: 0.8;
   }
 
-  @media (max-width: 768px) {
-    top: 60%; 
-  }
-
-  @media (max-width: 480px) {
-    top: 70%; 
+  @media screen and (max-width: 768px) {
+    top: 20%; 
   }
 `;
-
 
 // 이미지 애니메이션 키프레임
 export const tiltLeftRight = keyframes`
@@ -101,19 +92,15 @@ export const SectionOne = styled(Section)`
   width: 100%; 
   box-sizing: border-box; 
 `;
+
 // 메인 페이지 이야기하러가기 버튼 이미지
 export const UpImage = styled.img`
   width: 120px;
   height: 120px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 80px;
     height: 80px;
-  }
-
-  @media (max-width: 480px) {
-    width: 60px;
-    height: 60px;
   }
 `;
 
@@ -123,12 +110,8 @@ export const UpButtonText = styled.div`
   font-size: clamp(16px, 4vw, 27px);
   margin-top: 55px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     margin-top: 30px;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: 20px;
   }
 `;
 
@@ -141,15 +124,13 @@ export const OwnglyphFont = styled.h1`
     font-style: normal;
   }
   font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
-  font-size: clamp(25px, 5vw, 40px);
+  font-size: clamp(20px, 3vw, 40px);
   color: #fff;
   margin: 0;
   text-align: center; // 텍스트 중앙 정렬 추가
   padding: 0 20px; // 양옆 패딩 추가
 `;
 
-
-// 온보딩 3P 사진 돌아가는 css
 // 캐릭터 회전 애니메이션을 위한 키프레임 추가
 const rotate = keyframes`
   0%, 100% {
@@ -186,13 +167,8 @@ export const CharacterContainer = styled.div`
   align-items: center;
   z-index: 5;
 
-  @media (max-width: 768px) {
-    width: 50%;
-    height: 40%;
-  }
-
-  @media (max-width: 480px) {
-    width: 60%;
+  @media screen and (max-width: 768px) {
+    width: 40%;
     height: 30%;
   }
 `;
@@ -209,13 +185,8 @@ export const Character = styled.img`
   animation: ${rotate} 6s infinite;
   animation-fill-mode: both;
 
-  @media (max-width: 768px) {
-    width: 25%;
-    height: 50%;
-  }
-
-  @media (max-width: 480px) {
-    width: 50%;
+  @media screen and (max-width: 768px) {
+    width: 20%;
     height: 40%;
   }
 `;
@@ -246,12 +217,8 @@ export const ClickImage = styled.img`
   z-index: 4;
   animation: ${clickAnimation} 2s infinite;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 35px;
-  }
-
-  @media (max-width: 480px) {
-    width: 25px;
   }
 `;
 
@@ -311,7 +278,7 @@ export const LeftText = styled.div`
   width: 100%; 
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding-left: 5%;
   }
 `;
@@ -331,10 +298,10 @@ export const RightText = styled.div`
   width: 100%; 
   box-sizing: border-box; 
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding-right: 5%;
     position: relative;
-    top: 0;
+    top: -35%;
     transform: translateY(0);
   }
 `;
@@ -346,7 +313,7 @@ export const WorryImageContainer = styled.div`
   width: 100%;
   margin: auto;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     flex-direction: column;
     align-items: center;
   }
@@ -371,16 +338,10 @@ export const WorryImage = styled.img`
   top: -60px;
   animation: ${dontworry} 6s infinite;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 150px;
     margin: 15px;
     top: -30px;
-  }
-
-  @media (max-width: 480px) {
-    width: 120px;
-    margin: 10px;
-    top: -20px;
   }
 `;
 
@@ -422,13 +383,8 @@ export const StyledUpButtonContainer = styled.div`
     opacity: 0.8;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     top: 50%;
-    left: 50%;
-  }
-
-  @media (max-width: 480px) {
-    top: 60%;
     left: 50%;
   }
 `;
@@ -442,14 +398,9 @@ export const StyledUpImage = styled.img`
     transform: scale(1.25);
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 80px;
     height: 80px;
-  }
-
-  @media (max-width: 480px) {
-    width: 60px;
-    height: 60px;
   }
 `;
 
@@ -458,11 +409,7 @@ export const StyledUpButtonText = styled.div`
   font-size: clamp(16px, 4vw, 27px);
   margin-top: 30px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     margin-top: 20px;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: 10px;
   }
 `;

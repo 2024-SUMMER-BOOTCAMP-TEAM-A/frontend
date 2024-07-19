@@ -67,7 +67,7 @@ export const Display = styled.div`
   border-radius: 30px;
   color: #fff;
   z-index: 20;
-  margin-top: 8%;
+  margin-top: 10%;
   box-sizing: border-box;
 
   @media (max-width: 768px) {

@@ -25,7 +25,7 @@ export const CardContainer = styled.div`
   height: 70%;
   max-width: 1500px; 
   overflow: hidden; 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     height: 60%;
     width: 100%;
   }
@@ -90,18 +90,11 @@ export const Card = styled.div`
     transform: scale(1.10); 
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 80%; 
     height: 300px; 
     margin: 0 10px; 
     padding: 10px;
-  }
-
-  @media (max-width: 480px) {
-    width: 90%;
-    height: 250px;
-    margin: 0 5px;
-    padding: 5px;
   }
 `;
 
@@ -111,14 +104,9 @@ export const CardImage = styled.img`
   height: 300px;
   border-radius: 50%;
   margin: 20px auto 20px auto; 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 150px;
     height: 200px;
-  }
-
-  @media (max-width: 480px) {
-    width: 120px;
-    height: 160px;
   }
 `;
 
@@ -131,29 +119,20 @@ export const CardText = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 18px;
     margin-top: 10px;
   }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
-    margin-top: 5px;
-  }
 `;
+
 // 이미지 스타일
 export const Image = styled.img`
   position: flex;
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 60%;
-    top: 5%;
-  }
-
-  @media (max-width: 480px) {
-    width: 80%;
     top: 5%;
   }
 `;
@@ -177,18 +156,11 @@ export const RankingButton = styled.button`
     background-color: #789cc1;  
     transform: scale(1.1);
   }
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 5px 15px;
     font-size: 12px;
     top: 3%;
     right: 5%;
-  }
-
-  @media (max-width: 480px) {
-    padding: 3px 10px;
-    font-size: 10px;
-    top: 2%;
-    right: 4%;
   }
 `;
 
@@ -204,12 +176,8 @@ export const NavButton = styled.button`
   &:hover {
     color: #98B4E6;
   }
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 18px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 14px;
   }
 `;
 
@@ -224,12 +192,8 @@ export const NavContainer = styled.div`
   transform: translateX(-50%);
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     bottom: 5%;
-  }
-
-  @media (max-width: 480px) {
-    bottom: 4%;
   }
 
   & > ${NavButton} {
@@ -238,12 +202,8 @@ export const NavContainer = styled.div`
     align-items: center;
     margin: 0 30px; 
 
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       margin: 0 10px;
-    }
-
-    @media (max-width: 480px) {
-      margin: 0 5px;
     }
   }
 `;
@@ -260,16 +220,10 @@ export const ChatButton = styled.button`
   &:hover {
     background-color: #789cc1;
   }
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     margin-top: 40px; 
     padding: 3px 40px;
     font-size: 14px;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: 30px;
-    padding: 3px 30px;
-    font-size: 12px;
   }
 `;
 
@@ -293,14 +247,10 @@ export const ModalStyles = {
     height: '70%', 
     textAlign: 'center',
     zIndex: 101,
-    '@media (max-width: 768px)': {
+    '@media screen and (max-width: 768px)': {
       width: '90%',
       height: 'auto',
     },
-    '@media (max-width: 480px)': {
-      width: '95%',
-      height: 'auto',
-    }
   },
 } as ReactModal.Styles;
 
@@ -316,13 +266,8 @@ export const ModalContent = styled.div`
   & > img {
     flex-shrink: 0; // 이미지 크기 고정
 
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       width: 80px;
-      height: auto;
-    }
-
-    @media (max-width: 480px) {
-      width: 60px;
       height: auto;
     }
   }
@@ -337,12 +282,8 @@ export const ModalContent = styled.div`
     text-align: left;
     border-radius: 10px; 
 
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       padding: 20px;
-    }
-
-    @media (max-width: 480px) {
-      padding: 10px;
     }
   }
 `;
@@ -356,14 +297,9 @@ export const NameText = styled.div`
   margin-bottom: -30px; 
   text-align:left;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 24px;
     margin-bottom: -20px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 20px;
-    margin-bottom: -10px;
   }
 `;
 
