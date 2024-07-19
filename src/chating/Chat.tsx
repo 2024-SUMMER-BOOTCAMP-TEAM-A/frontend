@@ -35,7 +35,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3LCJpYXQiOjE3MjEzNzUyNjIsImV4cCI6MTcyMTQ2MTY2Mn0.iIJBlEtR8quaXSn_lmWIB0VO_UbLB1rQGyERqgneKy4'; 
+    const token = localStorage.getItem('accessToken');
     socket.emit('start chat', { token });
 
     const handleChatMessage = (message: Message) => {

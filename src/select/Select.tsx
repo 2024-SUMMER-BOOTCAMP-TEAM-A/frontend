@@ -19,6 +19,7 @@ import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
 import leemalImage from '../assets/png/leemal.png';
 import uncleImage from '../assets/png/uncle.png';
+import { saveUserSelection } from './selectAPI';
 
 const API_URL = 'http://localhost:8000/api/v1/persons';
 
@@ -58,6 +59,15 @@ const Select: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
   const [animationDirection, setAnimationDirection] = useState<'left' | 'right' | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      console.error('Access token not found in localStorage');
+    }
+  }, []);  
 
   useEffect(() => {
     const formattedData = personas.map((persona, index) => {
@@ -114,10 +124,16 @@ const Select: React.FC = () => {
     setSelectedCard(null);
   };
 
-  const handleStartChat = () => {
+  const handleStartChat = async () => {
     if (selectedCard) {
-      const { name, cardText, modalText, fontComponent } = selectedCard;
-      navigate('/chat', { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' } } });
+      const { id, name, cardText, modalText, fontComponent } = selectedCard;
+  
+      try {
+        await saveUserSelection(id);
+        navigate('/chat', {state: { character: { id, name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont',}}});
+      } catch (error) {
+        console.error('Error starting chat:', error);
+      }
     }
   };
 
@@ -138,7 +154,7 @@ const Select: React.FC = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
     navigate('/');
   };
 
