@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import socket from './socket';
 import {
   UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
@@ -8,7 +8,6 @@ import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 import { Character } from '../assets/initCharacter';
 import { ChatContainer } from './component/chatingStyles';
-import { selectPersona } from './chatAPI';
 
 interface Message {
   sender: string;
@@ -17,34 +16,6 @@ interface Message {
 
 interface ChatProps {
   initialCharacter: Character;
-}
-
-function getToken() {
-  const accessToken = localStorage.getItem('accessToken');
-  const refreshToken = localStorage.getItem('refreshToken');
-  return { accessToken, refreshToken };
-}
-
-async function startChat() {
-  try {
-      // 로컬스토리지에서 토큰 가져오기
-      const tokens = getToken();
-      
-      if (!tokens) {
-          throw new Error('No token found in localStorage.');
-      }
-
-      // 인격 번호 선택하기
-      const personaId = await selectPersona();
-      
-      // 토큰과 인격 번호를 함께 전송
-      const token = tokens.accessToken;
-      socket.emit('start chat', { token, personaId });
-      
-      console.log('Chat started with token and personaId:', { token, personaId });
-  } catch (error) {
-      console.error('Error starting chat:', error);
-  }
 }
 
 const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
@@ -58,13 +29,14 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   let silenceTimer: ReturnType<typeof setTimeout>;
   let mediaRecorder: MediaRecorder;
 
+  const { nickname } = useParams<{ nickname: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { character, nickname } = location.state || { character: initialCharacter, nickname: '' };
+  const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
-  
-    socket.emit('start chat', startChat());
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3LCJpYXQiOjE3MjEzNzUyNjIsImV4cCI6MTcyMTQ2MTY2Mn0.iIJBlEtR8quaXSn_lmWIB0VO_UbLB1rQGyERqgneKy4'; 
+    socket.emit('start chat', { token });
 
     const handleChatMessage = (message: Message) => {
       console.log('handleChatMessage:', message);
@@ -86,7 +58,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
     const handleTranscript = (data: { message: string }) => {
       console.log('handleTranscript:', data.message);
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname, message: data.message }]);
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: data.message }]);
       resetSilenceTimer();
     };
 
@@ -118,9 +90,10 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const sendMessage = (message: string) => {
     console.log('sendMessage:', message);
-    if (message.trim()) {
-      socket.emit('chat message', { content: message, sender: nickname });
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname, message }]);
+    const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim(); // 개행 문자 제거
+    if (sanitizedMessage) {
+      socket.emit('chat message', { content: sanitizedMessage, sender: nickname });
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: sanitizedMessage }]);
       setInput('');
     }
   };
@@ -159,7 +132,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       socket.emit('end stt');
     };
 
-    mediaRecorder.start(250);
+    mediaRecorder.start(250); 
 
     socket.emit('start stt');
     resetSilenceTimer();
@@ -180,7 +153,13 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const handleCloseLog = () => {
     setIsLogOpen(false);
-    navigate('/select', { state: { nickname } });
+    navigate(`/select/${nickname}`);
+  };
+
+  const handleEndSTT = () => {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+    }
   };
 
   if (!isChatOpen) return null;
@@ -203,15 +182,17 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
         setInput={setInput} 
         sendMessage={sendMessage}
         handleStartSTT={handleStartSTT}
+        handleEndSTT={handleEndSTT}
       />
       <Stars />
       <Stars1 />
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && <LogModal character={character} nickname={nickname || 'No nickname provided'} onClose={handleCloseLog} />}
+      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} onClose={handleCloseLog} />}
     </ChatContainer>
   );
 };
 
 export default Chat;
+
