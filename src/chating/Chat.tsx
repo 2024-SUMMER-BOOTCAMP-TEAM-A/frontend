@@ -35,13 +35,12 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEzLCJpYXQiOjE3MjEyOTA1NDgsImV4cCI6MTcyMTM3Njk0OH0.DL8-OM9shd1ZxnMEXmLR0sPbi4bHtxz5YtPSljJJs-o'; // Replace with the appropriate token retrieval method
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3LCJpYXQiOjE3MjEzNzUyNjIsImV4cCI6MTcyMTQ2MTY2Mn0.iIJBlEtR8quaXSn_lmWIB0VO_UbLB1rQGyERqgneKy4'; 
     socket.emit('start chat', { token });
 
     const handleChatMessage = (message: Message) => {
       console.log('handleChatMessage:', message);
       setMessages((prevMessages) => {
-        // 중복 메시지 추가 방지
         if (prevMessages.length > 0 && prevMessages[prevMessages.length - 1].message === message.message && prevMessages[prevMessages.length - 1].sender === message.sender) {
           return prevMessages;
         }
@@ -91,9 +90,10 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const sendMessage = (message: string) => {
     console.log('sendMessage:', message);
-    if (message.trim()) {
-      socket.emit('chat message', { content: message, sender: nickname });
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message }]);
+    const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim(); // 개행 문자 제거
+    if (sanitizedMessage) {
+      socket.emit('chat message', { content: sanitizedMessage, sender: nickname });
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: sanitizedMessage }]);
       setInput('');
     }
   };
@@ -132,7 +132,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       socket.emit('end stt');
     };
 
-    mediaRecorder.start(250); // Collect audio data every 250ms
+    mediaRecorder.start(250); 
 
     socket.emit('start stt');
     resetSilenceTimer();
@@ -156,6 +156,12 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     navigate(`/select/${nickname}`);
   };
 
+  const handleEndSTT = () => {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+    }
+  };
+
   if (!isChatOpen) return null;
 
   const convertedMessages = messages.map((msg) => ({
@@ -176,6 +182,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
         setInput={setInput} 
         sendMessage={sendMessage}
         handleStartSTT={handleStartSTT}
+        handleEndSTT={handleEndSTT}
       />
       <Stars />
       <Stars1 />

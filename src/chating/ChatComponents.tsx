@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import html2canvas from 'html2canvas';
 import { useNavigate, useParams } from 'react-router-dom';
 import TypingWaiting from './component/TypingWaiting';
-import { Character } from '../assets/initCharacter'; 
+import { Character } from '../assets/initCharacter';
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
 import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
 import {
@@ -17,8 +17,9 @@ import {
 } from './component/logstyles';
 import penImg from '../assets/png/pen.png';
 import logpersonaImg from '../assets/png/logpersona.png';
-import chatImg from '../assets/png/uncleback.png'; 
+import chatImg from '../assets/png/uncleback.png';
 import downloadImg from '../assets/png/download.png';
+import { debounce } from 'lodash';
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
@@ -49,15 +50,15 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
 
   useEffect(() => {
     if (isTyping) {
-      setShowText(null); 
-      setShowTyping(true); 
+      setShowText(null);
+      setShowTyping(true);
     } else {
       const timer = setTimeout(() => {
-        setShowText(children); 
-        setShowTyping(false); 
-      }, 1000); 
+        setShowText(children);
+        setShowTyping(false);
+      }, 1000);
 
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
     }
   }, [isTyping, children]);
 
@@ -111,21 +112,27 @@ export const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[
   );
 };
 
-export const UserInputBox: React.FC<{ input: string; setInput: (input: string) => void; sendMessage: (message: string) => void; handleStartSTT: () => void }> = ({ input, setInput, sendMessage, handleStartSTT }) => {
 
-  const handleSend = () => {
-    if (input.trim()) {
-      sendMessage(input);
+export const UserInputBox: React.FC<{ input: string; setInput: (input: string) => void; sendMessage: (message: string) => void; handleStartSTT: () => void; handleEndSTT: () => void; }> = ({ input, setInput, sendMessage, handleStartSTT, handleEndSTT }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSend = useCallback(debounce(() => {
+    const sanitizedInput = input.replace(/(\r\n|\n|\r)/gm, '').trim(); // 개행 문자 제거 및 불필요한 공백 제거
+    if (sanitizedInput) {
+      sendMessage(sanitizedInput);
       setInput('');
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
     }
-  };
+  }, 300), [input, sendMessage, setInput]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); 
-      handleSend(); 
+      e.preventDefault();
+      handleSend();
     }
-  };
+  }, [handleSend]);
 
   return (
     <UserInputCon>
@@ -133,11 +140,12 @@ export const UserInputBox: React.FC<{ input: string; setInput: (input: string) =
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown} 
+        onKeyDown={handleKeyDown}
         placeholder="메시지를 입력하세요."
+        ref={inputRef}
       />
       <SendButton onClick={handleSend}>Send</SendButton>
-      <MicButton onClick={handleStartSTT}>Start STT</MicButton>
+      <MicButton onMouseDown={handleStartSTT} onMouseUp={handleEndSTT}>Hold to Speak</MicButton>
     </UserInputCon>
   );
 };
@@ -196,7 +204,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
         <LogContainer ref={logContainerRef}>
           <LogImage src={logpersonaImg} alt="Persona" />
           <LogNickname>{nickname}</LogNickname>
-          <ChatImage src={chatImg} alt="Chat related" /> {/* Placeholder for chat-related image */}
+          <ChatImage src={chatImg} alt="Chat related" />
           <ChatSummary>
             <br />
             상담내용 상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담
