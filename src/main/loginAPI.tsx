@@ -15,8 +15,10 @@ interface LoginResponse {
 export const loginUser = async (data: LoginData): Promise<LoginResponse> => {
   try {
     const response = await axios.post(LOGIN_URL, data);
-    return response.data;
-  } catch (error) {
+    const { accessToken, refreshToken } = response.data;
+
+    return { accessToken, refreshToken };
+    } catch (error) {
     console.error('로그인 중 오류 발생:', error);
     throw error;
   }

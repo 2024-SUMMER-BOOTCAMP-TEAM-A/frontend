@@ -38,7 +38,8 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
-    const token = localStorage.getItem('accesstoken');
+    const token = localStorage.getItem('accessToken');
+
     socket.emit('start chat', { token });
 
     const handleChatMessage = (message: Message) => {
