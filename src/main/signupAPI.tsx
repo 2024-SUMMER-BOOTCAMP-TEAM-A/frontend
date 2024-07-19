@@ -11,7 +11,6 @@ interface SignupData {
 export const signupUser = async (data: SignupData): Promise<void> => {
   try {
     const response = await axios.post(SIGNUP_URL, data);
-    console.log('회원가입 성공:', response.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('회원가입 중 오류 발생:', error.response?.data || error.message);

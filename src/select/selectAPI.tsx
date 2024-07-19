@@ -11,7 +11,6 @@ interface Persona {
 export const fetchPersonas = async (): Promise<Persona[]> => {
   try {
     const response = await axios.get<Persona[]>(API_URL);
-    console.log('API Response:', response.data); // API 응답을 로그에 출력
     return response.data;
   } catch (error) {
     console.error('인격 카드 데이터를 가져오는 중 오류 발생:', error);
