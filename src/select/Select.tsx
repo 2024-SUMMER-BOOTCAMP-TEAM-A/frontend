@@ -46,9 +46,9 @@ interface CardData {
 }
 
 const personas: Persona[] = [
-  { id: 1, name: '침착맨', title: '나랑 스무고개해서 이기면 만원' },
+  { id: 1, name: '침착맨', title: '연애가 젤 쉬운거 아님?' },
   { id: 2, name: '장원영', title: '이거 완전 럭키비키잖아! 🍀 ' },
-  { id: 3, name: '이서진', title: '연애가 참 어렵제?' },
+  { id: 3, name: '이서진', title: '인생은 원래 힘든거야~' },
   { id: 4, name: '맑눈광', title: '이렇게 해야 능률이 올라가는 편입니다.' }
 ];
 
@@ -192,8 +192,8 @@ const Select: React.FC = () => {
           </CardSlider>
         </CardContainer>
         <NavContainer>
-          <NavButton onClick={handlePrev}>{'< Prev'}</NavButton>
-          <NavButton onClick={handleNext}>{'Next >'}</NavButton>
+          <NavButton onClick={handlePrev} className="iconamoon--arrow-left-2-bold" />
+          <NavButton onClick={handleNext} className="iconamoon--arrow-right-2-bold" />
         </NavContainer>
       </FadeInText>
       <ReactModal

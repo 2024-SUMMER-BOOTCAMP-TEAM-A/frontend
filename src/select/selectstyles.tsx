@@ -16,7 +16,7 @@ export const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 53%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
@@ -59,7 +59,7 @@ export const Card = styled.div<{ isActive?: boolean; isLeft?: boolean; isRight?:
   border-radius: 40px;
   width: 40%;
   height: 550px;
-  margin: 0 30px;
+  margin: 0 50px;
   text-align: center;
   padding: 20px 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -173,36 +173,95 @@ export const NavButton = styled.button`
   color: white;
   font-size: 24px;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
+
   &:hover {
     color: #98B4E6;
   }
+
+  &.iconamoon--arrow-left-2-bold {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m14 7l-5 5m0 0l5 5'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
+  &.iconamoon--arrow-right-2-bold {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m10 17l5-5m0 0l-5-5'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
   @media screen and (max-width: 768px) {
     font-size: 18px;
+    width: 30px;
+    height: 30px;
   }
 `;
-
 export const NavContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 7%;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  pointer-events: none;
+
   @media screen and (max-width: 768px) {
-    bottom: 5%;
+    top: 53%;
   }
   & > ${NavButton} {
-    display: flex;
+    pointer-events: all;
+    width: 50px;
+    height: 50px;
     justify-content: center;
     align-items: center;
-    margin: 0 30px;
+
     @media screen and (max-width: 768px) {
-      margin: 0 10px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  & > ${NavButton}:first-child {
+    position: absolute;
+    left: 37.5%; /* 가운데 카드의 왼쪽에 위치 */
+    transform: translateX(-100%);
+
+    @media screen and (max-width: 768px) {
+      left: 45%; /* 화면이 작을 때 위치 조정 */
+    }
+  }
+
+  & > ${NavButton}:last-child {
+    position: absolute;
+    right: 37.5%; /* 가운데 카드의 오른쪽에 위치 */
+    transform: translateX(100%);
+
+    @media screen and (max-width: 768px) {
+      right: 45%; /* 화면이 작을 때 위치 조정 */
     }
   }
 `;
+
 
 const jelly = keyframes`
   0%, 100% {
@@ -334,4 +393,3 @@ export const FadeOutText = styled.div`
 export const FadeInText = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
 `;
-
