@@ -31,40 +31,6 @@ export const CardContainer = styled.div`
   }
 `;
 
-// 카드 슬라이더 애니메이션
-// const slideLeft = keyframes`
-//   from {
-//     transform: translateX(0%);
-//   }
-//   to {
-//     transform: translateX(-33.33%);
-//   }
-// `;
-
-// const slideRight = keyframes`
-//   from {
-//     transform: translateX(0%);
-//   }
-//   to {
-//     transform: translateX(33.33%);
-//   }
-// `;
-
-// export const CardSlider = styled.div<{ $animationDirection: 'left' | 'right' | null }>`
-//   display: flex;
-//   width: 300%; 
-//   transition: transform 0.1s ease-in-out;
-//   ${({ $animationDirection }) =>
-//     $animationDirection === 'left' &&
-//     css`
-//       animation: ${slideLeft} 0.2s forwards;
-//     `}
-//   ${({ $animationDirection }) =>
-//     $animationDirection === 'right' &&
-//     css`
-//       animation: ${slideRight} 0.2s forwards;
-//     `}
-// `;
 const slideLeft = keyframes`
   0% {
     transform: translateX(0);
@@ -89,9 +55,18 @@ interface CardSliderProps {
 
 export const CardSlider = styled.div<CardSliderProps>`
   display: flex;
+  width: 300%; 
   transition: transform 0.5s ease-in-out;
-  transform: ${({ $animationDirection }) =>
-    $animationDirection === 'left' ? 'translateX(-100%)' : $animationDirection === 'right' ? 'translateX(100%)' : 'translateX(0)'};
+  ${({ $animationDirection }) =>
+    $animationDirection === 'left' &&
+    css`
+      animation: ${slideLeft} 0.5s forwards;
+    `}
+  ${({ $animationDirection }) =>
+    $animationDirection === 'right' &&
+    css`
+      animation: ${slideRight} 0.5s forwards;
+    `}
 `;
 
 // 개별 카드 스타일
@@ -102,8 +77,8 @@ export const Card = styled.div`
   background: rgba(32, 27, 70, 0.7);
   border: 2px solid white; 
   border-radius: 40px;
-  width: 30%; 
-  height: 500px;  
+  width: 40%; 
+  height: 550px;  
   margin: 0 30px;  
   text-align: center;
   padding: 20px 10px; 
@@ -150,7 +125,7 @@ export const CardImage = styled.img`
 export const CardText = styled.div`
   color: white;
   font-size: 28px; 
-  margin-top: 20px; /* 텍스트와 이미지 사이에 마진 추가 */
+  margin-top: 40px; /* 텍스트와 이미지 사이에 마진 추가 */
   white-space: pre-line; 
   text-align: center;
   overflow: hidden;

@@ -195,3 +195,4 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 };
 
 export default Chat;
+

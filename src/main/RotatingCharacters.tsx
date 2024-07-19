@@ -4,13 +4,16 @@ import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
 import leemalImage from '../assets/png/leemal.png';
 import clickImg from '../assets/png/click.png';
+import uncleImg from '../assets/png/uncle.png';
+import { lucygirl } from '../assets/initCharacter';
 
 const RotatingCharacters: React.FC = () => {
   return (
     <CharacterContainer>
-      <Character1 src={luckyImage} alt="Character 1" />
-      <Character2 src={mzImage} alt="Character 2" />
-      <Character3 src={leemalImage} alt="Character 3" />
+      <Character1 src={leemalImage} alt="1" />
+      <Character2 src={luckyImage} alt="2" />
+      <Character3 src={uncleImg} alt="3" />
+      <Character3 src={mzImage} alt="4" />
       <ClickImage src={clickImg} alt="Click" />
     </CharacterContainer>
   );

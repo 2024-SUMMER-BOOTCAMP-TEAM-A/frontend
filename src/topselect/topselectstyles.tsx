@@ -59,7 +59,7 @@ export const Display = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 84%;
-  height: 80%; 
+  height: 75%; 
   padding: 30px;
   background-color: #3c383c;
   border: 20px solid #D2B48C;
