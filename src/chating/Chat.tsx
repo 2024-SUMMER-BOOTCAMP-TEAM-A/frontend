@@ -34,9 +34,15 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const location = useLocation();
   const character = location.state?.character || initialCharacter;
 
+  function getToken() {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    return { accessToken, refreshToken };
+  }
+
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEzLCJpYXQiOjE3MjEyOTA1NDgsImV4cCI6MTcyMTM3Njk0OH0.DL8-OM9shd1ZxnMEXmLR0sPbi4bHtxz5YtPSljJJs-o'; // Replace with the appropriate token retrieval method
-    socket.emit('start chat', { token });
+    const token = getToken();
+    console.log(token);    socket.emit('start chat', { token });
 
     const handleChatMessage = (message: Message) => {
       console.log('handleChatMessage:', message);
