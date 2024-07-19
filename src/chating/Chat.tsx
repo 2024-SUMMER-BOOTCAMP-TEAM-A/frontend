@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import socket from './socket';
 import {
   UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
@@ -58,10 +58,9 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   let silenceTimer: ReturnType<typeof setTimeout>;
   let mediaRecorder: MediaRecorder;
 
-  const { nickname } = useParams<{ nickname: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const character = location.state?.character || initialCharacter;
+  const { character, nickname } = location.state || { character: initialCharacter, nickname: '' };
 
   useEffect(() => {
   
@@ -87,7 +86,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
     const handleTranscript = (data: { message: string }) => {
       console.log('handleTranscript:', data.message);
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: data.message }]);
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname, message: data.message }]);
       resetSilenceTimer();
     };
 
@@ -121,7 +120,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     console.log('sendMessage:', message);
     if (message.trim()) {
       socket.emit('chat message', { content: message, sender: nickname });
-      setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message }]);
+      setMessages((prevMessages) => [...prevMessages, { sender: nickname, message }]);
       setInput('');
     }
   };
@@ -160,7 +159,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       socket.emit('end stt');
     };
 
-    mediaRecorder.start(250); // Collect audio data every 250ms
+    mediaRecorder.start(250);
 
     socket.emit('start stt');
     resetSilenceTimer();
@@ -181,7 +180,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const handleCloseLog = () => {
     setIsLogOpen(false);
-    navigate(`/select/${nickname}`);
+    navigate('/select', { state: { nickname } });
   };
 
   if (!isChatOpen) return null;
@@ -210,7 +209,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} onClose={handleCloseLog} />}
+      {isLogOpen && <LogModal character={character} nickname={nickname || 'No nickname provided'} onClose={handleCloseLog} />}
     </ChatContainer>
   );
 };

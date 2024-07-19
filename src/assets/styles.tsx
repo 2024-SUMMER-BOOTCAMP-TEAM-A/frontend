@@ -248,7 +248,7 @@ export const Moon = styled.div`
   display:flex;
   border-radius: 50%;
   width: 370px;
-  height: 400px;
+  height: 380px;
   position: absolute;
   top: 12%;
   left: 50%;
@@ -269,7 +269,6 @@ export const Moon = styled.div`
     height: 200px;
   }
 `;
-
 
 // PERSONA 문구 
 export const Image = styled.img`

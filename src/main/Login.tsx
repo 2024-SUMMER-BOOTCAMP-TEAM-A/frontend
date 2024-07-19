@@ -19,13 +19,11 @@ const LoginPage: React.FC = () => {
   const [loginPassword, setLoginPassword] = useState('');
   const navigate = useNavigate();
 
-  // 이메일 형식 검사 함수
   const isValidEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  // 회원가입 처리 함수
   const handleRegister = async () => {
     if (!isValidEmail(email)) {
       setErrorMessage('이메일 형식으로 입력해주세요.');
@@ -37,7 +35,7 @@ const LoginPage: React.FC = () => {
       try {
         await signupUser({ email, nickname, password });
         setShowRegisterModal(false);
-        setShowCompleteModal(true); // 회원가입 완료 모달 표시
+        setShowCompleteModal(true);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setErrorMessage(error.response?.data?.message || '회원가입 중 오류가 발생했습니다.');
@@ -47,11 +45,10 @@ const LoginPage: React.FC = () => {
         setShowErrorModal(true);
       }
     } else {
-      setShowFieldErrorModal(true); // 모든 필드 입력 요구 모달 표시
+      setShowFieldErrorModal(true);
     }
   };
 
-  // 로그인 처리 함수
   const handleLogin = async () => {
     try {
       const response = await loginUser({ email: loginEmail, password: loginPassword });
@@ -65,7 +62,6 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  // Enter 키 누를 때 로그인 처리
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleLogin();
@@ -74,7 +70,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <PageContainer>
-      {/* 닉네임 섹션 */}
       <NicknameSection>
         <div style={{ marginTop: '40px', marginBottom: '60px', textAlign: 'center' }}>
           <FadeInText>
@@ -86,7 +81,6 @@ const LoginPage: React.FC = () => {
         </FadeInText>
       </NicknameSection>
       
-      {/* 로그인 폼 */}
       <FormContainer>
         <StyledInput 
           type="email" 
@@ -108,7 +102,6 @@ const LoginPage: React.FC = () => {
         </ButtonRow>
       </FormContainer>
 
-      {/* 회원가입 모달 */}
       {showRegisterModal && (
         <Modal>
           <ModalContent>
@@ -139,7 +132,6 @@ const LoginPage: React.FC = () => {
         </Modal>
       )}
 
-      {/* 오류 메시지 모달 */}
       {showErrorModal && (
         <Modal>
           <ModalContent>
@@ -150,7 +142,6 @@ const LoginPage: React.FC = () => {
         </Modal>
       )}
 
-      {/* 회원가입 완료 모달 */}
       {showCompleteModal && (
         <Modal>
           <ModalContent>
@@ -161,7 +152,6 @@ const LoginPage: React.FC = () => {
         </Modal>
       )}
 
-      {/* 모든 필드 입력 요구 모달 */}
       {showFieldErrorModal && (
         <Modal>
           <ModalContent>
@@ -177,7 +167,6 @@ const LoginPage: React.FC = () => {
 
 export default LoginPage;
 
-// 스타일드 컴포넌트
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
