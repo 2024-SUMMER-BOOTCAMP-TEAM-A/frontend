@@ -93,7 +93,7 @@ export const LogHeaderImage = styled.img`
 // 상담일지 컨테이너
 export const LogContainer = styled.div`
   position: absolute;
-  top: 11%;
+  top: 15%;
   left: 40%;
   transform: translateX(-50%);
   width: 500px;

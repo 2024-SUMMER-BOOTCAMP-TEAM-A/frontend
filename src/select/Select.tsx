@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReactModal from 'react-modal';
 import axios from 'axios'; 
 import personaImg from '../assets/png/persona.png';
@@ -47,13 +47,11 @@ interface CardData {
 const personas: Persona[] = [
   { id: 1, name: '침착맨',title: '나랑 스무고개해서 이기면 만원'},
   { id: 2, name: '장원영' ,title: '이거 완전 럭키비키잖아! 🍀 '},
-  { id: 3, name: '쌈디' , title: '연애가 참 어렵제?'},
+  { id: 3, name: '이서진' , title: '연애가 참 어렵제?'},
   { id: 4, name: '맑눈광',title: '이렇게 해야 능률이 올라가는 편입니다.' }
 ];
 
 const Select: React.FC = () => {
-  const location = useLocation();
-  const { nickname } = location.state || {};
   const [personasData, setPersonasData] = useState<CardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -118,10 +116,8 @@ const Select: React.FC = () => {
 
   const handleStartChat = () => {
     if (selectedCard) {
-      console.log('Navigating to chat with nickname:', nickname);
-      console.log('Selected card:', selectedCard);
       const { name, cardText, modalText, fontComponent } = selectedCard;
-      navigate('/chat', { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' }, nickname } });
+      navigate('/chat', { state: { character: { name, cardText, modalText, fontFamily: fontComponent.displayName || 'defaultFont' } } });
     }
   };
 
@@ -142,17 +138,16 @@ const Select: React.FC = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // 토큰을 로컬 저장소에서 제거
-    navigate('/'); // 로그인 페이지로 리디렉션
+    localStorage.removeItem('token');
+    navigate('/');
   };
-  
 
   const displayedCards = [
     ...personasData.slice(currentIndex, currentIndex + 3),
     ...personasData.slice(0, Math.max(0, (currentIndex + 3) - personasData.length)),
   ].slice(0, 3);
 
-  const FontComponent = selectedCard?.fontComponent || KyoboHandwriting2020A; // Default font component
+  const FontComponent = selectedCard?.fontComponent || KyoboHandwriting2020A;
 
   return (
     <MainContainer>
@@ -163,7 +158,7 @@ const Select: React.FC = () => {
         <GmarketSansMedium style={{ fontSize: '15px' }}>로그아웃</GmarketSansMedium>
       </LogoutButton>
       <FadeInText>
-        <RankingButton onClick={() => navigate('/topselect', { state: { nickname } })}>
+        <RankingButton onClick={() => navigate('/topselect')}>
           <GmarketSansMedium style={{ fontSize: '15px' }}>인기챗봇순위</GmarketSansMedium>
         </RankingButton>
         <CardContainer>
@@ -220,7 +215,6 @@ const Select: React.FC = () => {
           </ModalContent>
         )}
       </ReactModal>
-      {nickname && <div>Welcome, {nickname}!</div>}
     </MainContainer>
   );
 };

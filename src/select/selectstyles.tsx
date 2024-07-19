@@ -77,8 +77,8 @@ export const Card = styled.div`
   background: rgba(32, 27, 70, 0.7);
   border: 2px solid white; 
   border-radius: 40px;
-  width: 30%; 
-  height: 500px;  
+  width: 40%; 
+  height: 550px;  
   margin: 0 30px;  
   text-align: center;
   padding: 20px 10px; 
@@ -125,7 +125,7 @@ export const CardImage = styled.img`
 export const CardText = styled.div`
   color: white;
   font-size: 28px; 
-  margin-top: 20px; /* 텍스트와 이미지 사이에 마진 추가 */
+  margin-top: 40px; /* 텍스트와 이미지 사이에 마진 추가 */
   white-space: pre-line; 
   text-align: center;
   overflow: hidden;
