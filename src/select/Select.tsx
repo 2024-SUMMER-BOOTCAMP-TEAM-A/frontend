@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactModal from 'react-modal';
-import axios from 'axios'; 
+import axios from 'axios';
 import personaImg from '../assets/png/persona.png';
 import mzBackground from '../assets/png/mzback.png';
 import leemalBackground from '../assets/png/leemalback.png';
@@ -46,10 +46,10 @@ interface CardData {
 }
 
 const personas: Persona[] = [
-  { id: 1, name: '침착맨',title: '나랑 스무고개해서 이기면 만원'},
-  { id: 2, name: '장원영' ,title: '이거 완전 럭키비키잖아! 🍀 '},
-  { id: 3, name: '이서진' , title: '연애가 참 어렵제?'},
-  { id: 4, name: '맑눈광',title: '이렇게 해야 능률이 올라가는 편입니다.' }
+  { id: 1, name: '침착맨', title: '나랑 스무고개해서 이기면 만원' },
+  { id: 2, name: '장원영', title: '이거 완전 럭키비키잖아! 🍀 ' },
+  { id: 3, name: '이서진', title: '연애가 참 어렵제?' },
+  { id: 4, name: '맑눈광', title: '이렇게 해야 능률이 올라가는 편입니다.' }
 ];
 
 const Select: React.FC = () => {
@@ -74,25 +74,24 @@ const Select: React.FC = () => {
       const images = [leemalImage, luckyImage, uncleImage, mzImage];
       const backgrounds = [leemalBackground, luckyBackground, uncleBackground, mzBackground];
       const fonts = [KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar, Gothic_Goding];
-  
+
       return {
         id: persona.id,
         name: persona.name,
-        cardText: persona.title, 
+        cardText: persona.title,
         modalText: '',
         img: images[index % images.length],
         background: backgrounds[index % backgrounds.length],
         fontComponent: fonts[index % fonts.length],
       };
     });
-  
+
     setPersonasData(formattedData);
   }, []);
 
   const fetchPersonaDetails = async (personaId: number): Promise<PersonaDetails> => {
     try {
       const response = await axios.get<PersonaDetails>(`${API_URL}/${personaId}`);
-      console.log('API Response for Details:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching persona details:', error);
@@ -100,17 +99,15 @@ const Select: React.FC = () => {
     }
   };
 
-  const handleCardClick = async (personaId: number) => {
-    console.log("Clicked Persona ID:", personaId);
+  const handleCardClick = async (personaId: number, isActive: boolean) => {
+    if (!isActive) return;
 
     try {
       const details = await fetchPersonaDetails(personaId);
-      console.log('Fetched details:', details);
 
       const cardData = personasData.find((card) => card.id === personaId);
       if (cardData) {
         const updatedCard = { ...cardData, modalText: details.content };
-        console.log("Selected Card Data:", updatedCard);
         setSelectedCard(updatedCard);
         setModalIsOpen(true);
       }
@@ -179,8 +176,14 @@ const Select: React.FC = () => {
         </RankingButton>
         <CardContainer>
           <CardSlider $animationDirection={animationDirection}>
-            {displayedCards.map((card) => (
-              <Card key={card.id} onClick={() => handleCardClick(card.id)}>
+            {displayedCards.map((card, index) => (
+              <Card
+                key={card.id}
+                onClick={() => handleCardClick(card.id, index === 1)}
+                isActive={index === 1}
+                isLeft={index === 0}
+                isRight={index === 2}
+              >
                 <CardImage src={card.img} alt={`Character ${card.name}`} />
                 <CardText as={card.fontComponent}>{card.name}</CardText>
                 <CardText as={card.fontComponent}>{card.cardText}</CardText>
@@ -236,3 +239,4 @@ const Select: React.FC = () => {
 };
 
 export default Select;
+

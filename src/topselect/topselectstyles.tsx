@@ -164,6 +164,15 @@ export const OtherPlaceImage = styled.img`
   }
 `;
 
+const pulse = keyframes`
+  from {
+    box-shadow: 0 0 0 0 rgba(255, 105, 135, 0.4);
+  }
+  to {
+    box-shadow: 0 0 0 20px rgba(255, 105, 135, 0);
+  }
+`;
+
 export const BackButton = styled.button`
   position: absolute;
   top: 5%;
@@ -199,6 +208,7 @@ export const BackButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
+    animation: ${pulse} 1.5s infinite;
   }
 
   @media (max-width: 768px) {

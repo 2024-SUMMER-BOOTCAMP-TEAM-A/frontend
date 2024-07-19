@@ -283,6 +283,14 @@ export const Image = styled.img`
   }
 `;
 
+const pulse = keyframes`
+  from {
+    box-shadow: 0 0 0 0 rgba(255, 105, 135, 0.4);
+  }
+  to {
+    box-shadow: 0 0 0 20px rgba(255, 105, 135, 0);
+  }
+`;
 export const LogoutButton = styled.button`
   display: flex;
   position: absolute;
@@ -300,5 +308,6 @@ export const LogoutButton = styled.button`
   &:hover {
     background-color: #00465A;
     transform: scale(1.1);
+    animation: ${pulse} 1.5s infinite;
   }
 `;

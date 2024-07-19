@@ -18,7 +18,7 @@ export const Button = styled.button`
   
   &:hover {
     background-color: #ddd;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.2);
   }
   
   span {

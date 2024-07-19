@@ -28,7 +28,7 @@ export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; f
 
   return (
     <CharacterProfile>
-      <Leftarrow onClick={() => navigate(`/select/${nickname}`)} />
+      <Leftarrow onClick={() => navigate(-1)} />
       <ProfileName style={{ fontFamily }}>{name}</ProfileName>
       <CloseButton onClick={onClose}>
         <Closeicon />
@@ -179,7 +179,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
   const logContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRankingClick = () => {
-    navigate(`/topselect/${nickname}`);
+    navigate(`/topselect`);
   };
 
   const handleDownload = () => {
