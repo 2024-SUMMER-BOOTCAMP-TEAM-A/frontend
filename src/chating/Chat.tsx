@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import socket from './socket';
 import {
   UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
@@ -25,6 +26,8 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
+  const [chatLogId, setChatLogId] = useState<string>('');
+  const [summaryLog, setSummaryLog] = useState<any>(null); // 요약본 상태 추가
   const messageEndRef = useRef<HTMLDivElement>(null);
   let silenceTimer: ReturnType<typeof setTimeout>;
   let mediaRecorder: MediaRecorder;
@@ -35,11 +38,10 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3LCJpYXQiOjE3MjEzNzUyNjIsImV4cCI6MTcyMTQ2MTY2Mn0.iIJBlEtR8quaXSn_lmWIB0VO_UbLB1rQGyERqgneKy4'; 
+    const token = localStorage.getItem('accesstoken');
     socket.emit('start chat', { token });
 
     const handleChatMessage = (message: Message) => {
-      console.log('handleChatMessage:', message);
       setMessages((prevMessages) => {
         if (prevMessages.length > 0 && prevMessages[prevMessages.length - 1].message === message.message && prevMessages[prevMessages.length - 1].sender === message.sender) {
           return prevMessages;
@@ -57,7 +59,6 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     };
 
     const handleTranscript = (data: { message: string }) => {
-      console.log('handleTranscript:', data.message);
       setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: data.message }]);
       resetSilenceTimer();
     };
@@ -66,31 +67,29 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       console.error('Error:', data.message);
     };
 
-    socket.on('chat log created', (data: { code: number; data: any }) => {
-      if (data.code === 201) {
-        console.log('Chat log created:', data.data);
-      } else {
-        console.error('Failed to create chat log:', data.data);
-      }
-    });
+    const handleChatLogSaved = async (data: { chatLogId: string }) => {
+      console.log('Chat log ID received from server:', data.chatLogId);
+      setChatLogId(data.chatLogId);
+      await handleEndChat(data.chatLogId); // chatLogId가 설정된 후 handleEndChat 호출
+    };
 
     socket.on('chat message', handleChatMessage);
     socket.on('tts audio', handleTtsAudio);
     socket.on('transcript', handleTranscript);
     socket.on('error', handleError);
+    socket.on('chat log saved', handleChatLogSaved);
 
     return () => {
-      socket.off('chat log created');
       socket.off('chat message', handleChatMessage);
       socket.off('tts audio', handleTtsAudio);
       socket.off('transcript', handleTranscript);
       socket.off('error', handleError);
+      socket.off('chat log saved', handleChatLogSaved);
     };
   }, [nickname]);
 
   const sendMessage = (message: string) => {
-    console.log('sendMessage:', message);
-    const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim(); // 개행 문자 제거
+    const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim();
     if (sanitizedMessage) {
       socket.emit('chat message', { content: sanitizedMessage, sender: nickname });
       setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: sanitizedMessage }]);
@@ -104,17 +103,13 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
       }
-    }, 5000); // Set the timeout duration
+    }, 5000);
   };
 
   const scrollToBottom = () => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const handleEndChat = () => {
-    socket.emit('end chat');
   };
 
   const handleStartSTT = async () => {
@@ -132,19 +127,46 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       socket.emit('end stt');
     };
 
-    mediaRecorder.start(250); 
-
+    mediaRecorder.start(250);
     socket.emit('start stt');
     resetSilenceTimer();
   };
 
-  const handleCloseChat = () => {
-    setIsAlertOpen(true);
+  const handleEndChat = async (chatLogId: string) => {
+    console.log('Trying to end chat with chatLogId:', chatLogId);
+    if (!chatLogId) {
+      console.error('No chatLogId found');
+      return;
+    }
+  
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
+      console.log('Summary saved successfully:', response.data);
+      const summaryLogId = response.data.summaryLogId; // 요약본 ID 가져오기
+      fetchSummaryLog(summaryLogId); 
+    } catch (error) {
+      console.error('Error saving summary:', error);
+    }
   };
+  
+  const fetchSummaryLog = async (summaryLogId: string) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
+      console.log('Summary fetched successfully:', response.data);
+      setSummaryLog(response.data); // 요약본 상태 설정
+    } catch (error) {
+      console.error('Error fetching summary:', error);
+    }
+  };  
 
   const handleConfirmCloseChat = () => {
+    socket.emit('end chat'); // 여기에서 end chat 이벤트 전송
     setIsAlertOpen(false);
     setIsLogOpen(true);
+  };
+
+  const handleCloseChat = () => {
+    setIsAlertOpen(true);
   };
 
   const handleCancelCloseChat = () => {
@@ -152,8 +174,9 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   };
 
   const handleCloseLog = () => {
+    console.log('Handling close log');
+    console.log('Summary Log:', summaryLog); // summaryLog 상태 확인
     setIsLogOpen(false);
-    navigate(`/select/${nickname}`);
   };
 
   const handleEndSTT = () => {
@@ -172,11 +195,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   return (
     <ChatContainer>
       <UPCharacterProfile name={character.name} onClose={handleCloseChat} fontFamily={character.fontFamily} />
-      <ChatingBox 
-        messages={convertedMessages}
-        isTyping={isTyping}
-        character={character}
-      />
+      <ChatingBox messages={convertedMessages} isTyping={isTyping} character={character} />
       <UserInputBox 
         input={input} 
         setInput={setInput} 
@@ -189,7 +208,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} onClose={handleCloseLog} />}
+      {isLogOpen && nickname && <LogModal character={character} nickname={nickname} summaryLog={summaryLog} onClose={handleCloseLog} />}
     </ChatContainer>
   );
 };
