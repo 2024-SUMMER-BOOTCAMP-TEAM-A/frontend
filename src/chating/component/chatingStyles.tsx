@@ -27,7 +27,7 @@ export const CharacterProfile = styled.div`
   border-bottom: 1px solid #ddd;
   height: 40px;
   border: none;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 20px 50px;
     height: 30px;
   }
@@ -56,7 +56,7 @@ export const CloseButton = styled.button`
         transform: scale(1.1);
     }
 
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       top: 20px;
       right: 50px;
     }
@@ -69,7 +69,7 @@ export const ProfileName = styled.div`
   font-weight: bold;
   color: white;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 16px;
     padding: 10px;
   }
@@ -117,7 +117,7 @@ export const ChatBox = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 5px;
   }
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 90%;
   }
 `;
@@ -140,7 +140,7 @@ export const CharacterChat = styled.div`
   display: flex;
   align-items: center;
   align-items: flex-end;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     align-items: flex-start;
   }
 `;
@@ -160,7 +160,7 @@ export const CharacterChatContent = styled.div`
   border-radius: 15px 15px 15px 2px;
   font-size: 15px;
   animation: ${appearAnimation} 0.5s ease-out;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 14px;
   }
 `;
@@ -170,7 +170,7 @@ export const UserChat = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: flex-end;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     justify-content: flex-start;
   }
 `;
@@ -190,7 +190,7 @@ export const UserChatContent = styled.div`
   border-radius: 15px 15px 2px 15px;
   font-size: 15px;
   animation: ${appearAnimation} 0.5s ease-out;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 14px;
   }
 `;
@@ -204,7 +204,7 @@ export const CharacterAvatar = styled.img`
   object-position: 0% 20%;
   z-index:20;
   margin-right: 20px;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 50px;
     height: 50px;
     margin-right: 10px;
@@ -235,7 +235,7 @@ export const UserInputCon = styled.div`
   opacity: 0.9;
   margin-top: auto;
   justify-content: space-between;
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 90%;
     height: 50px;
     margin-bottom: 20px;
@@ -250,7 +250,7 @@ export const InputMessage = styled.input`
   border-radius: 5px;  /* 모서리 둥글게 */
   font-size: 14px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 12px;
     padding: 8px;
   }
@@ -275,7 +275,7 @@ export const SendButton = styled.button`
   font-size: 0;  /* 버튼 텍스트를 제거하여 아이콘만 보이도록 합니다 */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  /* 버튼에 그림자 효과 추가 */
   transition: background-color 0.3s;  /* 배경색 변화에 부드러운 전환 효과 추가 */
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 40px;
     height: 40px;
   }
@@ -300,7 +300,7 @@ export const MicButton = styled.button`
   font-size: 0;  /* 버튼 텍스트를 제거하여 아이콘만 보이도록 합니다 */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  /* 버튼에 그림자 효과 추가 */
   transition: background-color 0.3s;  /* 배경색 변화에 부드러운 전환 효과 추가 */
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 40px;
     height: 40px;
   }
@@ -327,7 +327,7 @@ export const AlertBox = styled.div`
     border-radius: 8px;
     text-align: center;
     color: #295180;
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
      width: 90%;
       padding: 15px;
     }
@@ -337,7 +337,7 @@ export const AlertBox = styled.div`
 export const AlertButtons = styled.div`
   margin-top: 20px;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     margin-top: 15px;
   }
 `;
@@ -356,7 +356,7 @@ export const AlertButtonCancle = styled.button`
     transform: scale(1.1);
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 8px 16px;
     margin: 0 5px;
   }
@@ -377,7 +377,7 @@ export const AlertButtonFinish = styled.button`
     transform: scale(1.1);
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding: 8px 16px;
     margin: 0 5px;
   }

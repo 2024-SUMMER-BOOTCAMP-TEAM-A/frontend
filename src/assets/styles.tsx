@@ -146,7 +146,7 @@ position: absolute;
 top: 0;
 left: 0;
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   box-shadow: ${createStars(Math.floor(numStarOneStars / 2))};
 }
 
@@ -174,7 +174,7 @@ box-shadow: ${createStars(numStarTwoStars)};
 animation: ${animStar} ${starTwoScrollDuration} linear infinite;
 animation-delay: 0s;
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   box-shadow: ${createStars(Math.floor(numStarTwoStars / 2))};
 }
 
@@ -202,7 +202,7 @@ box-shadow: ${createStars(numStarThreeStars)};
 animation: ${animStar} ${starThreeScrollDuration} linear infinite;
 animation-delay: 0s;
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   box-shadow: ${createStars(Math.floor(numStarThreeStars / 2))};
 }
 
@@ -237,7 +237,7 @@ left: ${(props) => props.left}px;
 background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
 animation: ${animShootingStar} 10s linear infinite;
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   width: 3px;
   height: 50px;
 }
@@ -259,38 +259,28 @@ export const Moon = styled.div`
   animation: ${glow} 3s infinite;
   will-change: transform, opacity;
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 200px;
     height: 250px;
-  }
-
-  @media (max-width: 480px) {
-    width: 150px;
-    height: 200px;
   }
 `;
 
 // PERSONA 문구 
 export const Image = styled.img`
-width: 40%;
-margin-bottom: 20px;
-position: absolute;
-top: 14%;
-left: 50%;
-transform: translate(-50%, -50%);
-margin: 0;
-text-align: center;
-z-index: 2;
+  width: 40%;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  text-align: center;
+  z-index: 2;
 
-@media (max-width: 768px) {
-  width: 25%;
-  height: 30%;
-}
-
-@media (max-width: 480px) {
-  width: 30%;
-  height: 25%;
-}
+  @media screen and (max-width: 768px) {
+    width: 25%;
+    height: 30%;
+  }
 `;
 
 export const LogoutButton = styled.button`
