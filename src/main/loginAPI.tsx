@@ -8,8 +8,8 @@ interface LoginData {
 }
 
 interface LoginResponse {
-  token: string;
-  nickname: string;
+  accessToken: string;
+  refreshToken : string;
 }
 
 export const loginUser = async (data: LoginData): Promise<LoginResponse> => {

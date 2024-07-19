@@ -8,6 +8,7 @@ import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 import { Character } from '../assets/initCharacter';
 import { ChatContainer } from './component/chatingStyles';
+import { selectPersona } from './chatAPI';
 
 interface Message {
   sender: string;
@@ -16,6 +17,34 @@ interface Message {
 
 interface ChatProps {
   initialCharacter: Character;
+}
+
+function getToken() {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  return { accessToken, refreshToken };
+}
+
+async function startChat() {
+  try {
+      // 로컬스토리지에서 토큰 가져오기
+      const tokens = getToken();
+      
+      if (!tokens) {
+          throw new Error('No token found in localStorage.');
+      }
+
+      // 인격 번호 선택하기
+      const personaId = await selectPersona();
+      
+      // 토큰과 인격 번호를 함께 전송
+      const token = tokens.accessToken;
+      socket.emit('start chat', { token, personaId });
+      
+      console.log('Chat started with token and personaId:', { token, personaId });
+  } catch (error) {
+      console.error('Error starting chat:', error);
+  }
 }
 
 const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
@@ -34,13 +63,12 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const { character, nickname } = location.state || { character: initialCharacter, nickname: '' };
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEzLCJpYXQiOjE3MjEyOTA1NDgsImV4cCI6MTcyMTM3Njk0OH0.DL8-OM9shd1ZxnMEXmLR0sPbi4bHtxz5YtPSljJJs-o'; // Replace with the appropriate token retrieval method
-    socket.emit('start chat', { token });
+  
+    socket.emit('start chat', startChat());
 
     const handleChatMessage = (message: Message) => {
       console.log('handleChatMessage:', message);
       setMessages((prevMessages) => {
-        // Prevent duplicate messages
         if (prevMessages.length > 0 && prevMessages[prevMessages.length - 1].message === message.message && prevMessages[prevMessages.length - 1].sender === message.sender) {
           return prevMessages;
         }

@@ -52,9 +52,10 @@ const LoginPage: React.FC = () => {
   const handleLogin = async () => {
     try {
       const response = await loginUser({ email: loginEmail, password: loginPassword });
-      console.log('Login response:', response);
-      localStorage.setItem('token', response.token);
-      navigate('/select'); // URL 경로에 닉네임을 전달하지 않음
+      console.log('Login successful:', response); // 응답 확인
+      localStorage.setItem('accesstoken', response.accessToken); // 토큰을 로컬 저장소에 저장
+      localStorage.setItem('refreshToken', response.refreshToken); // 리프레시 토큰을 로컬 저장소에 저장
+      navigate('/select'); // 이동할 페이지 경로
     } catch (error) {
       setErrorMessage('이메일 또는 비밀번호가 잘못되었습니다.');
       setShowErrorModal(true);
