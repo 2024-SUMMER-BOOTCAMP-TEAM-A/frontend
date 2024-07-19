@@ -21,6 +21,7 @@ import chatImg from '../assets/png/uncleback.png';
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
 
+
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
   const { nickname } = useParams<{ nickname: string }>();
@@ -112,7 +113,6 @@ export const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[
   );
 };
 
-
 export const UserInputBox: React.FC<{ input: string; setInput: (input: string) => void; sendMessage: (message: string) => void; handleStartSTT: () => void; handleEndSTT: () => void; }> = ({ input, setInput, sendMessage, handleStartSTT, handleEndSTT }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -164,7 +164,11 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
   );
 };
 
-export const LogModal: React.FC<{ character: Character; nickname: string | undefined; onClose: () => void }> = ({ character, nickname, onClose }) => {
+export const LogModal: React.FC<{ character: Character; nickname: string | undefined; summaryLog: any; onClose: () => void }> = ({ character, nickname, summaryLog, onClose }) => {
+  if (!summaryLog) {
+    return <div>Loading...</div>;
+  }
+
   const getCurrentDate = () => {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
@@ -202,16 +206,14 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
           </LogHeader>
         </LogHeaderContainer>
         <LogContainer ref={logContainerRef}>
-          <LogImage src={logpersonaImg} alt="Persona" />
+          <LogImage src={summaryLog.image || logpersonaImg} alt="Persona" />
           <LogNickname>{nickname}</LogNickname>
           <ChatImage src={chatImg} alt="Chat related" />
           <ChatSummary>
-            <br />
-            상담내용 상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담내용 요약~상담
+            {summaryLog.summary || "상담 내용을 불러오는 중..."}
           </ChatSummary>
           <Solution>
-            <br />
-            <span>해결 방안~해결 방안~해결 방안~해결 방안~</span>
+            {summaryLog.conclusion || "해결 방안을 불러오는 중..."}
           </Solution>
           <PersonalitySection>
             <PersonalityDescription>{character?.name}</PersonalityDescription>

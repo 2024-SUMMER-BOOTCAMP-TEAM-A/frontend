@@ -1,19 +1,23 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/v1/persons';
+const API_URL = 'http://localhost:8000/api/v1/userSelections';
 
-interface Persona {
-  id: number;
-  name: string;
-  title: string;
+interface SaveUserSelectionData {
+  personId: number;
 }
 
-export const fetchPersonas = async (): Promise<Persona[]> => {
+export const saveUserSelection = async (personId: number): Promise<void> => {
   try {
+
     const response = await axios.get<Persona[]>(API_URL);
     return response.data;
+
+<!--     const data: SaveUserSelectionData = { personId };
+    await axios.post(API_URL, data);
+    console.log('UserSelection saved successfully'); -->
+
   } catch (error) {
-    console.error('인격 카드 데이터를 가져오는 중 오류 발생:', error);
+    console.error('Error saving user selection:', error);
     throw error;
   }
 };
