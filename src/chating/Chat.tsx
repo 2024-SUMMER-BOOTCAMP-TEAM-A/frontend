@@ -141,7 +141,8 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
     }
   
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
+      const response = await axios.post('http://34.83.113.214:8000/api/v1/logs/summary', { chatLogId });
+      // const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
       console.log('Summary saved successfully:', response.data);
       const summaryLogId = response.data.summaryLogId; // 요약본 ID 가져오기
       fetchSummaryLog(summaryLogId); 
@@ -152,7 +153,8 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   
   const fetchSummaryLog = async (summaryLogId: string) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
+      const response = await axios.get(`http://34.83.113.214:8000/api/v1/logs/summary/${summaryLogId}`);
+      // const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
       console.log('Summary fetched successfully:', response.data);
       setSummaryLog(response.data); // 요약본 상태 설정
     } catch (error) {
