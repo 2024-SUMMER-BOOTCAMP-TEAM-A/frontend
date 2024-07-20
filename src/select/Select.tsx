@@ -21,7 +21,8 @@ import leemalImage from '../assets/png/leemal.png';
 import uncleImage from '../assets/png/uncle.png';
 import { saveUserSelection } from './selectAPI';
 
-const API_URL = 'http://localhost:8000/api/v1/persons';
+const API_URL = 'http://34.83.113.214:8000/api/v1/persons';
+// const API_URL = 'http://localhost:8000/api/v1/persons';
 
 interface Persona {
   id: number;
