@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 //   transports: ['websocket', 'polling']
 // });
 
-const socket = io('http://34.83.113.214:8000', {
+const socket = io('https://person-a.site:8000', {
   transports: ['websocket', 'polling']
 });
 
