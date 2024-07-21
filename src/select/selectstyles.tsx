@@ -1,4 +1,7 @@
-import styled, { keyframes, css } from 'styled-components';
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+import { Card, CardImage, CardText } from './cardstyles'; // cardstyles.tsx에서 불러오기
+import styled, { keyframes } from 'styled-components';
 
 // 메인 컨테이너
 export const MainContainer = styled.div`
@@ -27,107 +30,6 @@ export const CardContainer = styled.div`
   @media screen and (max-width: 768px) {
     height: 60%;
     width: 100%;
-  }
-`;
-
-interface CardSliderProps {
-  $animationDirection?: 'left' | 'right' | null;
-}
-
-export const CardSlider = styled.div<CardSliderProps>`
-  display: flex;
-  width: 300%;
-  transition: transform 0.5s ease-in-out;
-  ${({ $animationDirection }) =>
-    $animationDirection === 'left' &&
-    css`
-      transform: translateX(-33.33%);
-    `}
-  ${({ $animationDirection }) =>
-    $animationDirection === 'right' &&
-    css`
-      transform: translateX(33.33%);
-    `}
-`;
-
-export const Card = styled.div<{ isActive?: boolean; isLeft?: boolean; isRight?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background: rgba(32, 27, 70, 0.7);
-  border: 2px solid white;
-  border-radius: 40px;
-  width: 40%;
-  height: 550px;
-  margin: 0 50px;
-  text-align: center;
-  padding: 20px 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.5s ease-in-out;
-
-  ${({ isActive, isLeft, isRight }) =>
-    isActive
-      ? css`
-          transform: scale(1.10) rotateY(0);
-          z-index: 10;
-        `
-      : isLeft
-      ? css`
-          transform: perspective(1000px) rotateY(15deg);
-          z-index: 1;
-        `
-      : isRight
-      ? css`
-          transform: perspective(1000px) rotateY(-15deg);
-          z-index: 1;
-        `
-      : css`
-          transform: scale(1) rotateY(0);
-          z-index: 1;
-        `}
-
-  @media screen and (max-width: 768px) {
-    width: 80%;
-    height: 300px;
-    margin: 0 10px;
-    padding: 10px;
-  }
-`;
-
-export const CardImage = styled.img`
-  display: flex;
-  width: 230px;
-  height: 300px;
-  border-radius: 50%;
-  margin: 20px auto 20px auto;
-  @media screen and (max-width: 768px) {
-    width: 150px;
-    height: 200px;
-  }
-`;
-
-export const CardText = styled.div`
-  color: white;
-  font-size: 28px;
-  margin-top: 40px;
-  white-space: pre-line;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  @media screen and (max-width: 768px) {
-    font-size: 18px;
-    margin-top: 10px;
-  }
-`;
-
-export const Image = styled.img`
-  position: flex;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  @media screen and (max-width: 768px) {
-    width: 60%;
-    top: 5%;
   }
 `;
 
@@ -200,7 +102,7 @@ export const NavButton = styled.button`
     height: 1em;
     --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m10 17l5-5m0 0l-5-5'/%3E%3C/svg%3E");
     background-color: currentColor;
-    -webkit-mask-image: var(--svg);
+    -webkit-mask-image: var (--svg);
     mask-image: var(--svg);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
@@ -214,6 +116,7 @@ export const NavButton = styled.button`
     height: 30px;
   }
 `;
+
 export const NavContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -261,7 +164,6 @@ export const NavContainer = styled.div`
     }
   }
 `;
-
 
 const jelly = keyframes`
   0%, 100% {
@@ -316,6 +218,7 @@ export const ModalStyles = {
     height: '70%',
     textAlign: 'center',
     zIndex: 101,
+    transition: 'all 0.2s ease-in-out',
     '@media screen and (max-width: 768px)': {
       width: '90%',
       height: 'auto',
@@ -393,3 +296,70 @@ export const FadeOutText = styled.div`
 export const FadeInText = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
 `;
+
+const ModalBackdrop = styled.div<{ isOpen: boolean }>`
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  transition: opacity 0.5s ease-in-out;
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+`;
+
+const ModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const CardComponent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 700); // 애니메이션 시간이 지난 후 모달 열기
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClicked(false);
+      setIsClosing(false);
+    }, 700); // 애니메이션 시간이 지난 후 카드 원위치
+  };
+
+  return (
+    <>
+      <Card isClicked={isClicked} isClosing={isClosing} onClick={handleClick}>
+        <CardImage src="your-image-url" alt="Card Image" />
+        <CardText>Your Card Text</CardText>
+      </Card>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        style={ModalStyles}
+        contentLabel="Example Modal"
+      >
+        <ModalContent>
+          <img src="your-modal-image-url" alt="Modal Image" />
+          <div>
+            <NameText>Modal Title</NameText>
+            <p>Modal description goes here.</p>
+          </div>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+export default CardComponent;
