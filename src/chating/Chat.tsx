@@ -38,6 +38,11 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const character = location.state?.character || initialCharacter;
 
   useEffect(() => {
+    // 캐릭터 정보를 콘솔에 출력
+    console.log('Selected character:', character);
+  }, [character]);
+  
+  useEffect(() => {
     const token = localStorage.getItem('accessToken');
 
     socket.emit('start chat', { token });
