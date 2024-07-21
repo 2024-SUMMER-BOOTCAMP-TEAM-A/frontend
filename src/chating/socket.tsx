@@ -4,7 +4,8 @@ import { io } from 'socket.io-client';
 //   transports: ['websocket', 'polling']
 // });
 
-const socket = io('https://person-a.site/api', {
+const socket = io('https://person-a.site', {
+  path: '/api/socket.io',
   transports: ['websocket', 'polling']
 });
 
