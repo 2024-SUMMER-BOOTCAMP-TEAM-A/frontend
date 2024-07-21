@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const LOGIN_URL = 'https://person-a.site:8000/api/v1/users/login';
+const LOGIN_URL = 'https://person-a.site/api/v1/users/login';
 // const LOGIN_URL = 'http://localhost:8000/api/v1/users/login';
 
 interface LoginData {
