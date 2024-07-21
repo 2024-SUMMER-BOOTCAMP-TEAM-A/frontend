@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const API_URL = 'http://localhost:8000/api/v1/persons';
-const API_URL = 'https://person-a.site:8000/api/v1/persons';
+const API_URL = 'https://person-a.site/api/v1/persons';
 
 interface PersonaDetails {
   id: number;
