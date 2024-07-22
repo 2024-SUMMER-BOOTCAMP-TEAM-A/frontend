@@ -16,7 +16,7 @@ export const ChatContainer = styled.div`
   border: none;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+  background: linear-gradient(to bottom, #020107 0%, #390097 100%);
 `;
 
 // 상단 바
