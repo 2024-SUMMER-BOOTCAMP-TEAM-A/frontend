@@ -3,9 +3,9 @@ import styled, { keyframes } from 'styled-components';
 // 별 배경 크기 및 애니메이션 설정을 위한 상수 
 export const starFieldWidth = 2560;
 export const starFieldHeight = 2560;
-export const starOneScrollDuration = '100s';
-export const starTwoScrollDuration = '125s';
-export const starThreeScrollDuration = '175s';
+export const starOneScrollDuration = '80s';
+export const starTwoScrollDuration = '120s';
+export const starThreeScrollDuration = '150s';
 export const numStarOneStars = 1500;
 export const numStarTwoStars = 800;
 export const numStarThreeStars = 50;
@@ -47,13 +47,19 @@ export const glow = keyframes`
 }
 `;
 
+//랜덤 색
+const getRandomColor = () => {
+  const colors = ['#FFFFFF', '#CBCBCB', '#FEFFB9', '#C6FFC5', '#B9C8FF', '#E1AFFF'];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 // 별 위치를 생성하는 함수
 export const createStars = (n: number) => {
-let stars = `${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
-for (let i = 2; i <= n; i++) {
-  stars += `, ${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px #FFF`;
-}
-return stars;
+  let stars = `${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px ${getRandomColor()}`;
+  for (let i = 2; i <= n; i++) {
+    stars += `, ${Math.random() * starFieldWidth}px ${Math.random() * starFieldHeight}px ${getRandomColor()}`;
+  }
+  return stars;
 };
 
 // 전체 컨테이너
@@ -62,7 +68,7 @@ display: block;
 position: relative;
 width: 100%;
 height: 100vh;
-background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+background: linear-gradient(to bottom, #020107 0%, #390097 100%);
 overflow: auto;
 scroll-snap-type: y mandatory;
 `;
@@ -220,6 +226,7 @@ animation-delay: 0s;
   animation-delay: ${starThreeScrollDuration};
 }
 `;
+
 interface ShootingStarsProps {
 top: number;
 left: number;
