@@ -9,8 +9,7 @@ import {
   CloseButton, ChatBox, CharacterChat, UserChat, CharacterChatContent, UserChatContent, CharacterAvatar, CharacterMessage, UserMessage, CharacterProfile,
   ProfileName, UserInputCon, InputMessage, SendButton, MicButton, AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish,
 } from './component/chatingStyles';
-import { Stars, Stars1, Stars2, GmarketSansMedium } from '../assets/styles';
-import ShootingStarsComponent from '../assets/ShootingStarsComponent';
+import { GmarketSansMedium } from '../assets/styles';
 import {
   LogNickname, ChatImage, ChatSummary, Solution, PersonalitySection, PersonalityImage, PersonalityDescription, LogDate, LogHeaderImage,
   DownButton, CosultButton, RankingButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
@@ -20,7 +19,6 @@ import logpersonaImg from '../assets/png/logpersona.png';
 import chatImg from '../assets/png/uncleback.png';
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
-
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();

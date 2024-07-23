@@ -6,9 +6,9 @@ export const starFieldHeight = 2560;
 export const starOneScrollDuration = '90s';
 export const starTwoScrollDuration = '120s';
 export const starThreeScrollDuration = '130s';
-export const numStarOneStars = 1500;
-export const numStarTwoStars = 800;
-export const numStarThreeStars = 50;
+export const numStarOneStars = 1800;
+export const numStarTwoStars = 1000;
+export const numStarThreeStars = 100;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`
