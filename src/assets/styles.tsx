@@ -272,7 +272,7 @@ export const Moon = styled.div`
   }
 `;
 
-// PERSONA 문구 
+// PERSONA 문구(온보딩 페이지에서만 사용)
 export const Image = styled.img`
   width: 40%;
   margin-bottom: 20px;
@@ -316,5 +316,28 @@ export const LogoutButton = styled.button`
     background-color: #00465A;
     transform: scale(1.1);
     animation: ${pulse} 1.5s infinite;
+  }
+`;
+
+// 페르소나 로고
+export const AnimatedImage = styled.img`
+  width: 40%;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  text-align: center;
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 25%;
+    height: 30%;
   }
 `;
