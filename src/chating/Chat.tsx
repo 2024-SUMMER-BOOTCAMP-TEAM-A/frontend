@@ -13,6 +13,7 @@ import TypingWaiting from './component/TypingWaiting';
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
 import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
 import { debounce } from 'lodash';
+import LottieAnimation from './stt';
 
 interface Message {
   sender: string;
@@ -155,6 +156,7 @@ const Chat: React.FC = () => {
   const [isLogOpen, setIsLogOpen] = useState(false);
   const [chatLogId, setChatLogId] = useState<string>('');
   const [summaryLog, setSummaryLog] = useState<any>(null);
+  const [isLottieOpen, setIsLottieOpen] = useState<boolean>(false); // 추가
   const messageEndRef = useRef<HTMLDivElement>(null);
   let silenceTimer: ReturnType<typeof setTimeout>;
   let mediaRecorder: MediaRecorder;
@@ -286,10 +288,12 @@ const Chat: React.FC = () => {
     mediaRecorder.onstop = () => {
       clearTimeout(silenceTimer);
       socket.emit('end stt');
+      setIsLottieOpen(false); // 애니메이션 닫기
     };
 
     mediaRecorder.start(250);
     socket.emit('start stt');
+    setIsLottieOpen(true); // 애니메이션 열기
     resetSilenceTimer();
   };
 
@@ -378,7 +382,7 @@ const Chat: React.FC = () => {
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
       {isLogOpen && <LogModal character={character} nickname={nickname} summaryLog={summaryLog} onClose={handleCloseLog} />}
-
+      <LottieAnimation isOpen={isLottieOpen} onClose={() => setIsLottieOpen(false)} />
     </ChatContainer>
   );
 };
