@@ -164,9 +164,36 @@ const Chat: React.FC = () => {
   const location = useLocation();
   const character = location.state?.character as Character;
 
+  // useEffect(() => {
+  //   // 캐릭터 정보를 콘솔에 출력
+  //   console.log('Selected character:', character);
+  // }, [character]);
+
   useEffect(() => {
-    // 캐릭터 정보를 콘솔에 출력
-    console.log('Selected character:', character);
+      if (character && character.greeting) {
+      const isGreetingMessageExists = messages.some(
+        (msg) => msg.sender === 'system' && msg.message === character.greeting
+      );
+  
+      if (!isGreetingMessageExists) {
+        const greetingMessage: Message = {
+          sender: 'system',
+          message: character.greeting
+        };
+        setMessages(() => [greetingMessage]);
+
+        // TTS 음성 파일 재생
+        if (character.ttsFile) {
+          const audioUrl = character.ttsFile;
+          const audio = new Audio(audioUrl);
+          audio.play().catch((error) => {
+            console.error('Error playing TTS audio:', error);
+          });
+        }
+      }
+    } else {
+      console.error('Character or greeting is not defined');
+    }
   }, [character]);
   
   useEffect(() => {
@@ -219,7 +246,8 @@ const Chat: React.FC = () => {
       socket.off('error', handleError);
       socket.off('chat log saved', handleChatLogSaved);
     };
-  }, [nickname, character]);
+
+  }, [character]);
 
   const sendMessage = (message: string) => {
     const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim();
