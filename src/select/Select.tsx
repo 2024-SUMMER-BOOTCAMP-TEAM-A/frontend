@@ -301,8 +301,8 @@ import uncleImage from '../assets/png/uncle.png';
 import { saveUserSelection } from './selectAPI';
 import initialCharacters from '../assets/initCharacter';
 
-const API_URL = 'https://person-a.site/api/v1/persons';
-// const API_URL = 'http://localhost:8000/api/v1/persons';
+// const API_URL = 'https://person-a.site/api/v1/persons';
+const API_URL = 'http://localhost:8000/api/v1/persons';
 
 interface Persona {
   id: number;
@@ -415,18 +415,13 @@ const Select: React.FC = () => {
   const handleStartChat = async () => {
     if (selectedCard) {
       const { id, name, cardText, modalText, fontComponent } = selectedCard;
-
+      const character = initialCharacters[id]; // 선택된 인격 데이터 가져오기
+  
       try {
         await saveUserSelection(id);
         navigate('/chat', {
           state: {
-            character: {
-              id,
-              name,
-              cardText,
-              modalText,
-              fontFamily: fontComponent.displayName || 'defaultFont',
-            },
+            character, // 인격 데이터 전달
           },
         });
       } catch (error) {
@@ -434,6 +429,7 @@ const Select: React.FC = () => {
       }
     }
   };
+  
 
   const handlePrev = () => {
     setAnimationDirection('right');

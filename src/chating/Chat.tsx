@@ -1,25 +1,152 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import socket from './socket';
-import {
-  UPCharacterProfile, ChatingBox, UserInputBox, CustomAlert, LogModal
-} from './ChatComponents';
+import { CustomAlert, LogModal } from './ChatComponents';
 import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 import { Character } from '../assets/initCharacter';
 import { ChatContainer } from './component/chatingStyles';
+import { CloseButton, ChatBox, CharacterChat, UserChat, CharacterChatContent, UserChatContent, CharacterAvatar, CharacterMessage, UserMessage, CharacterProfile,
+  ProfileName, UserInputCon, InputMessage, SendButton, MicButton } from './component/chatingStyles';
+import TypingWaiting from './component/TypingWaiting';
+import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
+import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
+import { debounce } from 'lodash';
 
 interface Message {
   sender: string;
   message: string;
 }
 
-interface ChatProps {
-  initialCharacter: Character;
+interface CharacterChatContentProps {
+  isTyping: boolean;
+  chatEndRef: React.RefObject<HTMLDivElement>;
+  children: React.ReactNode;
+  backgroundColor?: string;
+  fontFamily?: string;
 }
 
-const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
+export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatEndRef, children, backgroundColor, fontFamily }) => {
+  const [showText, setShowText] = useState<React.ReactNode>(null);
+  const [showTyping, setShowTyping] = useState(true);
+
+  useEffect(() => {
+    if (isTyping) {
+      setShowText(null);
+      setShowTyping(true);
+    } else {
+      const timer = setTimeout(() => {
+        setShowText(children);
+        setShowTyping(false);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isTyping, children]);
+
+  useEffect(() => {
+    if (showText && chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [showText, chatEndRef]);
+
+  return (
+    <CharacterChatContent style={{ backgroundColor, fontFamily }}>
+      {showTyping ? <TypingWaiting /> : showText}
+    </CharacterChatContent>
+  );
+};
+
+export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
+  const navigate = useNavigate();
+
+  return (
+    <CharacterProfile>
+      <Leftarrow onClick={() => navigate(-1)} />
+      <ProfileName style={{ fontFamily }}>{name}</ProfileName>
+      <CloseButton onClick={onClose}>
+        <Closeicon />
+      </CloseButton>
+    </CharacterProfile>
+  );
+};
+
+export const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTyping: boolean; character: Character }> = ({ messages, isTyping, character }) => {
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [messages, isTyping]);
+
+  return (
+    <ChatBox>
+      {messages.map((msg, index) => (
+        <div key={index} className={msg.isUser ? UserMessage : CharacterMessage}>
+          {msg.isUser ? (
+            <UserChat>
+              <UserChatContent>{msg.text}</UserChatContent>
+            </UserChat>
+          ) : (
+            <CharacterChat>
+              <CharacterAvatar src={character.img} alt="Character Avatar" />
+              <CharacterChatCon
+                isTyping={index === messages.length - 1 && isTyping}
+                chatEndRef={chatEndRef}
+                backgroundColor={character.background}
+                fontFamily={character.fontFamily}
+              >
+                {msg.text}
+              </CharacterChatCon>
+            </CharacterChat>
+          )}
+        </div>
+      ))}
+      <div ref={chatEndRef} />
+    </ChatBox>
+  );
+};
+
+export const UserInputBox: React.FC<{ input: string; setInput: (input: string) => void; sendMessage: (message: string) => void; handleStartSTT: () => void; handleEndSTT: () => void; }> = ({ input, setInput, sendMessage, handleStartSTT, handleEndSTT }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSend = useCallback(debounce(() => {
+    const sanitizedInput = input.replace(/(\r\n|\n|\r)/gm, '').trim(); // 개행 문자 제거 및 불필요한 공백 제거
+    if (sanitizedInput) {
+      sendMessage(sanitizedInput);
+      setInput('');
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
+    }
+  }, 300), [input, sendMessage, setInput]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
+    }
+  }, [handleSend]);
+
+  return (
+    <UserInputCon>
+      <InputMessage
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="메시지를 입력하세요."
+        ref={inputRef}
+      />
+      <SendButton onClick={handleSend}>Send</SendButton>
+      <MicButton onMouseDown={handleStartSTT} onMouseUp={handleEndSTT}>Hold to Speak</MicButton>
+    </UserInputCon>
+  );
+};
+
+const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -35,7 +162,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
   const { nickname } = useParams<{ nickname: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const character = location.state?.character || initialCharacter;
+  const character = location.state?.character as Character;
 
   useEffect(() => {
     // 캐릭터 정보를 콘솔에 출력
@@ -92,7 +219,7 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
       socket.off('error', handleError);
       socket.off('chat log saved', handleChatLogSaved);
     };
-  }, [nickname]);
+  }, [nickname, character]);
 
   const sendMessage = (message: string) => {
     const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim();
@@ -204,7 +331,11 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   return (
     <ChatContainer>
-      <UPCharacterProfile name={character.name} onClose={handleCloseChat} fontFamily={character.fontFamily} />
+      <UPCharacterProfile 
+        name={character.name} 
+        onClose={handleCloseChat} 
+        fontFamily={character.fontFamily} 
+      />
       <ChatingBox messages={convertedMessages} isTyping={isTyping} character={character} />
       <UserInputBox 
         input={input} 
