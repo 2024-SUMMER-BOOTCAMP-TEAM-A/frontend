@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const SIGNUP_URL = 'http://localhost:8000/api/v1/users/signup';
-const SIGNUP_URL = 'https://person-a.site/api/v1/users/signup';
+const SIGNUP_URL = 'http://localhost:8000/api/v1/users/signup';
+// const SIGNUP_URL = 'https://person-a.site/api/v1/users/signup';
 
 interface SignupData {
   email: string;

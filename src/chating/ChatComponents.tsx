@@ -166,7 +166,7 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
 const fetchSummaryLog = async (logId: string) => {
   try {
     const response = await axios.post(`https://person-a.site/api/v1/logs/summary/${logId}`);
-    //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
+    // const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching summary log:', error);

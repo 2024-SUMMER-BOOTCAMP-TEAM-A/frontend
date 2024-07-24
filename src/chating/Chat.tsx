@@ -149,8 +149,8 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post('http://person-a.site/api/v1/logs/summary', { chatLogId });
-      //const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
+      // const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
+      const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
       console.log('Summary saved successfully:', response.data);
       const summaryLogId = response.data.summaryLogId;
       setSummaryLogId(summaryLogId); // summaryLogId 설정
@@ -162,8 +162,8 @@ const Chat: React.FC<ChatProps> = ({ initialCharacter }) => {
 
   const fetchSummaryLog = async (summaryLogId: string) => {
     try {
-      const response = await axios.get(`http://person-a.site/api/v1/logs/summary/${summaryLogId}`);
-      //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
+      // const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
+      const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
       console.log('Summary fetched successfully:', response.data);
       setSummaryLog(response.data);
     } catch (error) {

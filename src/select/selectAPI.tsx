@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const API_URL = 'http://localhost:8000/api/v1/userSelections';
-const API_URL = 'https://person-a.site/api/v1/userSelections';
+const API_URL = 'http://localhost:8000/api/v1/userSelections';
+// const API_URL = 'https://person-a.site/api/v1/userSelections';
 
 interface SaveUserSelectionData {
   personId: number;
