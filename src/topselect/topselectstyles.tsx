@@ -1,26 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-// 메인 컨테이너
-export const MainContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
-  z-index: 20;
-  padding-top: 50px;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-  }
-`;
-
-// 텍스트 애니메이션
+// 애니메이션 키프레임 정의
 const typing = keyframes`
   from { width: 0; }
   to { width: 100%; }
@@ -35,13 +15,11 @@ const endTyping = keyframes`
   to { border-right: none; }
 `;
 
-// 캐릭터 이미지 애니메이션
 const typingCharacter = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
-// 빛나는 효과 애니메이션
 const glow = keyframes`
   0% {
     box-shadow: 0 0 5px #fff;
@@ -54,28 +32,105 @@ const glow = keyframes`
   }
 `;
 
-export const Display = styled.div`
+// 메인 컨테이너
+export const MainContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 84%;
-  height: 75%; 
-  padding: 30px;
-  background-color: #3c383c;
-  border: 20px solid #D2B48C;
-  box-shadow: 0px 0px 0px 3px #654321;
-  border-radius: 30px;
-  color: #fff;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
   z-index: 20;
-  margin-top: 10%;
+  padding-top: 50px;
   box-sizing: border-box;
-
+  perspective: 1200px; /* 3D perspective 설정 */
+  
   @media (max-width: 768px) {
-    flex-direction: column;
-    width: 90%;
-    height: auto;
-    padding: 20px;
-    margin-top: 0;
+    padding-top: 20px;
+  }
+`;
+
+// Book 컨테이너
+export const Book = styled.div`
+  transform-style: preserve-3d;
+  position: relative;
+  height: 400px; /* height 설정 */
+  width: 0px; /* width 설정 */
+  cursor: pointer;
+  backface-visibility: visible;
+  transition: transform 0.5s ease-in-out, box-shadow 0.35s ease-in-out;
+
+  &:hover .front {
+    transform: rotateY(-180deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .page1 {
+    transform: rotateY(-170deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .page2 {
+    transform: rotateY(-10deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .page3 {
+    transform: rotateY(-160deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .page4 {
+    transform: rotateY(-20deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .page5 {
+    transform: rotateY(-150deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .page6 {
+    transform: rotateY(-30deg) scale(1.1);
+    box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .back {
+    transform: rotateY(-10deg) scale(1.1);
+  }
+`;
+
+export const Page = styled.div`
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 370px;
+  height: 125%;
+  top: 0;
+  left: 0;
+  transform-origin: left center;
+  transition: transform 0.5s ease-in-out, box-shadow 0.35s ease-in-out;
+  border-bottom-right-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+
+  &.front, &.back {
+    background: navy;
+  }
+
+  &.page1, &.page2, &.page3, &.page4, &.page5, &.page6 {
+    background: #efefef;
+  }
+
+  &.page2, &.page4, &.page6 {
+    background: #f5f5f5;
+  }
+
+  &.page5 {
+    background: #fafafa;
+  }
+
+  &.page6 {
+    background: #fdfdfd;
   }
 `;
 
@@ -84,13 +139,13 @@ export const CharacterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 50%;
+  width: 100%;
   margin-top: 3%;
-  margin-left: -5%;
+  padding: 20px;
+  transform: scaleX(-1);
 
   @media (max-width: 768px) {
     width: 100%;
-    margin-left: 0;
     align-items: center;
   }
 `;
