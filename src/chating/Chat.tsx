@@ -7,6 +7,7 @@ import { Stars, Stars1, Stars2 } from '../assets/styles';
 import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 import { Character } from '../assets/initCharacter';
 import { ChatContainer } from './component/chatingStyles';
+import LoadingModal from './component/LoadingModal';
 import { CloseButton, ChatBox, CharacterChat, UserChat, CharacterChatContent, UserChatContent, CharacterAvatar, CharacterMessage, UserMessage, CharacterProfile,
   ProfileName, UserInputCon, InputMessage, SendButton, MicButton } from './component/chatingStyles';
 import TypingWaiting from './component/TypingWaiting';
@@ -154,6 +155,7 @@ const Chat: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [chatLogId, setChatLogId] = useState<string>('');
   const [summaryLog, setSummaryLog] = useState<any>(null);
   const [isLottieOpen, setIsLottieOpen] = useState<boolean>(false); // 추가
@@ -172,6 +174,7 @@ const Chat: React.FC = () => {
   // }, [character]);
 
   useEffect(() => {
+    console.log('Selected character:', character);
       if (character && character.greeting) {
       const isGreetingMessageExists = messages.some(
         (msg) => msg.sender === 'system' && msg.message === character.greeting
@@ -197,7 +200,7 @@ const Chat: React.FC = () => {
       console.error('Character or greeting is not defined');
     }
   }, [character]);
-  
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
 
@@ -232,7 +235,7 @@ const Chat: React.FC = () => {
     const handleChatLogSaved = async (data: { chatLogId: string }) => {
       console.log('Chat log ID received from server:', data.chatLogId);
       setChatLogId(data.chatLogId);
-      await handleEndChat(data.chatLogId); // chatLogId가 설정된 후 handleEndChat 호출
+      await handleEndChat(data.chatLogId);
     };
 
     socket.on('chat message', handleChatMessage);
@@ -303,31 +306,35 @@ const Chat: React.FC = () => {
       console.error('No chatLogId found');
       return;
     }
-  
+
     try {
+      setIsLoading(true);
       // const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
       const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
       console.log('Summary saved successfully:', response.data);
-      const summaryLogId = response.data.summaryLogId; // 요약본 ID 가져오기
-      fetchSummaryLog(summaryLogId); 
+      const summaryLogId = response.data.summaryLogId;
+      setSummaryLogId(summaryLogId); // summaryLogId 설정
+      fetchSummaryLog(summaryLogId);
     } catch (error) {
       console.error('Error saving summary:', error);
     }
   };
-  
+
   const fetchSummaryLog = async (summaryLogId: string) => {
     try {
       // const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
       const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
       console.log('Summary fetched successfully:', response.data);
-      setSummaryLog(response.data); // 요약본 상태 설정
+      setSummaryLog(response.data);
     } catch (error) {
       console.error('Error fetching summary:', error);
+    } finally {
+      setIsLoading(false);
     }
-  };  
+  };
 
   const handleConfirmCloseChat = () => {
-    socket.emit('end chat'); // 여기에서 end chat 이벤트 전송
+    socket.emit('end chat');
     setIsAlertOpen(false);
     setIsLogOpen(true);
   };
@@ -342,10 +349,9 @@ const Chat: React.FC = () => {
 
   const handleCloseLog = () => {
     console.log('Handling close log');
-    console.log('Summary Log:', summaryLog); // summaryLog 상태 확인
+    console.log('Summary Log:', summaryLog);
     setIsLogOpen(false);
-    navigate(-1); // 이전 페이지로 이동
-
+    navigate(-1);
   };
 
   const handleEndSTT = () => {
