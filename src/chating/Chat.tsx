@@ -268,7 +268,7 @@ const Chat: React.FC = () => {
       socket.off('chat log saved', handleChatLogSaved);
     };
 
-  }, [character]);
+  }, []);
 
   const sendMessage = (message: string) => {
     const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim();
