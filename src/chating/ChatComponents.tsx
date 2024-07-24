@@ -1,19 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 import { Character } from '../assets/initCharacter';
-import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish } from './component/chatingStyles';
+import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish, CharacterProfile, ProfileName, CloseButton, UserMessage, CharacterMessage
+  ,CharacterChatContent, ChatBox, UserChat, CharacterChat, UserInputCon, InputMessage, UserChatContent,CharacterAvatar, SendButton, MicButton
+ } from './component/chatingStyles';
 import { GmarketSansMedium } from '../assets/styles';
 import {
   LogNickname, ChatImage, ChatSummary, Solution, PersonalitySection, PersonalityImage, PersonalityDescription, LogDate, LogHeaderImage,
   DownButton, CosultButton, RankingButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
 } from './component/logstyles';
 import penImg from '../assets/png/pen.png';
-import logpersonaImg from '../assets/png/logpersona.png';
-import chatImg from '../assets/png/uncleback.png';
+import logpersonaImg from '../assets/png/logpersona.png';;
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
 import axios from 'axios';
+import LottieAnimation from './stt';
+import TypingWaiting from './component/TypingWaiting';
+import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
+import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
@@ -159,7 +164,8 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
 const fetchSummaryLog = async (logId: string) => {
   try {
     const response = await axios.post(`https://person-a.site/api/v1/logs/summary/${logId}`);
-    // const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
+    //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
+    console.log('API Response:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching summary log:', error);
@@ -167,14 +173,24 @@ const fetchSummaryLog = async (logId: string) => {
   }
 };
 
-export const LogModal: React.FC<{ character: Character; nickname: string | undefined; summaryLogId: string; onClose: () => void }> = ({ character, nickname, summaryLogId, onClose }) => {
+interface LogModalProps {
+  character: Character;
+  nickname: string | undefined;
+  summaryLogId: string;
+  onClose: () => void;
+}
+
+export const LogModal: React.FC<LogModalProps> = ({ character, nickname, summaryLogId, onClose }) => {
   const [summaryLog, setSummaryLog] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchLog = async () => {
       const log = await fetchSummaryLog(summaryLogId);
-      setSummaryLog(log);
+      console.log('Fetched Log:', log);
+      if (log && log.summaryLog) {
+        setSummaryLog(log.summaryLog); // 중첩된 summaryLog를 설정합니다.
+      }
       setLoading(false);
     };
 
@@ -192,6 +208,8 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
     return <div>Error loading log.</div>;
   }
 
+  console.log('SummaryLog state:', summaryLog);
+  
   const getCurrentDate = () => {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
@@ -204,7 +222,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
 
   const handleDownload = () => {
     if (logContainerRef.current) {
-      html2canvas(logContainerRef.current).then(canvas => {
+      html2canvas(logContainerRef.current).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = imgData;
@@ -226,14 +244,16 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
           </LogHeader>
         </LogHeaderContainer>
         <LogContainer ref={logContainerRef}>
-          <LogImage src={summaryLog.image || logpersonaImg} alt="Persona" />
-          <LogNickname>{nickname}</LogNickname>
-          <ChatImage src={summaryLog.image || chatImg} alt="Chat related" />
+          <LogImage src={logpersonaImg} alt="Persona" />
+          <LogNickname>{summaryLog.user}</LogNickname>
+          <ChatImage src={summaryLog.image} alt="Chat related" />
           <ChatSummary>
-            {summaryLog.summary || "상담 내용을 불러오는 중..."}
+            <br/>
+            {summaryLog.summary}
           </ChatSummary>
           <Solution>
-            {summaryLog.conclusion || "해결 방안을 불러오는 중..."}
+            <br/>
+            <strong style={{ fontSize: '1.1em' }}>{summaryLog.conclusion}</strong>
           </Solution>
           <PersonalitySection>
             <PersonalityDescription>{character?.name}</PersonalityDescription>
