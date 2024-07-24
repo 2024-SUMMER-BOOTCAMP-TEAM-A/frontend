@@ -1,16 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useRef } from 'react';
 import html2canvas from 'html2canvas';
-import { useNavigate, useParams } from 'react-router-dom';
-import TypingWaiting from './component/TypingWaiting';
+import { useNavigate } from 'react-router-dom';
 import { Character } from '../assets/initCharacter';
-import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
-import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
-import {
-  CloseButton, ChatBox, CharacterChat, UserChat, CharacterChatContent, UserChatContent, CharacterAvatar, CharacterMessage, UserMessage, CharacterProfile,
-  ProfileName, UserInputCon, InputMessage, SendButton, MicButton, AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish,
-} from './component/chatingStyles';
-import { Stars, Stars1, Stars2, GmarketSansMedium } from '../assets/styles';
-import ShootingStarsComponent from '../assets/ShootingStarsComponent';
+import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish } from './component/chatingStyles';
+import { GmarketSansMedium } from '../assets/styles';
 import {
   LogNickname, ChatImage, ChatSummary, Solution, PersonalitySection, PersonalityImage, PersonalityDescription, LogDate, LogHeaderImage,
   DownButton, CosultButton, RankingButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader

@@ -63,7 +63,8 @@ export const CloseButton = styled.button`
 `;
 
 // 캐릭터 이름
-export const ProfileName = styled.div`
+export const ProfileName = styled.div<{ fontFamily?: string }>`
+  font-family: ${props => props.fontFamily || 'Arial, sans-serif'};
   padding: 15px;
   font-size: 20px;
   font-weight: bold;
