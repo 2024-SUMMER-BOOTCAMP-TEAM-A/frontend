@@ -215,7 +215,7 @@ const Chat: React.FC = () => {
     } else {
       console.error('Character or greeting is not defined');
     }
-  }, [character]);
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
