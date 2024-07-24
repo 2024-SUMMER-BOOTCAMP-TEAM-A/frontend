@@ -185,7 +185,7 @@ import {
   CenteredText, LeftText, RightText, Section, SectionOne, WorryImageContainer,
   WorryImage1, WorryImage2, WorryImage3, OwnglyphFont, StyledUpButtonContainer, StyledUpImage, StyledUpButtonText,
   Button, FadeOutText, FadeInText
-} from '../main/mainstyles';
+} from './mainstyles';
 import RotatingCharacters from './RotatingCharacters';
 import StarBackground from '../assets/StarBackground';
 import LoginPage from './Login';

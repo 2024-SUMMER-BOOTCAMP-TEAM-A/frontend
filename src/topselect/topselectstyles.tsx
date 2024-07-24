@@ -8,7 +8,7 @@ export const MainContainer = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+  background: linear-gradient(to bottom, #020107 0%, #390097 100%);
   z-index: 20;
   padding-top: 50px;
   box-sizing: border-box;

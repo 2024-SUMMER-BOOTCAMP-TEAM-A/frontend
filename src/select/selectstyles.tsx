@@ -10,7 +10,24 @@ export const MainContainer = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+  background: linear-gradient(to bottom, #020107 0%, #390097 100%);
+`;
+
+// 모달 안 흰색 배경 부분
+export const ModalBackground = styled.div`
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  width: 190%;
+  height: 170%;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: -1;
+  @media screen and (max-width: 768px) {
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+  }
 `;
 
 // 카드 컨테이너
@@ -185,11 +202,11 @@ export const ChatButton = styled.button`
   margin-top: 70px;
   padding: 3px 70px;
   border-radius: 40px;
-  background: #FFE6F2;
+  background: #CCAEBA;
   border: none;
   cursor: pointer;
   &:hover {
-    background-color: #FFD9E9;
+    background-color: #B398A3;
     animation: ${jelly} 0.5s ease-in-out;
   }
   @media screen and (max-width: 768px) {

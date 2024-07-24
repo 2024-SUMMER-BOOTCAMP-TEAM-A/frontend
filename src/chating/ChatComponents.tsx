@@ -20,11 +20,10 @@ import logpersonaImg from '../assets/png/logpersona.png';
 import chatImg from '../assets/png/uncleback.png';
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
-
+import axios from 'axios';
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
-  const { nickname } = useParams<{ nickname: string }>();
 
   return (
     <CharacterProfile>
@@ -164,9 +163,40 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
   );
 };
 
-export const LogModal: React.FC<{ character: Character; nickname: string | undefined; summaryLog: any; onClose: () => void }> = ({ character, nickname, summaryLog, onClose }) => {
-  if (!summaryLog) {
+const fetchSummaryLog = async (logId: string) => {
+  try {
+    const response = await axios.post(`https://person-a.site/api/v1/logs/summary/${logId}`);
+    //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching summary log:', error);
+    return null;
+  }
+};
+
+export const LogModal: React.FC<{ character: Character; nickname: string | undefined; summaryLogId: string; onClose: () => void }> = ({ character, nickname, summaryLogId, onClose }) => {
+  const [summaryLog, setSummaryLog] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchLog = async () => {
+      const log = await fetchSummaryLog(summaryLogId);
+      setSummaryLog(log);
+      setLoading(false);
+    };
+
+    fetchLog();
+  }, [summaryLogId]);
+
+  const navigate = useNavigate();
+  const logContainerRef = useRef<HTMLDivElement>(null);
+
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (!summaryLog) {
+    return <div>Error loading log.</div>;
   }
 
   const getCurrentDate = () => {
@@ -174,9 +204,6 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
     return now.toLocaleDateString('ko-KR', options);
   };
-
-  const navigate = useNavigate();
-  const logContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRankingClick = () => {
     navigate(`/topselect`);
@@ -208,7 +235,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
         <LogContainer ref={logContainerRef}>
           <LogImage src={summaryLog.image || logpersonaImg} alt="Persona" />
           <LogNickname>{nickname}</LogNickname>
-          <ChatImage src={chatImg} alt="Chat related" />
+          <ChatImage src={summaryLog.image || chatImg} alt="Chat related" />
           <ChatSummary>
             {summaryLog.summary || "상담 내용을 불러오는 중..."}
           </ChatSummary>
