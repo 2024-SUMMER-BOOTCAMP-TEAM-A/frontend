@@ -403,7 +403,7 @@ const Chat: React.FC = () => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && ( <LogModal character={character} nickname={nickname} summaryLogId={summaryLogId} onClose={handleCloseLog} />
+      {isLogOpen && summaryLog && ( <LogModal character={character} nickname={nickname} summaryLogId={summaryLogId} onClose={handleCloseLog} />
       )}
       <LottieAnimation isOpen={isLottieOpen} onClose={() => setIsLottieOpen(false)} />
       {isLoading && <LoadingModal />}
