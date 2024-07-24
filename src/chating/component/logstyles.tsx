@@ -166,7 +166,7 @@ export const LogNickname = styled.div`
 
 export const ChatImage = styled.img`
   width: 100%;
-  height: 40%;
+  height: 35%;
   margin-bottom: 20px;
 
   @media screen and (max-width: 768px) {
@@ -181,7 +181,7 @@ export const ChatSummary = styled.div`
   font-size: 1em;
   text-align: left;
   color: black;
-  margin-bottom: 15%;
+  margin-bottom: 40px;
   &::before {
     content: "상담 내용";
     color: gray;
@@ -198,10 +198,7 @@ export const Solution = styled.div`
   text-align: left;
   font-size: 1em;
   color: black;
-  position: absolute;
-  left: 0;
-  bottom: 120px;
-  padding-left: 20px;
+
   &::before {
     content: "해결 방안";
     color: gray;
@@ -214,11 +211,9 @@ export const Solution = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    font-size: 0.9em;
-    padding-left: 10px;
-
+    font-size: 0.8em;
     span {
-      font-size: 1.1em;
+      font-size: 1em;
     }
   }
 `;

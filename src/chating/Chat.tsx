@@ -8,8 +8,23 @@ import ShootingStarsComponent from '../assets/ShootingStarsComponent';
 import { Character } from '../assets/initCharacter';
 import { ChatContainer } from './component/chatingStyles';
 import LoadingModal from './component/LoadingModal';
-import { CloseButton, ChatBox, CharacterChat, UserChat, CharacterChatContent, UserChatContent, CharacterAvatar, CharacterMessage, UserMessage, CharacterProfile,
-  ProfileName, UserInputCon, InputMessage, SendButton, MicButton } from './component/chatingStyles';
+import { 
+  CloseButton, 
+  ChatBox, 
+  CharacterChat, 
+  UserChat, 
+  CharacterChatContent, 
+  UserChatContent, 
+  CharacterAvatar, 
+  CharacterMessage, 
+  UserMessage, 
+  CharacterProfile,
+  ProfileName, 
+  UserInputCon, 
+  InputMessage, 
+  SendButton, 
+  MicButton 
+} from './component/chatingStyles';
 import TypingWaiting from './component/TypingWaiting';
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
 import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
@@ -158,6 +173,7 @@ const Chat: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [chatLogId, setChatLogId] = useState<string>('');
   const [summaryLog, setSummaryLog] = useState<any>(null);
+  const [summaryLogId, setSummaryLogId] = useState<string>(''); // 추가
   const [isLottieOpen, setIsLottieOpen] = useState<boolean>(false); // 추가
   const messageEndRef = useRef<HTMLDivElement>(null);
   let silenceTimer: ReturnType<typeof setTimeout>;
@@ -309,8 +325,8 @@ const Chat: React.FC = () => {
 
     try {
       setIsLoading(true);
-      // const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
-      const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
+      const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
+      //const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
       console.log('Summary saved successfully:', response.data);
       const summaryLogId = response.data.summaryLogId;
       setSummaryLogId(summaryLogId); // summaryLogId 설정
@@ -322,8 +338,8 @@ const Chat: React.FC = () => {
 
   const fetchSummaryLog = async (summaryLogId: string) => {
     try {
-      // const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
-      const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
+      const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
+      //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
       console.log('Summary fetched successfully:', response.data);
       setSummaryLog(response.data);
     } catch (error) {
@@ -387,8 +403,10 @@ const Chat: React.FC = () => {
       <Stars2 />
       <ShootingStarsComponent />
       {isAlertOpen && <CustomAlert message="정말로 채팅을 끝내시겠습니까?" onConfirm={handleConfirmCloseChat} onCancel={handleCancelCloseChat} />}
-      {isLogOpen && <LogModal character={character} nickname={nickname} summaryLog={summaryLog} onClose={handleCloseLog} />}
+      {isLogOpen && ( <LogModal character={character} nickname={nickname} summaryLogId={summaryLogId} onClose={handleCloseLog} />
+      )}
       <LottieAnimation isOpen={isLottieOpen} onClose={() => setIsLottieOpen(false)} />
+      {isLoading && <LoadingModal />}
     </ChatContainer>
   );
 };

@@ -25,8 +25,8 @@ import uncleImage from '../assets/png/uncle.png';
 import { saveUserSelection } from './selectAPI';
 import initialCharacters from '../assets/initCharacter';
 
-// const API_URL = 'https://person-a.site/api/v1/persons';
-const API_URL = 'http://localhost:8000/api/v1/persons';
+const API_URL = 'https://person-a.site/api/v1/persons';
+//const API_URL = 'http://localhost:8000/api/v1/persons';
 
 interface Persona {
   id: number;
