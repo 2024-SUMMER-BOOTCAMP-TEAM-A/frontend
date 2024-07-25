@@ -1,29 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import frontImage from '../assets/png/pront.png';
 import pageImage from '../assets/png/page.png';
+
 // 애니메이션 키프레임 정의
-
-
-// 메인 컨테이너
-export const MainContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(to bottom, #020107 0%, #390097 100%);
-  z-index: 20;
-  padding-top: 50px;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-  }
-`;
-
 const typing = keyframes`
   from { width: 0; }
   to { width: 100%; }
@@ -63,7 +42,7 @@ export const MainContainer = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
+  background: linear-gradient(to bottom, #020107 0%, #390097 100%);
   z-index: 20;
   padding-top: 50px;
   box-sizing: border-box;
