@@ -133,7 +133,7 @@ const characterImages: Record<string, string> = {
   '장원영': luckyImage,
   '이서진': uncleImage,
   '침착맨': leemalImage,
-  '김아영': mzImage,
+  'MZ': mzImage,
 };
 
 const TopSelect: React.FC = () => {
@@ -171,7 +171,7 @@ const TopSelect: React.FC = () => {
     switch (character) {
       case '장원영':
         return <Ownglyph_ryuttung_Rg style={commonStyle}>내가 1등이라고?! 완전 럭키비키잖아~</Ownglyph_ryuttung_Rg>;
-      case '김아영':
+      case 'MZ':
         return <Gothic_Goding style={commonStyle}>제가 1등이네요</Gothic_Goding>;
       case '이서진':
         return <Cafe24Shiningstar style={commonStyle}>아이 뭐, 나는 항상 1등이니까~</Cafe24Shiningstar>;

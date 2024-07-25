@@ -28,7 +28,7 @@ export const lucygirl: Character = {
 };
 
 export const MZ: Character = {
-  name: '김아영',
+  name: 'MZ',
   img: mzImage,
   fontFamily: 'Gothic_Goding',
   background: '#FFF8B7',
