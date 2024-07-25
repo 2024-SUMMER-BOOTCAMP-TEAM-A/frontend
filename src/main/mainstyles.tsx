@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 // 메인 페이지 시작하기 페이지의 버튼
