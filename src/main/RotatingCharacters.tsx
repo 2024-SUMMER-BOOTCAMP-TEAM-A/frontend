@@ -12,8 +12,7 @@ const RotatingCharacters: React.FC = () => {
     <CharacterContainer>
       <Character1 src={leemalImage} alt="1" />
       <Character2 src={luckyImage} alt="2" />
-      <Character3 src={uncleImg} alt="3" />
-      <Character3 src={mzImage} alt="4" />
+      <Character3 src={mzImage} alt="3" />
       <ClickImage src={clickImg} alt="Click" />
     </CharacterContainer>
   );

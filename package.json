@@ -23,6 +23,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "framer-motion": "^11.3.4",
     "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "lottie-web": "^5.12.2",
     "react": "^18.3.1",

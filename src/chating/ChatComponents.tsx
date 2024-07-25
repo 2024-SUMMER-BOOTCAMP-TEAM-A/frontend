@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { useNavigate } from 'react-router-dom';
 import { Character } from '../assets/initCharacter';
 import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish, CharacterProfile, ProfileName, CloseButton, UserMessage, CharacterMessage
@@ -11,7 +12,7 @@ import {
   DownButton, CosultButton, RankingButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
 } from './component/logstyles';
 import penImg from '../assets/png/pen.png';
-import logpersonaImg from '../assets/png/logpersona.png';;
+import logpersonaImg from '../assets/png/logpersona.png';
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
 import axios from 'axios';
@@ -222,14 +223,14 @@ export const LogModal: React.FC<LogModalProps> = ({ character, nickname, summary
 
   const handleDownload = () => {
     if (logContainerRef.current) {
-      html2canvas(logContainerRef.current).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = imgData;
-        link.download = 'log.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+      html2canvas(logContainerRef.current, { useCORS: true, backgroundColor: null }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/webp');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'WEBP', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('log.pdf');
       });
     }
   };

@@ -41,11 +41,11 @@ export const CardContainer = styled.div`
   transform: translate(-50%, -50%);
   z-index: 20;
   width: 90%;
-  height: 70%;
+  height: 75%;
   max-width: 1500px;
   overflow: hidden;
   @media screen and (max-width: 768px) {
-    height: 60%;
+    height: 65%;
     width: 100%;
   }
 `;
