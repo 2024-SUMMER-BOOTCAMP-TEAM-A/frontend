@@ -7,6 +7,7 @@ import { loginUser } from './loginAPI';
 import axios from 'axios';
 
 const LoginPage: React.FC = () => {
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
@@ -72,35 +73,46 @@ const LoginPage: React.FC = () => {
     <PageContainer>
       <NicknameSection>
         <div style={{ marginTop: '40px', marginBottom: '60px', textAlign: 'center' }}>
-          <FadeInText>
-            잠깐! 아직 이름을 안 물어봤네요.
-          </FadeInText>
+          <FadeInText>잠깐!</FadeInText>
+          <div style={{margin:'25px'}}/>
+          <FadeInText>저는 아직 당신이 어떤 사람인지 몰라요.</FadeInText>
+          <div style={{margin:'25px'}}/>
+          <FadeInText>저에게 당신에 대한 정보를 알려주시겠어요?</FadeInText>
         </div>
-        <FadeInText>
-          어떻게 불러드릴까요? 닉네임을 알려주세요!
-        </FadeInText>
       </NicknameSection>
       
       <FormContainer>
-        <StyledInput 
-          type="email" 
-          placeholder="이메일" 
-          value={loginEmail} 
-          onChange={(e) => setLoginEmail(e.target.value)} 
-          onKeyPress={handleKeyPress} 
-        />
-        <StyledInput 
-          type="password" 
-          placeholder="PW" 
-          value={loginPassword} 
-          onChange={(e) => setLoginPassword(e.target.value)} 
-          onKeyPress={handleKeyPress} 
-        />
         <ButtonRow>
-          <LoginButton onClick={handleLogin}>로그인</LoginButton>
+          <LoginButton onClick={() => setShowLoginModal(true)}>로그인</LoginButton>
           <RegisterButton onClick={() => setShowRegisterModal(true)}>회원가입</RegisterButton>
         </ButtonRow>
       </FormContainer>
+
+      {showLoginModal && (
+        <Modal>
+        <ModalContent>
+          <h2>로그인</h2>
+          <RegisterForm>
+            <StyledInput 
+              type="email" 
+              placeholder="이메일" 
+              value={loginEmail} 
+              onChange={(e) => setLoginEmail(e.target.value)} 
+              onKeyPress={handleKeyPress} 
+            />
+            <StyledInput 
+              type="password" 
+              placeholder="PW" 
+              value={loginPassword} 
+              onChange={(e) => setLoginPassword(e.target.value)} 
+              onKeyPress={handleKeyPress} 
+            />
+            <LoginButton onClick={handleLogin}>로그인</LoginButton>
+            <CloseButton onClick={() => setShowLoginModal(false)}>닫기</CloseButton>
+          </RegisterForm>
+        </ModalContent>
+      </Modal>
+      )}
 
       {showRegisterModal && (
         <Modal>
@@ -182,8 +194,8 @@ const FormContainer = styled.div`
   align-items: center;
   background-color: transparent; 
   border-radius: 30px;
-  padding: 20px;
-  width: 500px;
+  padding: 50px;
+  width: 400px;
   position: relative;
   z-index: 10;
   margin-top: 100%; 
@@ -200,16 +212,17 @@ const FormContainer = styled.div`
 const ButtonRow = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
-  gap: 10px; 
-  margin-top: 20px;
+  width: 120%;
+  height: 5.5vh;
+  gap: 100px; 
+  padding: 100px;
 `;
 
 const LoginButton = styled.button`
-  background-color: #3544c8;
+  background-color: #4497C3;
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 15px;
   padding: 10px 50px;
   font-size: clamp(14px, 2vw, 20px);
   cursor: pointer;
@@ -217,15 +230,15 @@ const LoginButton = styled.button`
   flex: 1;
 
   &:hover {
-    background-color: #2534b8;
+    background-color: #226589;
   }
 `;
 
 const RegisterButton = styled(LoginButton)`
-  background-color: #383535;
+  background-color: #415161;
 
   &:hover {
-    background-color: #282525;
+    background-color: #2E3B48;
   }
 `;
 
@@ -243,8 +256,9 @@ const Modal = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
+  background-color: #D4E3F2;
+  color: #150052;
+  padding: 30px;
   border-radius: 10px;
   width: 90%;
   max-width: 500px;
@@ -273,7 +287,7 @@ const StyledInput = styled.input`
 `;
 
 const CloseButton = styled.button`
-  background-color: #007bff;
+  background-color: #B1B1B1;
   color: white;
   border: none;
   border-radius: 30px;
@@ -283,7 +297,7 @@ const CloseButton = styled.button`
   font-family: 'Ownglyph_ryuttung-Rg', sans-serif; 
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #656565;
   }
 `;
 
