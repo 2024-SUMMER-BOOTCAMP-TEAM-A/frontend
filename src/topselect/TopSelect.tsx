@@ -114,7 +114,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  MainContainer, BackButton, Display, CharacterContainer, FirstPlaceContainer, OtherPlacesContainer, FirstPlaceImage, OtherPlaceImage, FirstPlaceComment
+  MainContainer, BackButton, Book, CharacterContainer, FirstPlaceContainer, OtherPlacesContainer, FirstPlaceImage, OtherPlaceImage, FirstPlaceComment,
+  Page
 } from './topselectstyles';
 import {
   GmarketSansMedium, Moon, Image, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar, LogoutButton, AnimatedImage
@@ -203,22 +204,33 @@ const TopSelect: React.FC = () => {
       <StarBackground />
       <AnimatedImage src={personaImg} alt="Persona" onClick={handleLogoClick} style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '15%', height: '30%' }} />
-      <Display>
+      <Book>
+        <Page className="front"></Page>
+        <Page className="page1"></Page>
+        <Page className="page2"></Page>
+        <Page className="page3"></Page>
+        <Page className="page4"></Page>
+        <Page className="page5">
         <CharacterContainer>
-          {topPerson && (
-            <FirstPlaceContainer>
-              <FirstPlaceImage src={characterImages[topPerson.name]} alt={topPerson.name} />
-              <FirstPlaceComment>{firstPlaceComment(topPerson.name)}</FirstPlaceComment>
-            </FirstPlaceContainer>
-          )}
-          <OtherPlacesContainer>
-            {sortedPersons.slice(1).map(person => (
-              <OtherPlaceImage key={person.id} src={characterImages[person.name]} alt={person.name} />
-            ))}
-          </OtherPlacesContainer>
-        </CharacterContainer>
-        <BarChart data={voteData} width="60%" height="80vh" />
-      </Display>
+            {topPerson && (
+              <FirstPlaceContainer>
+                <FirstPlaceImage src={characterImages[topPerson.name]} alt={topPerson.name} />
+                <FirstPlaceComment>{firstPlaceComment(topPerson.name)}</FirstPlaceComment>
+              </FirstPlaceContainer>
+            )}
+            <OtherPlacesContainer>
+              {sortedPersons.slice(1).map(person => (
+                <OtherPlaceImage key={person.id} src={characterImages[person.name]} alt={person.name} />
+              ))}
+            </OtherPlacesContainer>
+          </CharacterContainer>
+        </Page>
+        <Page className="page6">
+        <BarChart data={voteData} width="80%" height="80vh" />
+
+        </Page>
+        <Page className="back"></Page>
+      </Book>
       <BackButton onClick={handleBackClick} />
       <LogoutButton onClick={handleLogout}>
         <GmarketSansMedium style={{ fontSize: '15px' }}>로그아웃</GmarketSansMedium>

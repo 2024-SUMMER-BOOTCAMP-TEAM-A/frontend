@@ -138,9 +138,11 @@ const rotate = keyframes`
   }
   33% {
     transform: translateX(-120%) scale(0.8);
+    z-index: 1;
   }
   66% {
     transform: translateX(120%) scale(0.8);
+    z-index: 2;
   }
 `;
 
@@ -193,15 +195,15 @@ export const Character = styled.img`
 
 // 각 캐릭터의 회전 애니메이션 스타일 추가
 export const Character1 = styled(Character)`
-  z-index: 3;
+
   animation-delay: -2s; 
 `;
 export const Character2 = styled(Character)`
-  z-index: 2;
+
   animation-delay: -4s; 
 `;
 export const Character3 = styled(Character)`
-  z-index: 1;
+
   animation-delay: 0s; 
 `;
 
