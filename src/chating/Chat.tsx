@@ -175,6 +175,7 @@ const Chat: React.FC = () => {
   const [summaryLog, setSummaryLog] = useState<any>(null);
   const [summaryLogId, setSummaryLogId] = useState<string>(''); // 추가
   const [isLottieOpen, setIsLottieOpen] = useState<boolean>(false); // 추가
+  const hasInitialized = useRef(false);  // 초기화 확인용 ref
   const messageEndRef = useRef<HTMLDivElement>(null);
   let silenceTimer: ReturnType<typeof setTimeout>;
   let mediaRecorder: MediaRecorder;
@@ -184,12 +185,10 @@ const Chat: React.FC = () => {
   const location = useLocation();
   const character = location.state?.character as Character;
 
-  // useEffect(() => {
-  //   // 캐릭터 정보를 콘솔에 출력
-  //   console.log('Selected character:', character);
-  // }, [character]);
-
   useEffect(() => {
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+
     console.log('Selected character:', character);
       if (character && character.greeting) {
       const isGreetingMessageExists = messages.some(
