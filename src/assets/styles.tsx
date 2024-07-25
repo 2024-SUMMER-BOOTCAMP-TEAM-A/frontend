@@ -3,12 +3,12 @@ import styled, { keyframes } from 'styled-components';
 // 별 배경 크기 및 애니메이션 설정을 위한 상수 
 export const starFieldWidth = 2560;
 export const starFieldHeight = 2560;
-export const starOneScrollDuration = '90s';
-export const starTwoScrollDuration = '120s';
-export const starThreeScrollDuration = '130s';
-export const numStarOneStars = 1500;
-export const numStarTwoStars = 800;
-export const numStarThreeStars = 50;
+export const starOneScrollDuration = '80s';
+export const starTwoScrollDuration = '100s';
+export const starThreeScrollDuration = '120s';
+export const numStarOneStars = 1800;
+export const numStarTwoStars = 1000;
+export const numStarThreeStars = 400;
 
 // 별 애니메이션을 위한 키프레임
 export const animStar = keyframes`

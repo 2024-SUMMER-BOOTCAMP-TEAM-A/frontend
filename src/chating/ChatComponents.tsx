@@ -1,30 +1,27 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import html2canvas from 'html2canvas';
-import { useNavigate, useParams } from 'react-router-dom';
-import TypingWaiting from './component/TypingWaiting';
+import { useNavigate } from 'react-router-dom';
 import { Character } from '../assets/initCharacter';
-import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
-import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
-import {
-  CloseButton, ChatBox, CharacterChat, UserChat, CharacterChatContent, UserChatContent, CharacterAvatar, CharacterMessage, UserMessage, CharacterProfile,
-  ProfileName, UserInputCon, InputMessage, SendButton, MicButton, AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish,
-} from './component/chatingStyles';
-import { Stars, Stars1, Stars2, GmarketSansMedium } from '../assets/styles';
-import ShootingStarsComponent from '../assets/ShootingStarsComponent';
+import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish, CharacterProfile, ProfileName, CloseButton, UserMessage, CharacterMessage
+  ,CharacterChatContent, ChatBox, UserChat, CharacterChat, UserInputCon, InputMessage, UserChatContent,CharacterAvatar, SendButton, MicButton
+ } from './component/chatingStyles';
+import { GmarketSansMedium } from '../assets/styles';
 import {
   LogNickname, ChatImage, ChatSummary, Solution, PersonalitySection, PersonalityImage, PersonalityDescription, LogDate, LogHeaderImage,
   DownButton, CosultButton, RankingButton, ModalOverlay, ModalContent, LogImage, LogContainer, ButtonContainer, LogHeaderContainer, LogHeader
 } from './component/logstyles';
 import penImg from '../assets/png/pen.png';
-import logpersonaImg from '../assets/png/logpersona.png';
-import chatImg from '../assets/png/uncleback.png';
+import logpersonaImg from '../assets/png/logpersona.png';;
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
-
+import axios from 'axios';
+import LottieAnimation from './stt';
+import TypingWaiting from './component/TypingWaiting';
+import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
+import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
-  const { nickname } = useParams<{ nickname: string }>();
 
   return (
     <CharacterProfile>
@@ -164,19 +161,60 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
   );
 };
 
-export const LogModal: React.FC<{ character: Character; nickname: string | undefined; summaryLog: any; onClose: () => void }> = ({ character, nickname, summaryLog, onClose }) => {
-  if (!summaryLog) {
+const fetchSummaryLog = async (logId: string) => {
+  try {
+    const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${logId}`);
+    //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
+    console.log('API Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching summary log:', error);
+    return null;
+  }
+};
+
+interface LogModalProps {
+  character: Character;
+  nickname: string | undefined;
+  summaryLogId: string;
+  onClose: () => void;
+}
+
+export const LogModal: React.FC<LogModalProps> = ({ character, nickname, summaryLogId, onClose }) => {
+  const [summaryLog, setSummaryLog] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchLog = async () => {
+      const log = await fetchSummaryLog(summaryLogId);
+      console.log('Fetched Log:', log);
+      if (log && log.summaryLog) {
+        setSummaryLog(log.summaryLog); // 중첩된 summaryLog를 설정합니다.
+      }
+      setLoading(false);
+    };
+
+    fetchLog();
+  }, [summaryLogId]);
+
+  const navigate = useNavigate();
+  const logContainerRef = useRef<HTMLDivElement>(null);
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
+  if (!summaryLog) {
+    return <div>Error loading log.</div>;
+  }
+
+  console.log('SummaryLog state:', summaryLog);
+  
   const getCurrentDate = () => {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
     return now.toLocaleDateString('ko-KR', options);
   };
-
-  const navigate = useNavigate();
-  const logContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRankingClick = () => {
     navigate(`/topselect`);
@@ -184,7 +222,7 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
 
   const handleDownload = () => {
     if (logContainerRef.current) {
-      html2canvas(logContainerRef.current).then(canvas => {
+      html2canvas(logContainerRef.current).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = imgData;
@@ -206,14 +244,16 @@ export const LogModal: React.FC<{ character: Character; nickname: string | undef
           </LogHeader>
         </LogHeaderContainer>
         <LogContainer ref={logContainerRef}>
-          <LogImage src={summaryLog.image || logpersonaImg} alt="Persona" />
-          <LogNickname>{nickname}</LogNickname>
-          <ChatImage src={chatImg} alt="Chat related" />
+          <LogImage src={logpersonaImg} alt="Persona" />
+          <LogNickname>{summaryLog.user}</LogNickname>
+          <ChatImage src={summaryLog.image} alt="Chat related" />
           <ChatSummary>
-            {summaryLog.summary || "상담 내용을 불러오는 중..."}
+            <br/>
+            {summaryLog.summary}
           </ChatSummary>
           <Solution>
-            {summaryLog.conclusion || "해결 방안을 불러오는 중..."}
+            <br/>
+            <strong style={{ fontSize: '1.1em' }}>{summaryLog.conclusion}</strong>
           </Solution>
           <PersonalitySection>
             <PersonalityDescription>{character?.name}</PersonalityDescription>

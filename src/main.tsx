@@ -4,19 +4,16 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import StarField from './main/StarField';
 import Select from './select/Select';
 import Chat from './chating/Chat';
-import initialCharacters from './assets/initCharacter';
 import TopSelect from './topselect/TopSelect';
 import './index.css';
 import './App.css';
-
-const defaultCharacter = initialCharacters.MZ; //test
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<StarField />} />
       <Route path="/select" element={<Select />} />
-      <Route path="/chat" element={<Chat initialCharacter={defaultCharacter} />} /> 
+      <Route path="/chat" element={<Chat />} /> 
       <Route path="/topselect" element={<TopSelect />} />
     </Routes>
   );
