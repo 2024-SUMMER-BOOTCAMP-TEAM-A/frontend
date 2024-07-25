@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-
+import frontImage from '../assets/png/pront.png';
+import pageImage from '../assets/png/page.png';
 // 애니메이션 키프레임 정의
 const typing = keyframes`
   from { width: 0; }
@@ -97,42 +98,50 @@ export const Book = styled.div`
   }
 
   &:hover .back {
-    transform: rotateY(-10deg) scale(1.1);
+    transform: rotateY(-0deg) scale(1.1);
   }
 `;
 
 export const Page = styled.div`
   transform-style: preserve-3d;
   position: absolute;
-  width: 370px;
-  height: 125%;
+  width: 450px;
+  height: 150%;
   top: 0;
   left: 0;
   transform-origin: left center;
   transition: transform 0.5s ease-in-out, box-shadow 0.35s ease-in-out;
   border-bottom-right-radius: 0.5em;
   border-top-right-radius: 0.5em;
-
-  &.front, &.back {
-    background: navy;
+  background-size: cover; /* 배경 이미지를 꽉 차게 설정 */
+  
+  &.front {
+    background-image: url(${frontImage});
+    width: 500px;
   }
 
+  &.back {
+    background-image: url(${frontImage});
+  }
+
+
   &.page1, &.page2, &.page3, &.page4, &.page5, &.page6 {
-    background: #efefef;
+background-image: url(${pageImage});
   }
 
   &.page2, &.page4, &.page6 {
-    background: #f5f5f5;
+background-image: url(${pageImage});
   }
 
   &.page5 {
-    background: #fafafa;
+background-image: url(${pageImage});
   }
 
   &.page6 {
-    background: #fdfdfd;
+background-image: url(${pageImage});
   }
 `;
+
 
 // 캐릭터 이미지를 위한 컨테이너
 export const CharacterContainer = styled.div`
@@ -277,3 +286,4 @@ export const BackButton = styled.button`
     }
   }
 `;
+
