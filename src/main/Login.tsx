@@ -72,11 +72,9 @@ const LoginPage: React.FC = () => {
   return (
     <PageContainer>
       <NicknameSection>
-        <div style={{ marginTop: '40px', marginBottom: '60px', textAlign: 'center' }}>
-          <FadeInText>잠깐!</FadeInText>
-          <div style={{margin:'25px'}}/>
-          <FadeInText>저는 아직 당신이 어떤 사람인지 몰라요.</FadeInText>
-          <div style={{margin:'25px'}}/>
+        <div style={{ marginTop: '60px', marginBottom: '60px', textAlign: 'center' }}>
+          <FadeInText>잠깐! 저는 아직 당신이 어떤 사람인지 몰라요.</FadeInText>
+          <div style={{margin:'45px'}}/>
           <FadeInText>저에게 당신에 대한 정보를 알려주시겠어요?</FadeInText>
         </div>
       </NicknameSection>
@@ -216,10 +214,11 @@ const ButtonRow = styled.div`
   height: 5.5vh;
   gap: 100px; 
   padding: 100px;
+  margin-top: 50px; 
 `;
 
 const LoginButton = styled.button`
-  background-color: #4497C3;
+  background-color: #948cdb;
   color: white;
   border: none;
   border-radius: 15px;
@@ -230,15 +229,15 @@ const LoginButton = styled.button`
   flex: 1;
 
   &:hover {
-    background-color: #226589;
+    background-color: #5e598c;
   }
 `;
 
 const RegisterButton = styled(LoginButton)`
-  background-color: #415161;
+  background-color: #7bd8ec;
 
   &:hover {
-    background-color: #2E3B48;
+    background-color: #4e8996;
   }
 `;
 

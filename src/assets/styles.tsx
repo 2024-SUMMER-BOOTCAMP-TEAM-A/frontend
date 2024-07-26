@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import React, { useEffect, useState } from 'react';
 
 // 별 배경 크기 및 애니메이션 설정을 위한 상수 
 export const starFieldWidth = 2560;
@@ -99,7 +100,7 @@ font-size: 15px;
 color: black;
 `;
 
-// 쌈디 폰트
+// 이서진 폰트
 export const Cafe24Shiningstar = styled.h1`
 @font-face {
   font-family: 'Cafe24Shiningstar';
@@ -128,12 +129,12 @@ color: black;
 // 럭키 폰트
 export const Ownglyph_ryuttung_Rg = styled.h1`
 @font-face {
-  font-family: 'Ownglyph_ryuttung-Rg';
+  font-family: 'Ownglyph_ryuttung_Rg';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
-font-family: 'Ownglyph_ryuttung-Rg', sans-serif;
+font-family: 'Ownglyph_ryuttung_Rg', sans-serif;
 font-size: 15px;
 color: black;
 `;

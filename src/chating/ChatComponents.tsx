@@ -223,17 +223,41 @@ export const LogModal: React.FC<LogModalProps> = ({ character, nickname, summary
 
   const handleDownload = () => {
     if (logContainerRef.current) {
-      html2canvas(logContainerRef.current, { useCORS: true, backgroundColor: null }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/webp');
+      html2canvas(logContainerRef.current, {
+        useCORS: true,
+        backgroundColor: '#D6EAF8', 
+        scale: 2
+      }).then((canvas) => {
+        const a4Width = 210; 
+        const a4Height = 297; 
+        const a4Aspect = a4Height / a4Width;
+  
+        const expectedCanvasHeight = canvas.width * a4Aspect;
+  
+        const croppedCanvas = document.createElement('canvas');
+        croppedCanvas.width = canvas.width;
+        croppedCanvas.height = expectedCanvasHeight;
+  
+        const croppedContext = croppedCanvas.getContext('2d');
+        if (!croppedContext) {
+          console.error('Failed to get 2D context');
+          return;
+        }
+
+        croppedContext.drawImage(canvas, 0, 0, canvas.width, expectedCanvasHeight);
+  
+        const imgData = croppedCanvas.toDataURL('image/webp', 1.0);
+  
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.addImage(imgData, 'WEBP', 0, 0, pdfWidth, pdfHeight);
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+  
+        pdf.addImage(imgData, 'WEBP', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
         pdf.save('log.pdf');
       });
     }
   };
+  
 
   return (
     <ModalOverlay>
