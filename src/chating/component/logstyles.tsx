@@ -45,6 +45,7 @@ export const LogHeaderContainer = styled.div`
   background-color: #5A639C;
   z-index: 1;
   padding: 20px;
+  border: 10px solid #393F63;
 
   @media screen and (max-width: 768px) {
     width: 520px;
@@ -100,14 +101,14 @@ export const LogContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #D6EAF8;
+  background-color: #ced5ed;
   padding: 20px;
   z-index: 2;
 
   @media screen and (max-width: 768px) {
     top: 7%;
     width: 450px;
-    height: auto;
+    height: calc(450px * 1.414);
     left: 35%;
   }
 `;

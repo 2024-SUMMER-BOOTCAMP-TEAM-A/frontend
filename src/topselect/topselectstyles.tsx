@@ -44,7 +44,7 @@ export const MainContainer = styled.div`
   overflow: hidden;
   background: linear-gradient(to bottom, #020107 0%, #390097 100%);
   z-index: 20;
-  padding-top: 50px;
+  padding-top: 0px;
   box-sizing: border-box;
   perspective: 1200px; /* 3D perspective 설정 */
   
@@ -57,7 +57,7 @@ export const MainContainer = styled.div`
 export const Book = styled.div`
   transform-style: preserve-3d;
   position: relative;
-  height: 400px; /* height 설정 */
+  height: 430px; 
   width: 0px; /* width 설정 */
   cursor: pointer;
   backface-visibility: visible;

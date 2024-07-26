@@ -163,7 +163,7 @@ export const NavContainer = styled.div`
 
   & > ${NavButton}:first-child {
     position: absolute;
-    left: 36%; /* 가운데 카드의 왼쪽에 위치 */
+    left: 36.5%; /* 가운데 카드의 왼쪽에 위치 */
     transform: translateX(-100%);
 
     @media screen and (max-width: 768px) {
@@ -173,7 +173,7 @@ export const NavContainer = styled.div`
 
   & > ${NavButton}:last-child {
     position: absolute;
-    right: 36%; /* 가운데 카드의 오른쪽에 위치 */
+    right: 36.5%; /* 가운데 카드의 오른쪽에 위치 */
     transform: translateX(100%);
 
     @media screen and (max-width: 768px) {
