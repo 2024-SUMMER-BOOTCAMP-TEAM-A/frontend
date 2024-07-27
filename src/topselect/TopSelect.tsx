@@ -16,11 +16,18 @@ import StarBackground from '../assets/StarBackground';
 import BarChart from './BarChart';
 import { getPersonsByCountDesc, Person } from './topselectAPI';
 
+// 캐릭터 이미지 매핑
 const characterImages: Record<string, string> = {
   '장원영': luckyImage,
-  '이서진': uncleImage,
   '침착맨': leemalImage,
-  'MZ': mzImage,
+  '이서진': uncleImage,
+  'MZ': mzImage
+};
+
+// API 응답 이름을 올바른 이름으로 매핑
+const nameMapping: Record<string, string> = {
+  '쌈디': '이서진',
+  '맑눈광': 'MZ'
 };
 
 const TopSelect: React.FC = () => {
@@ -35,11 +42,16 @@ const TopSelect: React.FC = () => {
     const fetchData = async () => {
       try {
         const data = await getPersonsByCountDesc();
-        console.log('Fetched data:', data);
-        setPersons(data);
+        // 데이터를 올바른 이름으로 변환
+        const transformedData = data.map(person => ({
+          ...person,
+          name: nameMapping[person.name] || person.name
+        }));
+        console.log('가져온 데이터 및 변환된 데이터:', transformedData);
+        setPersons(transformedData);
       } catch (error) {
-        console.error('Error fetching persons:', error);
-        setError('Error fetching data');
+        console.error('사람 데이터를 가져오는 중 오류 발생:', error);
+        setError('데이터를 가져오는 중 오류가 발생했습니다');
       } finally {
         setLoading(false);
       }
@@ -76,6 +88,8 @@ const TopSelect: React.FC = () => {
     acc[person.name] = person.count;
     return acc;
   }, {});
+
+  console.log('투표 데이터:', voteData);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
