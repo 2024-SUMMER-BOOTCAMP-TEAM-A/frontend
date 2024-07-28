@@ -46,21 +46,40 @@ interface CharacterChatContentProps {
 
 export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatEndRef, children, backgroundColor, fontFamily }) => {
   const [showText, setShowText] = useState<React.ReactNode>(null);
+  const [fullText, setFullText] = useState<string>('');
+  const [typingIndex, setTypingIndex] = useState<number>(0);
   const [showTyping, setShowTyping] = useState(true);
 
   useEffect(() => {
     if (isTyping) {
-      setShowText(null);
+      setShowText('');
       setShowTyping(true);
     } else {
       const timer = setTimeout(() => {
-        setShowText(children);
+        setFullText(children as string); // children이 문자열이라고 가정
+        setTypingIndex(0);
         setShowTyping(false);
       }, 1000);
 
       return () => clearTimeout(timer);
+
     }
   }, [isTyping, children]);
+
+  useEffect(() => {
+    if (!showTyping && fullText) {
+      const timer = setTimeout(() => {
+        setShowText(fullText.substring(0, typingIndex + 1));
+        setTypingIndex(typingIndex + 1);
+      }, 50); // 한글자씩 출력하는 간격 조절 (밀리초 단위)
+
+      if (typingIndex >= fullText.length) {
+        clearTimeout(timer);
+      }
+
+      return () => clearTimeout(timer);
+    }
+  }, [showTyping, fullText, typingIndex]);
 
   useEffect(() => {
     if (showText && chatEndRef.current) {
@@ -74,6 +93,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
     </CharacterChatContent>
   );
 };
+
 
 export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; fontFamily?: string }> = ({ name, onClose, fontFamily }) => {
   const navigate = useNavigate();
