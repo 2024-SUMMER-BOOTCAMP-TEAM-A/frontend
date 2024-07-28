@@ -159,7 +159,7 @@ export const CharacterChatContent = styled.div`
   box-shadow: 2px 2px 20px -2px rgba(255,255,255,0.8);
   color: rgba(0,0,0,1);
   border-radius: 15px 15px 15px 2px;
-  font-size: 20px;
+  font-size: 22px;
   animation: ${appearAnimation} 0.5s ease-out;
   @media screen and (max-width: 768px) {
     font-size: 14px;
