@@ -56,7 +56,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
       const timer = setTimeout(() => {
         setFullText(children as string); // children이 문자열이라고 가정
         setTypingIndex(0);
-      }, 1000);
+      }, 0);
 
       return () => clearTimeout(timer);
 
@@ -64,7 +64,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
   }, [isTyping, children]);
 
   useEffect(() => {
-    if (!isTyping && fullText) {
+    if (fullText) {
       const timer = setTimeout(() => {
         setShowText(fullText.substring(0, typingIndex + 1));
         setTypingIndex(typingIndex + 1);
@@ -245,7 +245,7 @@ const Chat: React.FC = () => {
         }
         return [...prevMessages, message];
       });
-      setIsTyping(false)
+      setTimeout(() => setIsTyping(false), 2000);
       scrollToBottom();
     };
 
