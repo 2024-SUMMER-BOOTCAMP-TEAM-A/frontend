@@ -3,8 +3,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useNavigate } from 'react-router-dom';
 import { Character } from '../assets/initCharacter';
-import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish, CharacterProfile, ProfileName, CloseButton, UserMessage, CharacterMessage
-  ,CharacterChatContent, ChatBox, UserChat, CharacterChat, UserInputCon, InputMessage, UserChatContent,CharacterAvatar, SendButton, MicButton
+import { AlertOverlay, AlertBox, AlertButtons, AlertButtonCancle, AlertButtonFinish, CharacterProfile, ProfileName, CloseButton, UserInputCon, InputMessage, SendButton, MicButton
  } from './component/chatingStyles';
 import { GmarketSansMedium } from '../assets/styles';
 import {
@@ -16,8 +15,6 @@ import logpersonaImg from '../assets/png/logpersona.png';
 import downloadImg from '../assets/png/download.png';
 import { debounce } from 'lodash';
 import axios from 'axios';
-import LottieAnimation from './stt';
-import TypingWaiting from './component/TypingWaiting';
 import { ReactComponent as Leftarrow } from '../assets/svg/leftarrow.svg';
 import { ReactComponent as Closeicon } from '../assets/svg/closeIcon.svg';
 
@@ -32,82 +29,6 @@ export const UPCharacterProfile: React.FC<{ name: string; onClose: () => void; f
         <Closeicon />
       </CloseButton>
     </CharacterProfile>
-  );
-};
-
-interface CharacterChatContentProps {
-  isTyping: boolean;
-  chatEndRef: React.RefObject<HTMLDivElement>;
-  children: React.ReactNode;
-  backgroundColor?: string;
-  fontFamily?: string;
-}
-
-export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping, chatEndRef, children, backgroundColor, fontFamily }) => {
-  const [showText, setShowText] = useState<React.ReactNode>(null);
-  const [showTyping, setShowTyping] = useState(true);
-
-  useEffect(() => {
-    if (isTyping) {
-      setShowText(null);
-      setShowTyping(true);
-    } else {
-      const timer = setTimeout(() => {
-        setShowText(children);
-        setShowTyping(false);
-      }, 1000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isTyping, children]);
-
-  useEffect(() => {
-    if (showText && chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, [showText, chatEndRef]);
-
-  return (
-    <CharacterChatContent style={{ backgroundColor, fontFamily }}>
-      {showTyping ? <TypingWaiting /> : showText}
-    </CharacterChatContent>
-  );
-};
-
-export const ChatingBox: React.FC<{ messages: { text: string; isUser: boolean }[]; isTyping: boolean; character: Character }> = ({ messages, isTyping, character }) => {
-  const chatEndRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, [messages, isTyping]);
-
-  return (
-    <ChatBox>
-      {messages.map((msg, index) => (
-        <div key={index} className={msg.isUser ? UserMessage : CharacterMessage}>
-          {msg.isUser ? (
-            <UserChat>
-              <UserChatContent>{msg.text}</UserChatContent>
-            </UserChat>
-          ) : (
-            <CharacterChat>
-              <CharacterAvatar src={character.img} alt="Character Avatar" />
-              <CharacterChatCon
-                isTyping={index === messages.length - 1 && isTyping}
-                chatEndRef={chatEndRef}
-                backgroundColor={character.background}
-                fontFamily={character.fontFamily}
-              >
-                {msg.text}
-              </CharacterChatCon>
-            </CharacterChat>
-          )}
-        </div>
-      ))}
-      <div ref={chatEndRef} />
-    </ChatBox>
   );
 };
 
@@ -164,8 +85,8 @@ export const CustomAlert: React.FC<{ message: string; onConfirm: () => void; onC
 
 const fetchSummaryLog = async (logId: string) => {
   try {
-    const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${logId}`);
-    //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
+    // const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${logId}`);
+    const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${logId}`);
     console.log('API Response:', response.data);
     return response.data;
   } catch (error) {
