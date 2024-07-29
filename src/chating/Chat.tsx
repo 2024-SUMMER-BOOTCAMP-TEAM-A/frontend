@@ -258,7 +258,7 @@ const Chat: React.FC = () => {
 
     const handleTranscript = (data: { message: string }) => {
       setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: data.message }]);
-      resetSilenceTimer();
+      setIsTyping(true); // STT 메시지 수신 후 타이핑 상태를 false로 설정
     };
 
     const handleError = (data: { message: string }) => {
@@ -298,15 +298,6 @@ const Chat: React.FC = () => {
     }
   };
 
-  const resetSilenceTimer = () => {
-    clearTimeout(silenceTimer);
-    silenceTimer = setTimeout(() => {
-      if (mediaRecorder && mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
-      }
-    }, 2000);
-  };
-
   const scrollToBottom = () => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -317,23 +308,40 @@ const Chat: React.FC = () => {
     const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(audioStream, { mimeType: 'audio/webm' });
 
+    // STT 녹음을 시작할 때 필요한 설정을 여기서 수행합니다.
+    const startRecording = () => {
+      mediaRecorder.start(250);
+      socket.emit('start stt');
+      setIsLottieOpen(true); // 애니메이션 열기
+      resetSilenceTimer();
+    };
+
+    // STT 녹음이 종료될 때의 동작
+    const stopRecording = () => {
+      clearTimeout(silenceTimer);
+      socket.emit('end stt');
+      setIsLottieOpen(false); // 애니메이션 닫기
+    };
+
+    mediaRecorder.onstop = stopRecording;
+
+    // STT 녹음 데이터가 있는 경우 처리할 함수
     mediaRecorder.ondataavailable = (event) => {
       if (event.data.size > 0) {
         socket.emit('audio message', event.data);
       }
     };
 
-    mediaRecorder.onstop = () => {
-      clearTimeout(silenceTimer);
-      socket.emit('end stt');
-      setIsLottieOpen(false); // 애니메이션 닫기
-      setIsTyping(true);
-    };
+    startRecording();
+  };
 
-    mediaRecorder.start(250);
-    socket.emit('start stt');
-    setIsLottieOpen(true); // 애니메이션 열기
-    resetSilenceTimer();
+  const resetSilenceTimer = () => {
+    clearTimeout(silenceTimer);
+    silenceTimer = setTimeout(() => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+      }
+    }, 2000);
   };
 
   const handleEndChat = async (chatLogId: string) => {
