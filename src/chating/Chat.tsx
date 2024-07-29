@@ -48,18 +48,15 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
   const [showText, setShowText] = useState<React.ReactNode>(null);
   const [fullText, setFullText] = useState<string>('');
   const [typingIndex, setTypingIndex] = useState<number>(0);
-  const [showTyping, setShowTyping] = useState(true);
 
   useEffect(() => {
     if (isTyping) {
       setShowText('');
-      setShowTyping(true);
     } else {
       const timer = setTimeout(() => {
         setFullText(children as string); // children이 문자열이라고 가정
         setTypingIndex(0);
-        setShowTyping(false);
-      }, 1000);
+      }, 0);
 
       return () => clearTimeout(timer);
 
@@ -67,7 +64,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
   }, [isTyping, children]);
 
   useEffect(() => {
-    if (!showTyping && fullText) {
+    if (fullText) {
       const timer = setTimeout(() => {
         setShowText(fullText.substring(0, typingIndex + 1));
         setTypingIndex(typingIndex + 1);
@@ -79,7 +76,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
 
       return () => clearTimeout(timer);
     }
-  }, [showTyping, fullText, typingIndex]);
+  }, [isTyping, fullText, typingIndex]);
 
   useEffect(() => {
     if (showText && chatEndRef.current) {
@@ -89,7 +86,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
 
   return (
     <CharacterChatContent style={{ backgroundColor, fontFamily }}>
-      {showTyping ? <TypingWaiting /> : showText}
+      {isTyping ? <TypingWaiting /> : showText}
     </CharacterChatContent>
   );
 };
@@ -248,6 +245,7 @@ const Chat: React.FC = () => {
         }
         return [...prevMessages, message];
       });
+      setTimeout(() => setIsTyping(false), 2000);
       scrollToBottom();
     };
 
@@ -292,9 +290,11 @@ const Chat: React.FC = () => {
   const sendMessage = (message: string) => {
     const sanitizedMessage = message.replace(/(\r\n|\n|\r)/gm, '').trim();
     if (sanitizedMessage) {
+      setIsTyping(true);
       socket.emit('chat message', { content: sanitizedMessage, sender: nickname });
       setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: sanitizedMessage }]);
       setInput('');
+      setIsTyping(true);
     }
   };
 
@@ -344,8 +344,8 @@ const Chat: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
-      //const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
+      // const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
+      const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
       console.log('Summary saved successfully:', response.data);
       const summaryLogId = response.data.summaryLogId;
       setSummaryLogId(summaryLogId); // summaryLogId 설정
@@ -357,8 +357,8 @@ const Chat: React.FC = () => {
 
   const fetchSummaryLog = async (summaryLogId: string) => {
     try {
-      const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
-      //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
+      // const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
+      const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
       console.log('Summary fetched successfully:', response.data);
       setSummaryLog(response.data);
     } catch (error) {
