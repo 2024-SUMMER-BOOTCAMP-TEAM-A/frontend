@@ -248,6 +248,7 @@ const Chat: React.FC = () => {
         }
         return [...prevMessages, message];
       });
+      setTimeout(() => setIsTyping(false), 2000);
       scrollToBottom();
     };
 
@@ -295,6 +296,7 @@ const Chat: React.FC = () => {
       socket.emit('chat message', { content: sanitizedMessage, sender: nickname });
       setMessages((prevMessages) => [...prevMessages, { sender: nickname!, message: sanitizedMessage }]);
       setInput('');
+      setIsTyping(true);
     }
   };
 
