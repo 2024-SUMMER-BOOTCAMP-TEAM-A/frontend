@@ -304,7 +304,7 @@ const Chat: React.FC = () => {
       if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
       }
-    }, 5000);
+    }, 2000);
   };
 
   const scrollToBottom = () => {
@@ -327,6 +327,7 @@ const Chat: React.FC = () => {
       clearTimeout(silenceTimer);
       socket.emit('end stt');
       setIsLottieOpen(false); // 애니메이션 닫기
+      setIsTyping(true);
     };
 
     mediaRecorder.start(250);
