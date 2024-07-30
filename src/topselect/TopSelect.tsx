@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   MainContainer, BackButton, Book, CharacterContainer, FirstPlaceContainer, OtherPlacesContainer, FirstPlaceImage, OtherPlaceImage, FirstPlaceComment,
-  Page
+  Page, Title, GraphTitle, NavigateButton
 } from './topselectstyles';
 import {
-  GmarketSansMedium, Moon, Image, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar, LogoutButton, AnimatedImage
+  GmarketSansMedium, Moon, Gothic_Goding, KyoboHandwriting2020A, Ownglyph_ryuttung_Rg, Cafe24Shiningstar, LogoutButton, AnimatedImage
 } from '../assets/styles';
 import luckyImage from '../assets/png/lucky.png';
 import mzImage from '../assets/png/mz.png';
@@ -37,12 +37,13 @@ const TopSelect: React.FC = () => {
   const [persons, setPersons] = useState<Person[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [bookOpened, setBookOpened] = useState<boolean>(false);
+  const [triggerAnimation, setTriggerAnimation] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getPersonsByCountDesc();
-        // 데이터를 올바른 이름으로 변환
         const transformedData = data.map(person => ({
           ...person,
           name: nameMapping[person.name] || person.name
@@ -60,12 +61,24 @@ const TopSelect: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (bookOpened) {
+      setTriggerAnimation(true);
+      const timer = setTimeout(() => setTriggerAnimation(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [bookOpened]);
+
   const handleBackClick = () => {
     navigate(-1);
   };
 
+  const handleBookOpen = () => {
+    setBookOpened(true);
+  };
+
   const firstPlaceComment = (character: string) => {
-    const commonStyle = { fontSize: '25px' };
+    const commonStyle = { fontSize: '18px' };
 
     switch (character) {
       case '장원영':
@@ -100,19 +113,25 @@ const TopSelect: React.FC = () => {
     navigate('/');
   };
 
+  const handleNavigateClick = () => {
+    console.log('Navigating to character select page');  
+    navigate('/select');
+  };
+
   return (
     <MainContainer>
       <StarBackground />
       <AnimatedImage src={personaImg} alt="Persona" onClick={handleLogoClick} style={{ width: '30%', height: 'auto' }} />
       <Moon style={{ width: '15%', height: '30%' }} />
-      <Book>
+      <Book onClick={handleBookOpen}> 
         <Page className="front"></Page>
         <Page className="page1"></Page>
         <Page className="page2"></Page>
         <Page className="page3"></Page>
         <Page className="page4"></Page>
         <Page className="page5">
-        <CharacterContainer>
+          <CharacterContainer>
+            <Title>인기 PersonA 순위</Title> 
             {topPerson && (
               <FirstPlaceContainer>
                 <FirstPlaceImage src={characterImages[topPerson.name]} alt={topPerson.name} />
@@ -127,8 +146,15 @@ const TopSelect: React.FC = () => {
           </CharacterContainer>
         </Page>
         <Page className="page6">
-        <BarChart data={voteData} width="80%" height="80vh" />
-
+          <GraphTitle>
+              인기 통계
+          </GraphTitle>
+          <BarChart data={voteData} triggerAnimation={triggerAnimation} />
+          <NavigateButton onClick={handleNavigateClick}>
+            <GmarketSansMedium style={{ fontSize: '13px' ,color:'#b4aea2'}}>
+              캐릭터 선택 페이지로 가기
+            </GmarketSansMedium>
+          </NavigateButton>
         </Page>
         <Page className="back"></Page>
       </Book>

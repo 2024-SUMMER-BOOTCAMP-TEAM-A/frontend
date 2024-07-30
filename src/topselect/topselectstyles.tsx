@@ -185,7 +185,6 @@ export const FirstPlaceImage = styled.img`
 
 // 1등 캐릭터 멘트를 위한 스타일
 export const FirstPlaceComment = styled.div`
-  font-size: 16px;
   color: #fff;
   margin-top: 10px;
   text-align: center;
@@ -194,25 +193,45 @@ export const FirstPlaceComment = styled.div`
   white-space: nowrap;
   border-right: 2px solid #fff;
   animation: ${typing} 3s steps(30, end), ${blinkCaret} 0.75s step-end infinite, ${endTyping} 3s forwards;
+`;
 
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
+// 인기 persona 순위
+export const Title = styled.h2`
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  width: fit-content;
+  background-color: rgba(255, 165, 0, 0.5); 
+  display: inline-block; 
+  padding: 0 5px;
+  margin-left: 28%;
+`;
+
+// 인기 통계
+export const GraphTitle = styled.h2`
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+  margin-top: 50px;
+  background-color: rgba(255, 165, 0, 0.5); 
+  display: inline-block; 
+  padding: 0 5px;
+  margin-left: 40%;
 `;
 
 // 2, 3, 4등 캐릭터를 위한 컨테이너
 export const OtherPlacesContainer = styled.div`
   display: flex;
-  justify-content: center;  // 가운데 정렬로 변경
+  justify-content: center;
   align-items: center;
   width: 100%;
   gap: 8%;  // 이미지 간격 조절
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
     gap: 5%;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px;
   }
 `;
@@ -223,6 +242,8 @@ export const OtherPlaceImage = styled.img`
   height: auto;
   border-radius: 50%;
   animation: ${typingCharacter} 1s ease-out;
+  transform: rotateY(5deg); 
+  transition: transform 0.3s ease;
 
   @media (max-width: 768px) {
     width: 60px;
@@ -241,7 +262,7 @@ const pulse = keyframes`
 export const BackButton = styled.button`
   position: absolute;
   top: 5%;
-  right: 16%;
+  right: 17%;
   background-color: #E0BBE4;
   border: none;
   border-radius: 55px;
@@ -288,3 +309,20 @@ export const BackButton = styled.button`
   }
 `;
 
+// 선택 페이지 가기 버튼
+export const NavigateButton = styled.button`
+  background-color: transparent;
+  border: 2px solid #b4aea2;
+  border-radius: 30px;
+  color: #b4aea2;
+  padding: 5px 20px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  width: 60%;
+  position: absolute; 
+  bottom: 130px;
+  left: 52%;
+  transform: translateX(-50%);
+  z-index: 1000; 
+`;
