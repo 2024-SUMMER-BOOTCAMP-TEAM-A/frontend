@@ -116,33 +116,39 @@ export const Page = styled.div`
   border-top-right-radius: 0.5em;
   background-size: cover; /* 배경 이미지를 꽉 차게 설정 */
   
+  @media (max-width: 768px) {
+    width: 300px;
+  }
+
   &.front {
     background-image: url(${frontImage});
     width: 500px;
+
+    @media (max-width: 768px) {
+      width: 350px;
+    }
   }
 
   &.back {
     background-image: url(${frontImage});
   }
 
-
   &.page1, &.page2, &.page3, &.page4, &.page5, &.page6 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 
   &.page2, &.page4, &.page6 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 
   &.page5 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 
   &.page6 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 `;
-
 
 // 캐릭터 이미지를 위한 컨테이너
 export const CharacterContainer = styled.div`
@@ -193,6 +199,10 @@ export const FirstPlaceComment = styled.div`
   white-space: nowrap;
   border-right: 2px solid #fff;
   animation: ${typing} 3s steps(30, end), ${blinkCaret} 0.75s step-end infinite, ${endTyping} 3s forwards;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 // 인기 persona 순위
@@ -205,6 +215,11 @@ export const Title = styled.h2`
   display: inline-block; 
   padding: 0 5px;
   margin-left: 28%;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    font-size: 16px;
+  }
 `;
 
 // 인기 통계
@@ -217,6 +232,11 @@ export const GraphTitle = styled.h2`
   display: inline-block; 
   padding: 0 5px;
   margin-left: 40%;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    font-size: 16px;
+  }
 `;
 
 // 2, 3, 4등 캐릭터를 위한 컨테이너
@@ -325,4 +345,9 @@ export const NavigateButton = styled.button`
   left: 52%;
   transform: translateX(-50%);
   z-index: 1000; 
+
+  @media (max-width: 768px) {
+    width: 80%;
+    bottom: 100px;
+  }
 `;
