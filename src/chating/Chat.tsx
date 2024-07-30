@@ -68,7 +68,7 @@ export const CharacterChatCon: React.FC<CharacterChatContentProps> = ({ isTyping
       const timer = setTimeout(() => {
         setShowText(fullText.substring(0, typingIndex + 1));
         setTypingIndex(typingIndex + 1);
-      }, 50); // 한글자씩 출력하는 간격 조절 (밀리초 단위)
+      }, 130); // 한글자씩 출력하는 간격 조절 (밀리초 단위)
 
       if (typingIndex >= fullText.length) {
         clearTimeout(timer);
@@ -354,7 +354,7 @@ const Chat: React.FC = () => {
     try {
       setIsLoading(true);
       const response = await axios.post('https://person-a.site/api/v1/logs/summary', { chatLogId });
-      //const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
+      // const response = await axios.post('http://localhost:8000/api/v1/logs/summary', { chatLogId });
       console.log('Summary saved successfully:', response.data);
       const summaryLogId = response.data.summaryLogId;
       setSummaryLogId(summaryLogId); // summaryLogId 설정
@@ -367,7 +367,7 @@ const Chat: React.FC = () => {
   const fetchSummaryLog = async (summaryLogId: string) => {
     try {
       const response = await axios.get(`https://person-a.site/api/v1/logs/summary/${summaryLogId}`);
-      //const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
+      // const response = await axios.get(`http://localhost:8000/api/v1/logs/summary/${summaryLogId}`);
       console.log('Summary fetched successfully:', response.data);
       setSummaryLog(response.data);
     } catch (error) {
