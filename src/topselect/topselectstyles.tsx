@@ -116,33 +116,39 @@ export const Page = styled.div`
   border-top-right-radius: 0.5em;
   background-size: cover; /* 배경 이미지를 꽉 차게 설정 */
   
+  @media (max-width: 768px) {
+    width: 300px;
+  }
+
   &.front {
     background-image: url(${frontImage});
     width: 500px;
+
+    @media (max-width: 768px) {
+      width: 350px;
+    }
   }
 
   &.back {
     background-image: url(${frontImage});
   }
 
-
   &.page1, &.page2, &.page3, &.page4, &.page5, &.page6 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 
   &.page2, &.page4, &.page6 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 
   &.page5 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 
   &.page6 {
-background-image: url(${pageImage});
+    background-image: url(${pageImage});
   }
 `;
-
 
 // 캐릭터 이미지를 위한 컨테이너
 export const CharacterContainer = styled.div`
@@ -185,7 +191,6 @@ export const FirstPlaceImage = styled.img`
 
 // 1등 캐릭터 멘트를 위한 스타일
 export const FirstPlaceComment = styled.div`
-  font-size: 16px;
   color: #fff;
   margin-top: 10px;
   text-align: center;
@@ -200,19 +205,53 @@ export const FirstPlaceComment = styled.div`
   }
 `;
 
+// 인기 persona 순위
+export const Title = styled.h2`
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  width: fit-content;
+  background-color: rgba(255, 165, 0, 0.5); 
+  display: inline-block; 
+  padding: 0 5px;
+  margin-left: 28%;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    font-size: 16px;
+  }
+`;
+
+// 인기 통계
+export const GraphTitle = styled.h2`
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+  margin-top: 50px;
+  background-color: rgba(255, 165, 0, 0.5); 
+  display: inline-block; 
+  padding: 0 5px;
+  margin-left: 40%;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    font-size: 16px;
+  }
+`;
+
 // 2, 3, 4등 캐릭터를 위한 컨테이너
 export const OtherPlacesContainer = styled.div`
   display: flex;
-  justify-content: center;  // 가운데 정렬로 변경
+  justify-content: center;
   align-items: center;
   width: 100%;
   gap: 8%;  // 이미지 간격 조절
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
     gap: 5%;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px;
   }
 `;
@@ -223,6 +262,8 @@ export const OtherPlaceImage = styled.img`
   height: auto;
   border-radius: 50%;
   animation: ${typingCharacter} 1s ease-out;
+  transform: rotateY(5deg); 
+  transition: transform 0.3s ease;
 
   @media (max-width: 768px) {
     width: 60px;
@@ -241,7 +282,7 @@ const pulse = keyframes`
 export const BackButton = styled.button`
   position: absolute;
   top: 5%;
-  right: 16%;
+  right: 17%;
   background-color: #E0BBE4;
   border: none;
   border-radius: 55px;
@@ -288,3 +329,25 @@ export const BackButton = styled.button`
   }
 `;
 
+// 선택 페이지 가기 버튼
+export const NavigateButton = styled.button`
+  background-color: transparent;
+  border: 2px solid #b4aea2;
+  border-radius: 30px;
+  color: #b4aea2;
+  padding: 5px 20px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  width: 60%;
+  position: absolute; 
+  bottom: 130px;
+  left: 52%;
+  transform: translateX(-50%);
+  z-index: 1000; 
+
+  @media (max-width: 768px) {
+    width: 80%;
+    bottom: 100px;
+  }
+`;
