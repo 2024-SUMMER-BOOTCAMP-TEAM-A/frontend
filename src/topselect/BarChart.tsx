@@ -10,7 +10,7 @@ interface BarChartProps {
   triggerAnimation: boolean; 
 }
 
-const BarChart: React.FC<BarChartProps> = ({ data, width = '400px', height = '500px', triggerAnimation }) => {
+const BarChart: React.FC<BarChartProps> = ({ data, width = '400px', height = '400px', triggerAnimation }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -29,6 +29,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, width = '400px', height = '50
 
   const chartOptions: ChartOptions<'bar'> = {
     responsive: true,
+    maintainAspectRatio: false, 
     plugins: {
       legend: {
         display: false
@@ -55,6 +56,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, width = '400px', height = '50
       },
       y: {
         beginAtZero: true,
+        max: 100, // Adjust max value to make bars taller
         ticks: {
           callback: function (value) {
             return value + '%';
@@ -95,14 +97,11 @@ const BarChart: React.FC<BarChartProps> = ({ data, width = '400px', height = '50
 
   return (
     <div style={{
-      position: 'fixed',
-      bottom: '80px',
       width,
       height,
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 1000
+      alignItems: 'center'
     }}>
       <canvas ref={canvasRef}></canvas>
     </div>

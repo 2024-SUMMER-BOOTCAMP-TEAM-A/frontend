@@ -341,13 +341,13 @@ export const NavigateButton = styled.button`
   display: block;
   width: 60%;
   position: absolute; 
-  bottom: 130px;
-  left: 52%;
+  bottom: 100px;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 1000; 
 
   @media (max-width: 768px) {
     width: 80%;
-    bottom: 100px;
+    bottom: 80px;
   }
 `;
